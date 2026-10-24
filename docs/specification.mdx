@@ -1,0 +1,43 @@
+---
+title: "Specification"
+description: "The format specification for ETHICS.md."
+---
+
+<Warning>
+  Draft. Sections marked **Open** are unresolved and will change.
+</Warning>
+
+## File location
+
+An `ETHICS.md` file may appear at any level an agent operates in: an organization, a repository, a subdirectory, or a deployment. Agents read every `ETHICS.md` that applies to their current scope at the start of a session.
+
+## Precedence
+
+Files compose from the broadest scope to the narrowest. A narrower file may add constraints. It may not remove or weaken a constraint set by a broader file. No `ETHICS.md` overrides the usage policies of the model provider.
+
+**Open:** how conflicting constraints at the same scope are resolved.
+
+## Structure
+
+**Open:** whether the file uses frontmatter, and which fields are required.
+
+Proposed sections:
+
+| Section | Purpose |
+| --- | --- |
+| Commitments | Principles the agent upholds |
+| Red lines | Actions the agent never takes |
+| Escalation | Situations where the agent stops and asks a human |
+| Parties | How the interests of principals and affected third parties are weighed |
+| Exceptions | Declared exceptions, who may invoke them, and what is recorded |
+| Delegation | How constraints pass to sub-agents |
+
+## Delegation
+
+An agent that delegates work to another agent passes its applicable `ETHICS.md` constraints with the work. A sub-agent may not operate under weaker constraints than the agent that delegated to it.
+
+## Testability
+
+Each commitment and red line should be stated so that an evaluation can determine whether an agent honored it.
+
+**Open:** how commitments reference evaluation scenarios.

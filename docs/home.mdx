@@ -1,0 +1,31 @@
+---
+title: "Agent Ethics"
+description: "An open format for declaring how AI agents should behave when their actions affect people."
+---
+
+<Warning>
+  Agent Ethics is a draft. The format is under active design and will change.
+</Warning>
+
+## Why a separate file?
+
+Agents now send messages, move money, delete data and act for people who are not in the room. The instructions that tell an agent how a project works say little about how it should conduct itself while doing that work.
+
+`ETHICS.md` gives those commitments a predictable home:
+
+- **Red lines** the agent must never cross
+- **Escalation triggers** where it must stop and ask a human
+- **Precedence** between the person it serves and the people its actions affect
+- **Declared exceptions**, who may invoke them, and what gets recorded
+
+## How it relates to other formats
+
+| Format | Answers | Loaded |
+| --- | --- | --- |
+| `AGENTS.md` | How does this project work? | At session start |
+| `SKILL.md` | How do I perform this task? | When the task matches |
+| `ETHICS.md` | How must I conduct myself here? | At session start |
+
+## Declared and observed
+
+A file can only state commitments. Whether an agent honors them is an empirical question, so every commitment in `ETHICS.md` is written to be testable by an evaluation suite.

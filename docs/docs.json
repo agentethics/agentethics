@@ -1,0 +1,22 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "Agent Ethics",
+  "colors": {
+    "primary": "#7f7f7f",
+    "light": "#bfbfbf",
+    "dark": "#404040"
+  },
+  "navbar": {
+    "primary": {
+      "type": "github",
+      "href": "https://github.com/agentethics/agentethics"
+    }
+  },
+  "navigation": {
+    "pages": [
+      "home",
+      "specification"
+    ]
+  }
+}

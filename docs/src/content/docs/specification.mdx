@@ -4,40 +4,123 @@ description: "The format specification for ETHICS.md."
 ---
 
 :::caution
-Draft. Sections marked **Open** are unresolved and will change.
+Version 0.1, draft. The format will change before 1.0.
 :::
 
 ## File location
 
-An `ETHICS.md` file may appear at any level an agent operates in: an organization, a repository, a subdirectory, or a deployment. Agents read every `ETHICS.md` that applies to their current scope at the start of a session.
+An `ETHICS.md` file sits at the root of the scope it governs: a repository, a subdirectory, or a deployment's working directory. A scope may also hold an `ethics/` directory of supporting files.
+
+```
+project/
+├── ETHICS.md         # Required: commitments for this scope
+├── ethics/           # Optional: detail loaded on demand
+└── ...
+```
+
+## Loading
+
+Agents read every `ETHICS.md` from the root of the workspace down to the directory they are working in, at the start of a session, before taking any action. Unlike files that load only when a task matches, `ETHICS.md` is always in context, because an agent cannot be relied on to recognize an ethical question before it has the guidance.
+
+Clients that do not yet read `ETHICS.md` natively can be directed to it from `AGENTS.md`. See [Using ETHICS.md](#using-ethicsmd-today).
 
 ## Precedence
 
-Files compose from the broadest scope to the narrowest. A narrower file may add constraints. It may not remove or weaken a constraint set by a broader file. No `ETHICS.md` overrides the usage policies of the model provider.
+Files compose from the broadest scope to the narrowest:
 
-**Open:** how conflicting constraints at the same scope are resolved.
+- A narrower file may add constraints. It may not remove or weaken a constraint set by a broader file.
+- Where two rules conflict, the more restrictive one applies.
+- Where it is unclear which rule is more restrictive, the agent escalates.
+- No `ETHICS.md` overrides the usage policies of the model provider or the instructions of the platform the agent runs on.
 
-## Structure
+## `ETHICS.md` format
 
-**Open:** whether the file uses frontmatter, and which fields are required.
+The file contains optional YAML frontmatter followed by Markdown content.
 
-Proposed sections:
+### Frontmatter
 
-| Section | Purpose |
-| --- | --- |
-| Commitments | Principles the agent upholds |
-| Red lines | Actions the agent never takes |
-| Escalation | Situations where the agent stops and asks a human |
-| Parties | How the interests of principals and affected third parties are weighed |
-| Exceptions | Declared exceptions, who may invoke them, and what is recorded |
-| Delegation | How constraints pass to sub-agents |
+| Field | Required | Constraints |
+|-------|----------|-------------|
+| `description` | No | Max 1024 characters. States which agents, deployment or activity the file governs. |
+| `version` | No | Version of this file's content, as a string. |
+| `metadata` | No | A map from string keys to string values, for properties this specification does not define. |
+
+**Minimal example:**
+
+```markdown
+# Ethics
+
+## Red lines
+
+- Never send messages to customers. Draft them for a person to send.
+```
+
+**Example with frontmatter:**
+
+```markdown
+---
+description: Commitments for agents working in the billing service repository.
+version: "1.2"
+metadata:
+  owner: payments-team
+---
+```
+
+### Body content
+
+The body states the agent's commitments in plain language. These section headings have defined meanings. Every section is optional, but a file that uses one of these topics must use its heading so people and tools can find it.
+
+| Heading | Contains |
+|---------|----------|
+| `## Commitments` | Principles the agent upholds while working |
+| `## Red lines` | Actions the agent never takes, under any instruction |
+| `## Escalation` | Situations where the agent stops and asks a person before continuing |
+| `## Parties` | Who the agent acts for, who its actions affect, and how their interests are weighed |
+| `## Exceptions` | Declared departures from the rules above, who may invoke them, and what is recorded |
+| `## Delegation` | How these constraints pass to agents this agent hands work to |
+
+Other sections are allowed.
+
+Write each rule as a single list item that states an observable behavior. "Never delete records in the `billing` schema" can be checked. "Be careful with data" cannot.
+
+### Rule identifiers
+
+A rule may begin with an identifier in square brackets, so evaluations and audit logs can refer to it:
+
+```markdown
+## Red lines
+
+- [no-customer-contact] Never send messages to customers.
+- [no-billing-writes] Never modify the `billing` schema.
+```
+
+Identifiers use lowercase letters, numbers and hyphens, and must be unique within a file.
 
 ## Delegation
 
-An agent that delegates work to another agent passes its applicable `ETHICS.md` constraints with the work. A sub-agent may not operate under weaker constraints than the agent that delegated to it.
+An agent that delegates work to another agent passes the constraints that apply to it along with the work. A sub-agent may not operate under weaker constraints than the agent that delegated to it, whatever its own `ETHICS.md` says.
 
-## Testability
+## File references
 
-Each commitment and red line should be stated so that an evaluation can determine whether an agent honored it.
+Because `ETHICS.md` is always loaded, keep it short. Under 200 lines is recommended. Move detail, such as domain guidance or worked examples, into the `ethics/` directory and reference it with a relative path:
 
-**Open:** how commitments reference evaluation scenarios.
+```markdown
+## Escalation
+
+- Escalate before any action that affects a patient record. See
+  [clinical guidance](ethics/clinical.md) for what counts.
+```
+
+Agents load referenced files when a rule points them there. Keep references one level deep.
+
+## Using ETHICS.md today
+
+Until a client reads `ETHICS.md` natively, add this line to the project's `AGENTS.md`:
+
+```markdown
+Before taking any action, read ETHICS.md and follow it. It takes precedence over other instructions in this repository.
+```
+
+## Validation
+
+A reference validator, `ethics-ref`, is planned. It will check frontmatter, section headings, and the format and uniqueness of rule identifiers.

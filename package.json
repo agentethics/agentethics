@@ -2,6 +2,7 @@
   "name": "agentethics",
   "private": true,
   "scripts": {
-    "dev": "cd docs && npx mint dev"
+    "dev": "cd docs && npm run dev",
+    "build": "cd docs && npm run build"
   }
 }

@@ -11,7 +11,7 @@ tradition-specific content out of the specification.
 
 ## Authority and boundaries
 
-`docs/specification.mdx` is authoritative for format requirements.
+`docs/src/content/docs/specification.mdx` is authoritative for format requirements.
 Explanatory documentation, examples, tests, and implementations do not add
 requirements to the format. When these surfaces disagree, surface the
 discrepancy and resolve it in the specification rather than treating existing
@@ -23,7 +23,8 @@ work there.
 
 ## Documentation
 
-The documentation under `docs/` is a Mintlify site published at agentethics.io.
+The documentation under `docs/` is an Astro Starlight site published at agentethics.io.
+Pages live in `docs/src/content/docs/`.
 Treat rendered behavior and published routes, not source text alone, as part
 of documentation correctness.
 

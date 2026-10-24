@@ -30,14 +30,15 @@ The reference library is a demonstration of the format. Bug reports and feedback
 
 ### Documentation Site
 
-The docs site is built with [Mintlify](https://mintlify.com/).
+The docs site is built with [Astro Starlight](https://starlight.astro.build/).
 
 ```bash
-npm i -g mint
-cd docs && mint dev
+cd docs
+npm install
+npm run dev
 ```
 
-The local preview is available at `http://localhost:3000`.
+The local preview is available at `http://localhost:4321`.
 
 ## Submitting Changes
 

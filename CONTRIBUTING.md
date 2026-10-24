@@ -14,7 +14,7 @@ Found a problem in the specification, documentation, or reference library? [Open
 
 ### Proposals, Questions, and Feedback
 
-Feature requests, design questions and general feedback belong in [Discussions](https://github.com/agentethics/agentethics/discussions). Issues are reserved for concrete bugs.
+Feature requests, design questions and general feedback also go in [issues](https://github.com/agentethics/agentethics/issues). Start the title with `Proposal:` for changes to the specification, so they can be labeled and reviewed together.
 
 Proposals should address a real problem you have encountered while writing or implementing `ETHICS.md`. Show the problem and how your proposal addresses it.
 

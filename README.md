@@ -33,6 +33,9 @@ my-project/
 
 Agent Ethics is developed in the open and is intended for contribution to a neutral open source foundation. See [`CONTRIBUTING.md`](CONTRIBUTING.md) for how to get involved.
 
+- **Sponsor:** [CloudDon LLC](https://clouddon.ai)
+- **Founding contributor:** [Sriram Subramanian](https://github.com/ssriramhere/)
+
 ## License
 
 Code in this repository is licensed under [Apache 2.0](LICENSE). Documentation is licensed under [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/). See individual directories for details.

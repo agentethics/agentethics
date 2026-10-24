@@ -23,4 +23,4 @@ The static site is written to `dist/`.
 
 ## Deployment
 
-The site is deployed on Vercel with `docs/` as the project root. Changes deploy automatically after pushing to the default branch.
+The site is deployed to GitHub Pages by the workflow in `.github/workflows/deploy.yml`. Changes under `docs/` deploy automatically after pushing to the default branch. The custom domain is set in `public/CNAME`.

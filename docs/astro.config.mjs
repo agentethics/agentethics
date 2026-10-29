@@ -17,6 +17,7 @@ export default defineConfig({
 			sidebar: [
 				{ label: 'Overview', slug: 'index' },
 				{ label: 'Specification', slug: 'specification' },
+				{ label: 'Example', slug: 'example' },
 			],
 		}),
 	],

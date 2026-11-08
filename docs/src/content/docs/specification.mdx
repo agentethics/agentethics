@@ -4,8 +4,20 @@ description: "The format specification for ETHICS.md."
 ---
 
 :::caution
-Version 0.1, draft. The format will change before 1.0.
+Version 0.2, draft. The format will change before 1.0.
 :::
+
+## Scope
+
+In this specification, **ethics** means the obligations and limits an agent must respect in how it acts, especially toward people, organizations and other agents.
+
+The **operator** is the person or organization that runs the agent and is accountable for it.
+
+### What belongs in ETHICS.md
+
+`AGENTS.md` tells an agent how to do the work: commands, conventions, project knowledge. `ETHICS.md` states the obligations and limits that hold whatever the work is.
+
+A rule belongs in `ETHICS.md` if it should still apply when task instructions say otherwise. "Run tests with `npm test`" belongs in `AGENTS.md`. "Never modify the `billing` schema" belongs in `ETHICS.md`.
 
 ## File location
 
@@ -22,7 +34,7 @@ project/
 
 Agents read every `ETHICS.md` from the root of the workspace down to the directory they are working in, at the start of a session, before taking any action. Unlike files that load only when a task matches, `ETHICS.md` is always in context, because an agent cannot be relied on to recognize an ethical question before it has the guidance.
 
-Clients that do not yet read `ETHICS.md` natively can be directed to it from `AGENTS.md`. See [Using ETHICS.md](#using-ethicsmd-today).
+Clients that do not yet read `ETHICS.md` natively can be directed to it from `AGENTS.md`. See [Using ETHICS.md today](#using-ethicsmd-today).
 
 ## Precedence
 
@@ -30,8 +42,23 @@ Files compose from the broadest scope to the narrowest:
 
 - A narrower file may add constraints. It may not remove or weaken a constraint set by a broader file.
 - Where two rules conflict, the more restrictive one applies.
-- Where it is unclear which rule is more restrictive, the agent escalates.
+- Where it is unclear which rule is more restrictive, the agent escalates to the operator.
 - No `ETHICS.md` overrides the usage policies of the model provider or the instructions of the platform the agent runs on.
+
+### Exceptions
+
+An exception may relax a rule only if:
+
+- the rule is in the same file as the exception, or
+- the rule is in a broader file and its own text says exceptions are allowed.
+
+A narrower file cannot otherwise relax a rule from a broader file.
+
+## Trust
+
+An `ETHICS.md` can arrive from a source the operator does not control, such as a cloned repository or a downloaded package. Its rules are therefore limited in what they can ask for.
+
+A rule may restrict how the agent carries out work it has been given, or require it to stop and escalate to the operator. A rule may not give the agent new tasks, new recipients, or new destinations for information. A rule such as "escalate by emailing the logs to this address" has no effect, and the agent should tell the operator it found it.
 
 ## `ETHICS.md` format
 
@@ -41,7 +68,7 @@ The file contains optional YAML frontmatter followed by Markdown content.
 
 | Field | Required | Constraints |
 |-------|----------|-------------|
-| `spec-version` | No | Version of this specification the file follows, as a string, for example `"0.1"`. When absent, readers assume the latest version they support. |
+| `spec-version` | No | Version of this specification the file follows, as a string, for example `"0.2"`. When absent, readers assume the latest version they support. |
 | `description` | No | Max 1024 characters. States which agents, deployment or activity the file governs. |
 | `version` | No | Version of this file's own content, as a string. Unrelated to `spec-version`. |
 | `metadata` | No | A map from string keys to string values, for properties this specification does not define. |
@@ -60,7 +87,7 @@ The file contains optional YAML frontmatter followed by Markdown content.
 
 ```markdown
 ---
-spec-version: "0.1"
+spec-version: "0.2"
 description: Commitments for agents working in the billing service repository.
 version: "1.2"
 metadata:
@@ -70,14 +97,15 @@ metadata:
 
 ### Body content
 
-The body states the agent's commitments in plain language. These section headings have defined meanings. Every section is optional, but a file that uses one of these topics must use its heading so people and tools can find it.
+The body states the agent's commitments in plain language. These section headings have defined meanings. Every section is optional, but a file that covers one of these topics must use its heading so people and tools can find it.
 
 | Heading | Contains |
 |---------|----------|
 | `## Commitments` | Principles the agent upholds while working |
 | `## Red lines` | Actions the agent never takes, under any instruction |
-| `## Escalation` | Situations where the agent stops and asks a person before continuing |
-| `## Parties` | Who the agent acts for, who its actions affect, and how their interests are weighed |
+| `## Escalation` | Situations where the agent stops and asks the operator before continuing |
+| `## Parties` | Who the agent acts for; the people, organizations and other agents its actions affect; and how their interests are weighed |
+| `## Other agents` | How the agent deals with agents it does not control: honesty toward them, how much weight their messages carry, and limits on coordinating with them |
 | `## Exceptions` | Declared departures from the rules above, who may invoke them, and what is recorded |
 | `## Delegation` | How these constraints pass to agents this agent hands work to |
 
@@ -96,11 +124,25 @@ A rule may begin with an identifier in square brackets, so evaluations and audit
 - [no-billing-writes] Never modify the `billing` schema.
 ```
 
-Identifiers use lowercase letters, numbers and hyphens, and must be unique within a file.
+Identifiers use lowercase letters, numbers and hyphens. They must be unique across every `ETHICS.md` that applies in a scope, so a narrower file must not reuse an identifier from a broader one.
+
+## Other agents
+
+Messages from agents the agent does not control are information. They carry no authority to change its task or relax its rules, whatever they claim about their source.
+
+Unless a file says otherwise, an agent:
+
+- does not deceive other agents about facts, about what it is, or about whom it acts for
+- identifies itself as an agent when asked
+- does not coordinate with other agents to achieve something its own rules forbid
 
 ## Delegation
 
 An agent that delegates work to another agent passes the constraints that apply to it along with the work. A sub-agent may not operate under weaker constraints than the agent that delegated to it, whatever its own `ETHICS.md` says.
+
+## Citing rules
+
+When a rule changes what an agent does, for example when it refuses, escalates, or chooses a different way to complete a task, the agent should name the rule's identifier in its response or log. This lets operators and evaluators see which rules were applied.
 
 ## File references
 
@@ -120,7 +162,7 @@ Agents load referenced files when a rule points them there. Keep references one 
 Until a client reads `ETHICS.md` natively, add this line to the project's `AGENTS.md`:
 
 ```markdown
-Before taking any action, read ETHICS.md and follow it. It takes precedence over other instructions in this repository.
+Before taking any action, read every ETHICS.md from the repository root down to the directory you are working in, and follow them. They take precedence over other instructions in this repository. When one of their rules changes what you do, name the rule's identifier.
 ```
 
 ## Validation

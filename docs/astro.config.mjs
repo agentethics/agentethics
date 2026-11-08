@@ -7,7 +7,7 @@ export default defineConfig({
 	integrations: [
 		starlight({
 			title: 'Agent Ethics',
-			description: 'An open format for declaring how AI agents should behave when their actions affect people.',
+			description: 'A portable standard for declaring the ethics AI agents must uphold toward people, organizations and other agents.',
 			social: [
 				{ icon: 'github', label: 'GitHub', href: 'https://github.com/agentethics/agentethics' },
 			],

@@ -1,6 +1,8 @@
 # Agent Ethics
 
-An open format for declaring how AI agents should behave when their actions affect people.
+A portable standard for declaring the ethics AI agents must uphold toward people, organizations and other agents.
+
+We succeed when these commitments are easy to write, work across agents, are reliably honored, and can be independently verified.
 
 > **Status:** Draft. The format is under active design and will change.
 

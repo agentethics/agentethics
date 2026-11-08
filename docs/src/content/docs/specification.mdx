@@ -41,8 +41,9 @@ The file contains optional YAML frontmatter followed by Markdown content.
 
 | Field | Required | Constraints |
 |-------|----------|-------------|
+| `spec-version` | No | Version of this specification the file follows, as a string, for example `"0.1"`. When absent, readers assume the latest version they support. |
 | `description` | No | Max 1024 characters. States which agents, deployment or activity the file governs. |
-| `version` | No | Version of this file's content, as a string. |
+| `version` | No | Version of this file's own content, as a string. Unrelated to `spec-version`. |
 | `metadata` | No | A map from string keys to string values, for properties this specification does not define. |
 
 **Minimal example:**
@@ -59,6 +60,7 @@ The file contains optional YAML frontmatter followed by Markdown content.
 
 ```markdown
 ---
+spec-version: "0.1"
 description: Commitments for agents working in the billing service repository.
 version: "1.2"
 metadata:

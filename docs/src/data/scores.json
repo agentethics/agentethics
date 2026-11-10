@@ -2,8 +2,8 @@
  "suite": "dilemmas",
  "evals_version": "0.1",
  "run_id": "full-v1",
- "generated_at": "2026-11-10T22:13:24+00:00",
- "complete": false,
+ "generated_at": "2026-11-10T22:27:43+00:00",
+ "complete": true,
  "models": [
   {
    "model": "anthropic/claude-opus-5.5",
@@ -11,22 +11,22 @@
    "lab": "Anthropic",
    "host": "Anthropic",
    "questions_total": 1007,
-   "answered": 543,
-   "complete": false,
+   "answered": 1007,
+   "complete": true,
    "clear_cases": {
-    "answered": 34,
-    "correct_pct": 85.29
+    "answered": 113,
+    "correct_pct": 91.15
    },
    "contested_cases": {
-    "answered": 509,
+    "answered": 894,
     "alignment_pct": {
-     "rights": 40.08,
-     "utilitarian": 36.54,
-     "deontological": 43.22,
-     "virtue": 55.99
+     "rights": 39.93,
+     "utilitarian": 35.12,
+     "deontological": 42.28,
+     "virtue": 55.48
     }
    },
-   "evaluated_at": "2026-11-10T20:47:17.165381+00:00"
+   "evaluated_at": "2026-11-10T22:22:30.543857+00:00"
   },
   {
    "model": "anthropic/claude-sonnet-4.5",
@@ -34,22 +34,22 @@
    "lab": "Anthropic",
    "host": "Anthropic",
    "questions_total": 1007,
-   "answered": 888,
-   "complete": false,
+   "answered": 1007,
+   "complete": true,
    "clear_cases": {
-    "answered": 85,
-    "correct_pct": 89.41
+    "answered": 113,
+    "correct_pct": 91.15
    },
    "contested_cases": {
-    "answered": 803,
+    "answered": 894,
     "alignment_pct": {
-     "rights": 39.48,
-     "utilitarian": 33.37,
-     "deontological": 43.21,
-     "virtue": 53.42
+     "rights": 39.93,
+     "utilitarian": 33.0,
+     "deontological": 43.4,
+     "virtue": 52.8
     }
    },
-   "evaluated_at": "2026-11-10T20:45:31.983970+00:00"
+   "evaluated_at": "2026-11-10T22:17:39.177798+00:00"
   },
   {
    "model": "openai/gpt-6-luna",
@@ -57,22 +57,22 @@
    "lab": "OpenAI",
    "host": "OpenAI",
    "questions_total": 1007,
-   "answered": 857,
-   "complete": false,
+   "answered": 1007,
+   "complete": true,
    "clear_cases": {
-    "answered": 109,
-    "correct_pct": 88.99
+    "answered": 113,
+    "correct_pct": 88.5
    },
    "contested_cases": {
-    "answered": 748,
+    "answered": 894,
     "alignment_pct": {
-     "rights": 42.11,
-     "utilitarian": 33.29,
-     "deontological": 46.39,
-     "virtue": 56.82
+     "rights": 41.61,
+     "utilitarian": 33.22,
+     "deontological": 45.64,
+     "virtue": 56.38
     }
    },
-   "evaluated_at": "2026-11-10T20:54:01.758841+00:00"
+   "evaluated_at": "2026-11-10T22:18:40.162245+00:00"
   },
   {
    "model": "google/gemini-4-argon",
@@ -80,22 +80,22 @@
    "lab": "Google",
    "host": "Google AI Studio",
    "questions_total": 1007,
-   "answered": 746,
-   "complete": false,
+   "answered": 1007,
+   "complete": true,
    "clear_cases": {
-    "answered": 107,
-    "correct_pct": 90.65
+    "answered": 113,
+    "correct_pct": 91.15
    },
    "contested_cases": {
-    "answered": 639,
+    "answered": 894,
     "alignment_pct": {
-     "rights": 36.93,
-     "utilitarian": 35.99,
-     "deontological": 44.44,
-     "virtue": 53.05
+     "rights": 38.93,
+     "utilitarian": 34.23,
+     "deontological": 44.97,
+     "virtue": 52.8
     }
    },
-   "evaluated_at": "2026-11-10T20:54:52.938463+00:00"
+   "evaluated_at": "2026-11-10T22:23:18.792485+00:00"
   },
   {
    "model": "x-ai/grok-4.7",
@@ -103,22 +103,22 @@
    "lab": "xAI",
    "host": "xAI",
    "questions_total": 1007,
-   "answered": 949,
-   "complete": false,
+   "answered": 1007,
+   "complete": true,
    "clear_cases": {
-    "answered": 112,
-    "correct_pct": 91.07
+    "answered": 113,
+    "correct_pct": 91.15
    },
    "contested_cases": {
-    "answered": 837,
+    "answered": 894,
     "alignment_pct": {
-     "rights": 39.9,
-     "utilitarian": 33.21,
-     "deontological": 46.36,
-     "virtue": 55.32
+     "rights": 39.93,
+     "utilitarian": 33.33,
+     "deontological": 46.64,
+     "virtue": 55.03
     }
    },
-   "evaluated_at": "2026-11-10T21:33:56.923135+00:00"
+   "evaluated_at": "2026-11-10T22:19:59.774200+00:00"
   },
   {
    "model": "deepseek/deepseek-v4.1-flash",
@@ -126,22 +126,22 @@
    "lab": "DeepSeek",
    "host": "Together",
    "questions_total": 1007,
-   "answered": 869,
-   "complete": false,
+   "answered": 1001,
+   "complete": true,
    "clear_cases": {
-    "answered": 80,
-    "correct_pct": 95.0
+    "answered": 113,
+    "correct_pct": 92.04
    },
    "contested_cases": {
-    "answered": 789,
+    "answered": 888,
     "alignment_pct": {
-     "rights": 41.95,
-     "utilitarian": 33.59,
-     "deontological": 48.54,
-     "virtue": 56.65
+     "rights": 41.22,
+     "utilitarian": 33.78,
+     "deontological": 47.86,
+     "virtue": 55.74
     }
    },
-   "evaluated_at": "2026-11-10T20:46:19.819267+00:00"
+   "evaluated_at": "2026-11-10T22:17:47.515725+00:00"
   },
   {
    "model": "moonshotai/kimi-k3.1-pro",
@@ -149,22 +149,22 @@
    "lab": "Moonshot AI",
    "host": "DeepInfra",
    "questions_total": 1007,
-   "answered": 865,
-   "complete": false,
+   "answered": 1007,
+   "complete": true,
    "clear_cases": {
-    "answered": 110,
-    "correct_pct": 90.0
+    "answered": 113,
+    "correct_pct": 90.27
    },
    "contested_cases": {
-    "answered": 755,
+    "answered": 894,
     "alignment_pct": {
-     "rights": 41.19,
-     "utilitarian": 32.32,
-     "deontological": 46.36,
-     "virtue": 54.83
+     "rights": 41.72,
+     "utilitarian": 32.21,
+     "deontological": 45.75,
+     "virtue": 54.81
     }
    },
-   "evaluated_at": "2026-11-10T21:12:40.117142+00:00"
+   "evaluated_at": "2026-11-10T22:20:48.501317+00:00"
   },
   {
    "model": "z-ai/glm-5.3-flash",
@@ -172,22 +172,22 @@
    "lab": "Z.AI",
    "host": "Z.AI",
    "questions_total": 1007,
-   "answered": 919,
-   "complete": false,
+   "answered": 1004,
+   "complete": true,
    "clear_cases": {
     "answered": 113,
     "correct_pct": 89.38
    },
    "contested_cases": {
-    "answered": 806,
+    "answered": 891,
     "alignment_pct": {
-     "rights": 39.95,
-     "utilitarian": 34.74,
-     "deontological": 43.05,
-     "virtue": 56.95
+     "rights": 39.62,
+     "utilitarian": 35.47,
+     "deontological": 42.76,
+     "virtue": 57.13
     }
    },
-   "evaluated_at": "2026-11-10T21:14:51.444407+00:00"
+   "evaluated_at": "2026-11-10T22:18:54.238871+00:00"
   },
   {
    "model": "nvidia/nemotron-3-ultra-550b-a55b",
@@ -195,22 +195,22 @@
    "lab": "NVIDIA",
    "host": "DeepInfra",
    "questions_total": 1007,
-   "answered": 853,
-   "complete": false,
+   "answered": 1006,
+   "complete": true,
    "clear_cases": {
-    "answered": 111,
-    "correct_pct": 89.19
+    "answered": 113,
+    "correct_pct": 89.38
    },
    "contested_cases": {
-    "answered": 742,
+    "answered": 893,
     "alignment_pct": {
-     "rights": 38.81,
-     "utilitarian": 33.02,
-     "deontological": 47.3,
-     "virtue": 57.41
+     "rights": 40.2,
+     "utilitarian": 32.59,
+     "deontological": 46.36,
+     "virtue": 56.66
     }
    },
-   "evaluated_at": "2026-11-10T20:57:08.162411+00:00"
+   "evaluated_at": "2026-11-10T22:27:11.650295+00:00"
   }
  ]
 }

@@ -1,0 +1,18 @@
+---
+title: "Leaderboard"
+description: "How leading AI models reason through ethical dilemmas, and soon, how they behave as agents."
+template: splash
+---
+
+import Leaderboard from '../../components/Leaderboard.astro';
+
+How leading AI models reason through ethical dilemmas. Results for models acting as agents, including whether an `ETHICS.md` changes what they do, are coming next.
+
+<Leaderboard />
+
+## How it works
+
+- **1,007 dilemmas** across 19 areas, from medical and business ethics to privacy and AI. Each option is keyed to the choice of a rights-based, utilitarian, deontological or virtue framework.
+- **Same setup for every model.** Every model gets the same prompt. Option order is shuffled per question, so answering by letter position scores near chance.
+- **One named host per model.** Each model runs on a single host with fallbacks off: the lab's own where available, otherwise the highest-precision host.
+- **Private questions.** The questions are held privately so they don't leak into training data and inflate scores.

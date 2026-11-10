@@ -1,0 +1,216 @@
+{
+ "suite": "dilemmas",
+ "evals_version": "0.1",
+ "run_id": "full-v1",
+ "generated_at": "2026-11-10T22:13:24+00:00",
+ "complete": false,
+ "models": [
+  {
+   "model": "anthropic/claude-opus-5.5",
+   "name": "Claude Opus 5.5",
+   "lab": "Anthropic",
+   "host": "Anthropic",
+   "questions_total": 1007,
+   "answered": 543,
+   "complete": false,
+   "clear_cases": {
+    "answered": 34,
+    "correct_pct": 85.29
+   },
+   "contested_cases": {
+    "answered": 509,
+    "alignment_pct": {
+     "rights": 40.08,
+     "utilitarian": 36.54,
+     "deontological": 43.22,
+     "virtue": 55.99
+    }
+   },
+   "evaluated_at": "2026-11-10T20:47:17.165381+00:00"
+  },
+  {
+   "model": "anthropic/claude-sonnet-4.5",
+   "name": "Claude Sonnet 4.5",
+   "lab": "Anthropic",
+   "host": "Anthropic",
+   "questions_total": 1007,
+   "answered": 888,
+   "complete": false,
+   "clear_cases": {
+    "answered": 85,
+    "correct_pct": 89.41
+   },
+   "contested_cases": {
+    "answered": 803,
+    "alignment_pct": {
+     "rights": 39.48,
+     "utilitarian": 33.37,
+     "deontological": 43.21,
+     "virtue": 53.42
+    }
+   },
+   "evaluated_at": "2026-11-10T20:45:31.983970+00:00"
+  },
+  {
+   "model": "openai/gpt-6-luna",
+   "name": "GPT 6 Luna",
+   "lab": "OpenAI",
+   "host": "OpenAI",
+   "questions_total": 1007,
+   "answered": 857,
+   "complete": false,
+   "clear_cases": {
+    "answered": 109,
+    "correct_pct": 88.99
+   },
+   "contested_cases": {
+    "answered": 748,
+    "alignment_pct": {
+     "rights": 42.11,
+     "utilitarian": 33.29,
+     "deontological": 46.39,
+     "virtue": 56.82
+    }
+   },
+   "evaluated_at": "2026-11-10T20:54:01.758841+00:00"
+  },
+  {
+   "model": "google/gemini-4-argon",
+   "name": "Gemini 4 Argon",
+   "lab": "Google",
+   "host": "Google AI Studio",
+   "questions_total": 1007,
+   "answered": 746,
+   "complete": false,
+   "clear_cases": {
+    "answered": 107,
+    "correct_pct": 90.65
+   },
+   "contested_cases": {
+    "answered": 639,
+    "alignment_pct": {
+     "rights": 36.93,
+     "utilitarian": 35.99,
+     "deontological": 44.44,
+     "virtue": 53.05
+    }
+   },
+   "evaluated_at": "2026-11-10T20:54:52.938463+00:00"
+  },
+  {
+   "model": "x-ai/grok-4.7",
+   "name": "Grok 4.7",
+   "lab": "xAI",
+   "host": "xAI",
+   "questions_total": 1007,
+   "answered": 949,
+   "complete": false,
+   "clear_cases": {
+    "answered": 112,
+    "correct_pct": 91.07
+   },
+   "contested_cases": {
+    "answered": 837,
+    "alignment_pct": {
+     "rights": 39.9,
+     "utilitarian": 33.21,
+     "deontological": 46.36,
+     "virtue": 55.32
+    }
+   },
+   "evaluated_at": "2026-11-10T21:33:56.923135+00:00"
+  },
+  {
+   "model": "deepseek/deepseek-v4.1-flash",
+   "name": "DeepSeek V4.1 Flash",
+   "lab": "DeepSeek",
+   "host": "Together",
+   "questions_total": 1007,
+   "answered": 869,
+   "complete": false,
+   "clear_cases": {
+    "answered": 80,
+    "correct_pct": 95.0
+   },
+   "contested_cases": {
+    "answered": 789,
+    "alignment_pct": {
+     "rights": 41.95,
+     "utilitarian": 33.59,
+     "deontological": 48.54,
+     "virtue": 56.65
+    }
+   },
+   "evaluated_at": "2026-11-10T20:46:19.819267+00:00"
+  },
+  {
+   "model": "moonshotai/kimi-k3.1-pro",
+   "name": "Kimi K3.1 Pro",
+   "lab": "Moonshot AI",
+   "host": "DeepInfra",
+   "questions_total": 1007,
+   "answered": 865,
+   "complete": false,
+   "clear_cases": {
+    "answered": 110,
+    "correct_pct": 90.0
+   },
+   "contested_cases": {
+    "answered": 755,
+    "alignment_pct": {
+     "rights": 41.19,
+     "utilitarian": 32.32,
+     "deontological": 46.36,
+     "virtue": 54.83
+    }
+   },
+   "evaluated_at": "2026-11-10T21:12:40.117142+00:00"
+  },
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "name": "GLM 5.3 Flash",
+   "lab": "Z.AI",
+   "host": "Z.AI",
+   "questions_total": 1007,
+   "answered": 919,
+   "complete": false,
+   "clear_cases": {
+    "answered": 113,
+    "correct_pct": 89.38
+   },
+   "contested_cases": {
+    "answered": 806,
+    "alignment_pct": {
+     "rights": 39.95,
+     "utilitarian": 34.74,
+     "deontological": 43.05,
+     "virtue": 56.95
+    }
+   },
+   "evaluated_at": "2026-11-10T21:14:51.444407+00:00"
+  },
+  {
+   "model": "nvidia/nemotron-3-ultra-550b-a55b",
+   "name": "Nemotron 3 Ultra",
+   "lab": "NVIDIA",
+   "host": "DeepInfra",
+   "questions_total": 1007,
+   "answered": 853,
+   "complete": false,
+   "clear_cases": {
+    "answered": 111,
+    "correct_pct": 89.19
+   },
+   "contested_cases": {
+    "answered": 742,
+    "alignment_pct": {
+     "rights": 38.81,
+     "utilitarian": 33.02,
+     "deontological": 47.3,
+     "virtue": 57.41
+    }
+   },
+   "evaluated_at": "2026-11-10T20:57:08.162411+00:00"
+  }
+ ]
+}

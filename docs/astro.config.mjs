@@ -18,6 +18,7 @@ export default defineConfig({
 				{ label: 'Overview', slug: 'index' },
 				{ label: 'Specification', slug: 'specification' },
 				{ label: 'Example', slug: 'example' },
+				{ label: 'Leaderboard', slug: 'leaderboard' },
 			],
 		}),
 	],

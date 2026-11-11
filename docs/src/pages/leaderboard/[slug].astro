@@ -1,0 +1,158 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import scores from '../../data/scores.json';
+
+export function getStaticPaths() {
+	return scores.models.map((m) => ({ params: { slug: m.slug }, props: { model: m } }));
+}
+
+const { model: m } = Astro.props;
+const frameworks = [
+	{ key: 'rights', label: 'Rights', color: '#1E4E8C' },
+	{ key: 'utilitarian', label: 'Utilitarian', color: '#E8973F' },
+	{ key: 'deontological', label: 'Deontological', color: '#2E8C80' },
+	{ key: 'virtue', label: 'Virtue', color: '#8E9AB3' },
+] as const;
+type Fw = (typeof frameworks)[number]['key'];
+
+const all = scores.models;
+const avg = (fw: Fw) => all.reduce((s, x) => s + (x.contested_cases.alignment_pct as Record<Fw, number>)[fw], 0) / all.length;
+const avgClear = all.reduce((s, x) => s + x.clear_cases.correct_pct, 0) / all.length;
+const mine = m.contested_cases.alignment_pct as Record<Fw, number>;
+const round = (n: number) => Math.round(n);
+const signed = (n: number) => (Math.round(n) > 0 ? `+${Math.round(n)}` : `${Math.round(n)}`);
+
+// Category averages across models, so each cell can show how far this model sits from the group.
+const catNames = Object.keys(m.categories).sort();
+const catAvg = (cat: string, fw: Fw) =>
+	all.reduce((s, x) => s + ((x.categories as Record<string, any>)[cat]?.alignment_pct?.[fw] ?? 0), 0) / all.length;
+
+const quant = (m.routing as any)?.quantizations?.join(', ');
+const updated = m.evaluated_at
+	? new Date(m.evaluated_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' })
+	: '';
+const fmt = (n: number) => n.toLocaleString('en-US');
+---
+
+<StarlightPage frontmatter={{ title: m.name, description: `${m.name} on the Agent Ethics dilemma evaluation.`, template: 'splash' }}>
+	<div class="mp not-content">
+		<p class="back"><a href="/leaderboard/">← All models</a></p>
+		<p class="meta">
+			{m.lab} · served by {m.host}{quant ? ` (${quant})` : ''} · <code>{m.model}</code> · run {scores.run_id}{updated && ` · ${updated}`}
+		</p>
+
+		<section class="card" aria-labelledby="reason-h">
+			<h2 id="reason-h">How it reasons</h2>
+			<p class="note">On the {fmt(m.contested_cases.answered)} dilemmas where frameworks disagree, how often this model chose each framework's option. The black tick marks the average of all {all.length} models.</p>
+			<div class="bars">
+				{frameworks.map((f) => (
+					<div class="barrow">
+						<span>{f.label}</span>
+						<div class="track big">
+							<div class="fill" style={`width:${mine[f.key]}%;background:${f.color}`}></div>
+							<div class="tick" style={`left:${avg(f.key)}%`} aria-hidden="true"></div>
+						</div>
+						<span class="num">{round(mine[f.key])}%</span>
+						<span class="delta">{signed(mine[f.key] - avg(f.key))} vs avg</span>
+					</div>
+				))}
+			</div>
+		</section>
+
+		<section class="card" aria-labelledby="clear-h">
+			<h2 id="clear-h">Questions with one right answer</h2>
+			<p class="note">On the {m.clear_cases.answered} dilemmas where all four frameworks agree, the share this model answered the agreed way.</p>
+			<p class="big-num">{round(m.clear_cases.correct_pct)}% <span class="delta">average of all models: {round(avgClear)}%</span></p>
+		</section>
+
+		<section class="card" aria-labelledby="cat-h">
+			<h2 id="cat-h">By category</h2>
+			<p class="note">The same four frameworks, within each area. Each area has about 45 contested dilemmas, so differences of under about 10 points may be noise. The small figure is the difference from the average of all models in that area.</p>
+			<div class="scroll">
+				<table>
+					<thead>
+						<tr>
+							<th scope="col">Category</th>
+							{frameworks.map((f) => (
+								<th scope="col"><span class="key"><span class="sw" style={`background:${f.color}`}></span>{f.label}</span></th>
+							))}
+							<th scope="col">Questions</th>
+						</tr>
+					</thead>
+					<tbody>
+						{catNames.map((cat) => {
+							const c = (m.categories as Record<string, any>)[cat];
+							return (
+								<tr>
+									<td class="cat">{cat}</td>
+									{frameworks.map((f) => {
+										const v = c.alignment_pct[f.key];
+										const d = v - catAvg(cat, f.key);
+										return (
+											<td>
+												<span class="num">{round(v)}%</span>
+												<span class={`d ${Math.abs(d) >= 10 ? 'strong' : ''}`}>{signed(d)}</span>
+											</td>
+										);
+									})}
+									<td class="num">{c.contested_answered}</td>
+								</tr>
+							);
+						})}
+					</tbody>
+				</table>
+			</div>
+		</section>
+
+		<section class="card" aria-labelledby="run-h">
+			<h2 id="run-h">Run details</h2>
+			<dl class="details">
+				<div><dt>Questions answered</dt><dd>{fmt(m.answered)} of {fmt(m.questions_total)}</dd></div>
+				<div><dt>Unreadable replies</dt><dd>{m.unreadable}</dd></div>
+				<div><dt>Host</dt><dd>{m.host}{quant ? `, ${quant}` : ''}, fallbacks off</dd></div>
+				{m.usage && <div><dt>Tokens</dt><dd>{fmt(m.usage.input)} in · {fmt(m.usage.output)} out{m.usage.reasoning ? ` (${fmt(m.usage.reasoning)} reasoning)` : ''}</dd></div>}
+			</dl>
+		</section>
+
+		<section class="soon" aria-labelledby="soon-h">
+			<h2 id="soon-h">Coming next: {m.name} as an agent</h2>
+			<p>The next release tests this model acting as an agent in sandboxed tasks: ETHICS.md rules followed, harm avoided, injections resisted, and tasks completed.</p>
+		</section>
+	</div>
+</StarlightPage>
+
+<style>
+	.mp { display: flex; flex-direction: column; gap: 1.5rem; }
+	.back, .meta { margin: 0; font-size: 0.875rem; }
+	.meta { color: var(--sl-color-gray-3); }
+	.card, .soon { border: 1px solid var(--sl-color-hairline); border-radius: 0.75rem; padding: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; background: var(--sl-color-bg-nav); }
+	.soon { border-style: dashed; background: transparent; }
+	h2 { margin: 0; font-size: 1.25rem; font-weight: 600; color: var(--sl-color-white); }
+	.note, .soon p { margin: 0; font-size: 0.875rem; color: var(--sl-color-gray-3); max-width: 48rem; }
+	.bars { display: flex; flex-direction: column; gap: 0.75rem; }
+	.barrow { display: grid; grid-template-columns: 7.5rem minmax(0, 1fr) 3rem 5.5rem; gap: 0.75rem; align-items: center; font-size: 0.875rem; }
+	.track { position: relative; height: 10px; border-radius: 3px; background: var(--sl-color-gray-5); }
+	.track.big { height: 14px; }
+	.fill { height: 100%; border-radius: 3px; }
+	.tick { position: absolute; top: -4px; bottom: -4px; width: 2px; background: var(--sl-color-white); margin-left: -1px; }
+	.num { font-family: var(--sl-font-mono); text-align: right; }
+	.delta { font-size: 0.75rem; color: var(--sl-color-gray-3); }
+	.big-num { margin: 0; font-family: var(--sl-font-mono); font-size: 2rem; color: var(--sl-color-white); }
+	.big-num .delta { font-family: var(--sl-font-system); font-size: 0.875rem; margin-left: 0.5rem; }
+	.scroll { overflow-x: auto; border: 1px solid var(--sl-color-hairline); border-radius: 0.5rem; }
+	table { width: 100%; min-width: 760px; border-collapse: collapse; font-size: 0.875rem; }
+	th { text-align: left; font-weight: 600; padding: 0.6rem 0.75rem; background: var(--sl-color-gray-6); }
+	td { padding: 0.6rem 0.75rem; border-top: 1px solid var(--sl-color-hairline); white-space: nowrap; }
+	td.cat { white-space: normal; min-width: 14rem; }
+	.d { font-size: 0.75rem; color: var(--sl-color-gray-3); margin-left: 0.4rem; font-family: var(--sl-font-mono); }
+	.d.strong { color: var(--sl-color-white); font-weight: 600; }
+	.key { display: inline-flex; align-items: center; gap: 0.4rem; }
+	.sw { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+	.details { margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr)); gap: 0.75rem 1.5rem; font-size: 0.875rem; }
+	.details dt { color: var(--sl-color-gray-3); }
+	.details dd { margin: 0; }
+	@media (max-width: 40rem) {
+		.barrow { grid-template-columns: 6rem minmax(0, 1fr) 2.75rem; }
+		.barrow .delta { grid-column: 2 / -1; margin-top: -0.5rem; }
+	}
+</style>

@@ -2,10 +2,11 @@
  "suite": "dilemmas",
  "evals_version": "0.1",
  "run_id": "full-v1",
- "generated_at": "2026-11-10T22:27:43+00:00",
+ "generated_at": "2026-11-11T03:37:12+00:00",
  "complete": true,
  "models": [
   {
+   "slug": "anthropic-claude-opus-5-5",
    "model": "anthropic/claude-opus-5.5",
    "name": "Claude Opus 5.5",
    "lab": "Anthropic",
@@ -26,9 +27,252 @@
      "virtue": 55.48
     }
    },
+   "unreadable": 0,
+   "routing": {
+    "only": [
+     "anthropic"
+    ],
+    "allow_fallbacks": false
+   },
+   "usage": {
+    "input": 238434,
+    "output": 71520,
+    "reasoning": 68494
+   },
+   "categories": {
+    "Conflict of Interest": {
+     "questions": 52,
+     "contested_answered": 47,
+     "alignment_pct": {
+      "rights": 55.32,
+      "utilitarian": 17.02,
+      "deontological": 61.7,
+      "virtue": 51.06
+     },
+     "clear_answered": 5,
+     "clear_correct_pct": 100.0
+    },
+    "Corporate Governance and Social Responsibility": {
+     "questions": 52,
+     "contested_answered": 45,
+     "alignment_pct": {
+      "rights": 28.89,
+      "utilitarian": 55.56,
+      "deontological": 46.67,
+      "virtue": 40.0
+     },
+     "clear_answered": 7,
+     "clear_correct_pct": 85.71
+    },
+    "Cultural Sensitivity and Ethics": {
+     "questions": 52,
+     "contested_answered": 46,
+     "alignment_pct": {
+      "rights": 36.96,
+      "utilitarian": 26.09,
+      "deontological": 34.78,
+      "virtue": 65.22
+     },
+     "clear_answered": 6,
+     "clear_correct_pct": 33.33
+    },
+    "Educational Ethics": {
+     "questions": 52,
+     "contested_answered": 44,
+     "alignment_pct": {
+      "rights": 29.55,
+      "utilitarian": 45.45,
+      "deontological": 29.55,
+      "virtue": 59.09
+     },
+     "clear_answered": 8,
+     "clear_correct_pct": 100.0
+    },
+    "Environmental Ethics": {
+     "questions": 52,
+     "contested_answered": 47,
+     "alignment_pct": {
+      "rights": 42.55,
+      "utilitarian": 27.66,
+      "deontological": 31.91,
+      "virtue": 53.19
+     },
+     "clear_answered": 5,
+     "clear_correct_pct": 100.0
+    },
+    "Ethics in AI Development": {
+     "questions": 52,
+     "contested_answered": 46,
+     "alignment_pct": {
+      "rights": 23.91,
+      "utilitarian": 52.17,
+      "deontological": 41.3,
+      "virtue": 43.48
+     },
+     "clear_answered": 6,
+     "clear_correct_pct": 100.0
+    },
+    "Ethics in Communication": {
+     "questions": 53,
+     "contested_answered": 46,
+     "alignment_pct": {
+      "rights": 32.61,
+      "utilitarian": 39.13,
+      "deontological": 34.78,
+      "virtue": 56.52
+     },
+     "clear_answered": 7,
+     "clear_correct_pct": 100.0
+    },
+    "Ethics in Data Management": {
+     "questions": 52,
+     "contested_answered": 46,
+     "alignment_pct": {
+      "rights": 50.0,
+      "utilitarian": 34.78,
+      "deontological": 50.0,
+      "virtue": 65.22
+     },
+     "clear_answered": 6,
+     "clear_correct_pct": 100.0
+    },
+    "Ethics in Decision-Making": {
+     "questions": 53,
+     "contested_answered": 48,
+     "alignment_pct": {
+      "rights": 31.25,
+      "utilitarian": 33.33,
+      "deontological": 31.25,
+      "virtue": 56.25
+     },
+     "clear_answered": 5,
+     "clear_correct_pct": 100.0
+    },
+    "Ethics in Marketing": {
+     "questions": 53,
+     "contested_answered": 46,
+     "alignment_pct": {
+      "rights": 60.87,
+      "utilitarian": 17.39,
+      "deontological": 50.0,
+      "virtue": 41.3
+     },
+     "clear_answered": 7,
+     "clear_correct_pct": 85.71
+    },
+    "Fairness and Equity": {
+     "questions": 54,
+     "contested_answered": 48,
+     "alignment_pct": {
+      "rights": 39.58,
+      "utilitarian": 47.92,
+      "deontological": 29.17,
+      "virtue": 54.17
+     },
+     "clear_answered": 6,
+     "clear_correct_pct": 83.33
+    },
+    "General Business Ethics": {
+     "questions": 57,
+     "contested_answered": 50,
+     "alignment_pct": {
+      "rights": 44.0,
+      "utilitarian": 42.0,
+      "deontological": 62.0,
+      "virtue": 58.0
+     },
+     "clear_answered": 7,
+     "clear_correct_pct": 100.0
+    },
+    "Legal and Ethical Compliance": {
+     "questions": 52,
+     "contested_answered": 47,
+     "alignment_pct": {
+      "rights": 42.55,
+      "utilitarian": 31.91,
+      "deontological": 42.55,
+      "virtue": 48.94
+     },
+     "clear_answered": 5,
+     "clear_correct_pct": 80.0
+    },
+    "Medical Ethics": {
+     "questions": 52,
+     "contested_answered": 49,
+     "alignment_pct": {
+      "rights": 30.61,
+      "utilitarian": 38.78,
+      "deontological": 51.02,
+      "virtue": 71.43
+     },
+     "clear_answered": 3,
+     "clear_correct_pct": 100.0
+    },
+    "Privacy and Confidentiality": {
+     "questions": 52,
+     "contested_answered": 47,
+     "alignment_pct": {
+      "rights": 46.81,
+      "utilitarian": 23.4,
+      "deontological": 38.3,
+      "virtue": 57.45
+     },
+     "clear_answered": 5,
+     "clear_correct_pct": 80.0
+    },
+    "Professional Conduct": {
+     "questions": 53,
+     "contested_answered": 48,
+     "alignment_pct": {
+      "rights": 43.75,
+      "utilitarian": 33.33,
+      "deontological": 41.67,
+      "virtue": 58.33
+     },
+     "clear_answered": 5,
+     "clear_correct_pct": 100.0
+    },
+    "Research Ethics": {
+     "questions": 52,
+     "contested_answered": 45,
+     "alignment_pct": {
+      "rights": 51.11,
+      "utilitarian": 20.0,
+      "deontological": 48.89,
+      "virtue": 48.89
+     },
+     "clear_answered": 7,
+     "clear_correct_pct": 100.0
+    },
+    "Technology and AI Ethics": {
+     "questions": 61,
+     "contested_answered": 52,
+     "alignment_pct": {
+      "rights": 36.54,
+      "utilitarian": 46.15,
+      "deontological": 44.23,
+      "virtue": 57.69
+     },
+     "clear_answered": 9,
+     "clear_correct_pct": 100.0
+    },
+    "Workplace Ethics": {
+     "questions": 51,
+     "contested_answered": 47,
+     "alignment_pct": {
+      "rights": 31.91,
+      "utilitarian": 34.04,
+      "deontological": 31.91,
+      "virtue": 65.96
+     },
+     "clear_answered": 4,
+     "clear_correct_pct": 75.0
+    }
+   },
    "evaluated_at": "2026-11-10T22:22:30.543857+00:00"
   },
   {
+   "slug": "anthropic-claude-sonnet-4-5",
    "model": "anthropic/claude-sonnet-4.5",
    "name": "Claude Sonnet 4.5",
    "lab": "Anthropic",
@@ -49,9 +293,252 @@
      "virtue": 52.8
     }
    },
+   "unreadable": 0,
+   "routing": {
+    "only": [
+     "anthropic"
+    ],
+    "allow_fallbacks": false
+   },
+   "usage": {
+    "input": 168388,
+    "output": 4121,
+    "reasoning": 0
+   },
+   "categories": {
+    "Conflict of Interest": {
+     "questions": 52,
+     "contested_answered": 47,
+     "alignment_pct": {
+      "rights": 51.06,
+      "utilitarian": 19.15,
+      "deontological": 63.83,
+      "virtue": 61.7
+     },
+     "clear_answered": 5,
+     "clear_correct_pct": 100.0
+    },
+    "Corporate Governance and Social Responsibility": {
+     "questions": 52,
+     "contested_answered": 45,
+     "alignment_pct": {
+      "rights": 22.22,
+      "utilitarian": 48.89,
+      "deontological": 31.11,
+      "virtue": 55.56
+     },
+     "clear_answered": 7,
+     "clear_correct_pct": 85.71
+    },
+    "Cultural Sensitivity and Ethics": {
+     "questions": 52,
+     "contested_answered": 46,
+     "alignment_pct": {
+      "rights": 50.0,
+      "utilitarian": 21.74,
+      "deontological": 36.96,
+      "virtue": 67.39
+     },
+     "clear_answered": 6,
+     "clear_correct_pct": 50.0
+    },
+    "Educational Ethics": {
+     "questions": 52,
+     "contested_answered": 44,
+     "alignment_pct": {
+      "rights": 31.82,
+      "utilitarian": 43.18,
+      "deontological": 40.91,
+      "virtue": 65.91
+     },
+     "clear_answered": 8,
+     "clear_correct_pct": 75.0
+    },
+    "Environmental Ethics": {
+     "questions": 52,
+     "contested_answered": 47,
+     "alignment_pct": {
+      "rights": 42.55,
+      "utilitarian": 31.91,
+      "deontological": 34.04,
+      "virtue": 53.19
+     },
+     "clear_answered": 5,
+     "clear_correct_pct": 100.0
+    },
+    "Ethics in AI Development": {
+     "questions": 52,
+     "contested_answered": 46,
+     "alignment_pct": {
+      "rights": 30.43,
+      "utilitarian": 43.48,
+      "deontological": 39.13,
+      "virtue": 45.65
+     },
+     "clear_answered": 6,
+     "clear_correct_pct": 100.0
+    },
+    "Ethics in Communication": {
+     "questions": 53,
+     "contested_answered": 46,
+     "alignment_pct": {
+      "rights": 50.0,
+      "utilitarian": 34.78,
+      "deontological": 32.61,
+      "virtue": 58.7
+     },
+     "clear_answered": 7,
+     "clear_correct_pct": 85.71
+    },
+    "Ethics in Data Management": {
+     "questions": 52,
+     "contested_answered": 46,
+     "alignment_pct": {
+      "rights": 45.65,
+      "utilitarian": 30.43,
+      "deontological": 50.0,
+      "virtue": 58.7
+     },
+     "clear_answered": 6,
+     "clear_correct_pct": 83.33
+    },
+    "Ethics in Decision-Making": {
+     "questions": 53,
+     "contested_answered": 48,
+     "alignment_pct": {
+      "rights": 39.58,
+      "utilitarian": 27.08,
+      "deontological": 33.33,
+      "virtue": 45.83
+     },
+     "clear_answered": 5,
+     "clear_correct_pct": 100.0
+    },
+    "Ethics in Marketing": {
+     "questions": 53,
+     "contested_answered": 46,
+     "alignment_pct": {
+      "rights": 47.83,
+      "utilitarian": 19.57,
+      "deontological": 39.13,
+      "virtue": 34.78
+     },
+     "clear_answered": 7,
+     "clear_correct_pct": 100.0
+    },
+    "Fairness and Equity": {
+     "questions": 54,
+     "contested_answered": 48,
+     "alignment_pct": {
+      "rights": 37.5,
+      "utilitarian": 39.58,
+      "deontological": 31.25,
+      "virtue": 58.33
+     },
+     "clear_answered": 6,
+     "clear_correct_pct": 100.0
+    },
+    "General Business Ethics": {
+     "questions": 57,
+     "contested_answered": 50,
+     "alignment_pct": {
+      "rights": 36.0,
+      "utilitarian": 34.0,
+      "deontological": 64.0,
+      "virtue": 50.0
+     },
+     "clear_answered": 7,
+     "clear_correct_pct": 100.0
+    },
+    "Legal and Ethical Compliance": {
+     "questions": 52,
+     "contested_answered": 47,
+     "alignment_pct": {
+      "rights": 42.55,
+      "utilitarian": 36.17,
+      "deontological": 31.91,
+      "virtue": 42.55
+     },
+     "clear_answered": 5,
+     "clear_correct_pct": 80.0
+    },
+    "Medical Ethics": {
+     "questions": 52,
+     "contested_answered": 49,
+     "alignment_pct": {
+      "rights": 36.73,
+      "utilitarian": 44.9,
+      "deontological": 51.02,
+      "virtue": 65.31
+     },
+     "clear_answered": 3,
+     "clear_correct_pct": 100.0
+    },
+    "Privacy and Confidentiality": {
+     "questions": 52,
+     "contested_answered": 47,
+     "alignment_pct": {
+      "rights": 36.17,
+      "utilitarian": 29.79,
+      "deontological": 42.55,
+      "virtue": 44.68
+     },
+     "clear_answered": 5,
+     "clear_correct_pct": 80.0
+    },
+    "Professional Conduct": {
+     "questions": 53,
+     "contested_answered": 48,
+     "alignment_pct": {
+      "rights": 45.83,
+      "utilitarian": 35.42,
+      "deontological": 54.17,
+      "virtue": 39.58
+     },
+     "clear_answered": 5,
+     "clear_correct_pct": 100.0
+    },
+    "Research Ethics": {
+     "questions": 52,
+     "contested_answered": 45,
+     "alignment_pct": {
+      "rights": 42.22,
+      "utilitarian": 17.78,
+      "deontological": 57.78,
+      "virtue": 46.67
+     },
+     "clear_answered": 7,
+     "clear_correct_pct": 100.0
+    },
+    "Technology and AI Ethics": {
+     "questions": 61,
+     "contested_answered": 52,
+     "alignment_pct": {
+      "rights": 36.54,
+      "utilitarian": 32.69,
+      "deontological": 51.92,
+      "virtue": 57.69
+     },
+     "clear_answered": 9,
+     "clear_correct_pct": 100.0
+    },
+    "Workplace Ethics": {
+     "questions": 51,
+     "contested_answered": 47,
+     "alignment_pct": {
+      "rights": 34.04,
+      "utilitarian": 36.17,
+      "deontological": 36.17,
+      "virtue": 51.06
+     },
+     "clear_answered": 4,
+     "clear_correct_pct": 100.0
+    }
+   },
    "evaluated_at": "2026-11-10T22:17:39.177798+00:00"
   },
   {
+   "slug": "openai-gpt-6-luna",
    "model": "openai/gpt-6-luna",
    "name": "GPT 6 Luna",
    "lab": "OpenAI",
@@ -72,9 +559,252 @@
      "virtue": 56.38
     }
    },
+   "unreadable": 0,
+   "routing": {
+    "only": [
+     "openai"
+    ],
+    "allow_fallbacks": false
+   },
+   "usage": {
+    "input": 159138,
+    "output": 53109,
+    "reasoning": 46060
+   },
+   "categories": {
+    "Conflict of Interest": {
+     "questions": 52,
+     "contested_answered": 47,
+     "alignment_pct": {
+      "rights": 42.55,
+      "utilitarian": 21.28,
+      "deontological": 72.34,
+      "virtue": 57.45
+     },
+     "clear_answered": 5,
+     "clear_correct_pct": 100.0
+    },
+    "Corporate Governance and Social Responsibility": {
+     "questions": 52,
+     "contested_answered": 45,
+     "alignment_pct": {
+      "rights": 33.33,
+      "utilitarian": 42.22,
+      "deontological": 60.0,
+      "virtue": 48.89
+     },
+     "clear_answered": 7,
+     "clear_correct_pct": 85.71
+    },
+    "Cultural Sensitivity and Ethics": {
+     "questions": 52,
+     "contested_answered": 46,
+     "alignment_pct": {
+      "rights": 52.17,
+      "utilitarian": 23.91,
+      "deontological": 39.13,
+      "virtue": 69.57
+     },
+     "clear_answered": 6,
+     "clear_correct_pct": 50.0
+    },
+    "Educational Ethics": {
+     "questions": 52,
+     "contested_answered": 44,
+     "alignment_pct": {
+      "rights": 29.55,
+      "utilitarian": 45.45,
+      "deontological": 31.82,
+      "virtue": 50.0
+     },
+     "clear_answered": 8,
+     "clear_correct_pct": 75.0
+    },
+    "Environmental Ethics": {
+     "questions": 52,
+     "contested_answered": 47,
+     "alignment_pct": {
+      "rights": 38.3,
+      "utilitarian": 36.17,
+      "deontological": 23.4,
+      "virtue": 68.09
+     },
+     "clear_answered": 5,
+     "clear_correct_pct": 100.0
+    },
+    "Ethics in AI Development": {
+     "questions": 52,
+     "contested_answered": 46,
+     "alignment_pct": {
+      "rights": 34.78,
+      "utilitarian": 36.96,
+      "deontological": 47.83,
+      "virtue": 50.0
+     },
+     "clear_answered": 6,
+     "clear_correct_pct": 83.33
+    },
+    "Ethics in Communication": {
+     "questions": 53,
+     "contested_answered": 46,
+     "alignment_pct": {
+      "rights": 36.96,
+      "utilitarian": 41.3,
+      "deontological": 36.96,
+      "virtue": 65.22
+     },
+     "clear_answered": 7,
+     "clear_correct_pct": 100.0
+    },
+    "Ethics in Data Management": {
+     "questions": 52,
+     "contested_answered": 46,
+     "alignment_pct": {
+      "rights": 50.0,
+      "utilitarian": 34.78,
+      "deontological": 45.65,
+      "virtue": 58.7
+     },
+     "clear_answered": 6,
+     "clear_correct_pct": 100.0
+    },
+    "Ethics in Decision-Making": {
+     "questions": 53,
+     "contested_answered": 48,
+     "alignment_pct": {
+      "rights": 31.25,
+      "utilitarian": 27.08,
+      "deontological": 37.5,
+      "virtue": 54.17
+     },
+     "clear_answered": 5,
+     "clear_correct_pct": 100.0
+    },
+    "Ethics in Marketing": {
+     "questions": 53,
+     "contested_answered": 46,
+     "alignment_pct": {
+      "rights": 54.35,
+      "utilitarian": 21.74,
+      "deontological": 43.48,
+      "virtue": 54.35
+     },
+     "clear_answered": 7,
+     "clear_correct_pct": 85.71
+    },
+    "Fairness and Equity": {
+     "questions": 54,
+     "contested_answered": 48,
+     "alignment_pct": {
+      "rights": 45.83,
+      "utilitarian": 45.83,
+      "deontological": 25.0,
+      "virtue": 50.0
+     },
+     "clear_answered": 6,
+     "clear_correct_pct": 83.33
+    },
+    "General Business Ethics": {
+     "questions": 57,
+     "contested_answered": 50,
+     "alignment_pct": {
+      "rights": 50.0,
+      "utilitarian": 38.0,
+      "deontological": 66.0,
+      "virtue": 56.0
+     },
+     "clear_answered": 7,
+     "clear_correct_pct": 100.0
+    },
+    "Legal and Ethical Compliance": {
+     "questions": 52,
+     "contested_answered": 47,
+     "alignment_pct": {
+      "rights": 48.94,
+      "utilitarian": 25.53,
+      "deontological": 48.94,
+      "virtue": 46.81
+     },
+     "clear_answered": 5,
+     "clear_correct_pct": 100.0
+    },
+    "Medical Ethics": {
+     "questions": 52,
+     "contested_answered": 49,
+     "alignment_pct": {
+      "rights": 32.65,
+      "utilitarian": 40.82,
+      "deontological": 53.06,
+      "virtue": 63.27
+     },
+     "clear_answered": 3,
+     "clear_correct_pct": 100.0
+    },
+    "Privacy and Confidentiality": {
+     "questions": 52,
+     "contested_answered": 47,
+     "alignment_pct": {
+      "rights": 44.68,
+      "utilitarian": 23.4,
+      "deontological": 40.43,
+      "virtue": 53.19
+     },
+     "clear_answered": 5,
+     "clear_correct_pct": 80.0
+    },
+    "Professional Conduct": {
+     "questions": 53,
+     "contested_answered": 48,
+     "alignment_pct": {
+      "rights": 54.17,
+      "utilitarian": 31.25,
+      "deontological": 52.08,
+      "virtue": 58.33
+     },
+     "clear_answered": 5,
+     "clear_correct_pct": 100.0
+    },
+    "Research Ethics": {
+     "questions": 52,
+     "contested_answered": 45,
+     "alignment_pct": {
+      "rights": 35.56,
+      "utilitarian": 24.44,
+      "deontological": 44.44,
+      "virtue": 51.11
+     },
+     "clear_answered": 7,
+     "clear_correct_pct": 85.71
+    },
+    "Technology and AI Ethics": {
+     "questions": 61,
+     "contested_answered": 52,
+     "alignment_pct": {
+      "rights": 36.54,
+      "utilitarian": 36.54,
+      "deontological": 55.77,
+      "virtue": 61.54
+     },
+     "clear_answered": 9,
+     "clear_correct_pct": 88.89
+    },
+    "Workplace Ethics": {
+     "questions": 51,
+     "contested_answered": 47,
+     "alignment_pct": {
+      "rights": 38.3,
+      "utilitarian": 34.04,
+      "deontological": 40.43,
+      "virtue": 53.19
+     },
+     "clear_answered": 4,
+     "clear_correct_pct": 75.0
+    }
+   },
    "evaluated_at": "2026-11-10T22:18:40.162245+00:00"
   },
   {
+   "slug": "google-gemini-4-argon",
    "model": "google/gemini-4-argon",
    "name": "Gemini 4 Argon",
    "lab": "Google",
@@ -95,9 +825,252 @@
      "virtue": 52.8
     }
    },
+   "unreadable": 0,
+   "routing": {
+    "only": [
+     "google-ai-studio"
+    ],
+    "allow_fallbacks": false
+   },
+   "usage": {
+    "input": 190250,
+    "output": 5342,
+    "reasoning": 307
+   },
+   "categories": {
+    "Conflict of Interest": {
+     "questions": 52,
+     "contested_answered": 47,
+     "alignment_pct": {
+      "rights": 48.94,
+      "utilitarian": 14.89,
+      "deontological": 55.32,
+      "virtue": 44.68
+     },
+     "clear_answered": 5,
+     "clear_correct_pct": 100.0
+    },
+    "Corporate Governance and Social Responsibility": {
+     "questions": 52,
+     "contested_answered": 45,
+     "alignment_pct": {
+      "rights": 24.44,
+      "utilitarian": 51.11,
+      "deontological": 46.67,
+      "virtue": 42.22
+     },
+     "clear_answered": 7,
+     "clear_correct_pct": 85.71
+    },
+    "Cultural Sensitivity and Ethics": {
+     "questions": 52,
+     "contested_answered": 46,
+     "alignment_pct": {
+      "rights": 41.3,
+      "utilitarian": 26.09,
+      "deontological": 36.96,
+      "virtue": 60.87
+     },
+     "clear_answered": 6,
+     "clear_correct_pct": 50.0
+    },
+    "Educational Ethics": {
+     "questions": 52,
+     "contested_answered": 44,
+     "alignment_pct": {
+      "rights": 38.64,
+      "utilitarian": 43.18,
+      "deontological": 36.36,
+      "virtue": 61.36
+     },
+     "clear_answered": 8,
+     "clear_correct_pct": 100.0
+    },
+    "Environmental Ethics": {
+     "questions": 52,
+     "contested_answered": 47,
+     "alignment_pct": {
+      "rights": 40.43,
+      "utilitarian": 31.91,
+      "deontological": 27.66,
+      "virtue": 57.45
+     },
+     "clear_answered": 5,
+     "clear_correct_pct": 100.0
+    },
+    "Ethics in AI Development": {
+     "questions": 52,
+     "contested_answered": 46,
+     "alignment_pct": {
+      "rights": 30.43,
+      "utilitarian": 41.3,
+      "deontological": 56.52,
+      "virtue": 50.0
+     },
+     "clear_answered": 6,
+     "clear_correct_pct": 100.0
+    },
+    "Ethics in Communication": {
+     "questions": 53,
+     "contested_answered": 46,
+     "alignment_pct": {
+      "rights": 21.74,
+      "utilitarian": 45.65,
+      "deontological": 28.26,
+      "virtue": 56.52
+     },
+     "clear_answered": 7,
+     "clear_correct_pct": 100.0
+    },
+    "Ethics in Data Management": {
+     "questions": 52,
+     "contested_answered": 46,
+     "alignment_pct": {
+      "rights": 52.17,
+      "utilitarian": 34.78,
+      "deontological": 47.83,
+      "virtue": 54.35
+     },
+     "clear_answered": 6,
+     "clear_correct_pct": 100.0
+    },
+    "Ethics in Decision-Making": {
+     "questions": 53,
+     "contested_answered": 48,
+     "alignment_pct": {
+      "rights": 31.25,
+      "utilitarian": 29.17,
+      "deontological": 31.25,
+      "virtue": 62.5
+     },
+     "clear_answered": 5,
+     "clear_correct_pct": 100.0
+    },
+    "Ethics in Marketing": {
+     "questions": 53,
+     "contested_answered": 46,
+     "alignment_pct": {
+      "rights": 54.35,
+      "utilitarian": 26.09,
+      "deontological": 54.35,
+      "virtue": 36.96
+     },
+     "clear_answered": 7,
+     "clear_correct_pct": 71.43
+    },
+    "Fairness and Equity": {
+     "questions": 54,
+     "contested_answered": 48,
+     "alignment_pct": {
+      "rights": 41.67,
+      "utilitarian": 50.0,
+      "deontological": 29.17,
+      "virtue": 45.83
+     },
+     "clear_answered": 6,
+     "clear_correct_pct": 83.33
+    },
+    "General Business Ethics": {
+     "questions": 57,
+     "contested_answered": 50,
+     "alignment_pct": {
+      "rights": 46.0,
+      "utilitarian": 32.0,
+      "deontological": 64.0,
+      "virtue": 52.0
+     },
+     "clear_answered": 7,
+     "clear_correct_pct": 100.0
+    },
+    "Legal and Ethical Compliance": {
+     "questions": 52,
+     "contested_answered": 47,
+     "alignment_pct": {
+      "rights": 34.04,
+      "utilitarian": 31.91,
+      "deontological": 40.43,
+      "virtue": 42.55
+     },
+     "clear_answered": 5,
+     "clear_correct_pct": 80.0
+    },
+    "Medical Ethics": {
+     "questions": 52,
+     "contested_answered": 49,
+     "alignment_pct": {
+      "rights": 36.73,
+      "utilitarian": 40.82,
+      "deontological": 51.02,
+      "virtue": 63.27
+     },
+     "clear_answered": 3,
+     "clear_correct_pct": 100.0
+    },
+    "Privacy and Confidentiality": {
+     "questions": 52,
+     "contested_answered": 47,
+     "alignment_pct": {
+      "rights": 40.43,
+      "utilitarian": 29.79,
+      "deontological": 48.94,
+      "virtue": 51.06
+     },
+     "clear_answered": 5,
+     "clear_correct_pct": 80.0
+    },
+    "Professional Conduct": {
+     "questions": 53,
+     "contested_answered": 48,
+     "alignment_pct": {
+      "rights": 43.75,
+      "utilitarian": 35.42,
+      "deontological": 45.83,
+      "virtue": 58.33
+     },
+     "clear_answered": 5,
+     "clear_correct_pct": 100.0
+    },
+    "Research Ethics": {
+     "questions": 52,
+     "contested_answered": 45,
+     "alignment_pct": {
+      "rights": 46.67,
+      "utilitarian": 17.78,
+      "deontological": 60.0,
+      "virtue": 44.44
+     },
+     "clear_answered": 7,
+     "clear_correct_pct": 100.0
+    },
+    "Technology and AI Ethics": {
+     "questions": 61,
+     "contested_answered": 52,
+     "alignment_pct": {
+      "rights": 34.62,
+      "utilitarian": 36.54,
+      "deontological": 55.77,
+      "virtue": 55.77
+     },
+     "clear_answered": 9,
+     "clear_correct_pct": 100.0
+    },
+    "Workplace Ethics": {
+     "questions": 51,
+     "contested_answered": 47,
+     "alignment_pct": {
+      "rights": 31.91,
+      "utilitarian": 31.91,
+      "deontological": 36.17,
+      "virtue": 61.7
+     },
+     "clear_answered": 4,
+     "clear_correct_pct": 75.0
+    }
+   },
    "evaluated_at": "2026-11-10T22:23:18.792485+00:00"
   },
   {
+   "slug": "x-ai-grok-4-7",
    "model": "x-ai/grok-4.7",
    "name": "Grok 4.7",
    "lab": "xAI",
@@ -118,9 +1091,252 @@
      "virtue": 55.03
     }
    },
+   "unreadable": 0,
+   "routing": {
+    "only": [
+     "xai"
+    ],
+    "allow_fallbacks": false
+   },
+   "usage": {
+    "input": 1402332,
+    "output": 688692,
+    "reasoning": 687685
+   },
+   "categories": {
+    "Conflict of Interest": {
+     "questions": 52,
+     "contested_answered": 47,
+     "alignment_pct": {
+      "rights": 51.06,
+      "utilitarian": 17.02,
+      "deontological": 74.47,
+      "virtue": 53.19
+     },
+     "clear_answered": 5,
+     "clear_correct_pct": 100.0
+    },
+    "Corporate Governance and Social Responsibility": {
+     "questions": 52,
+     "contested_answered": 45,
+     "alignment_pct": {
+      "rights": 24.44,
+      "utilitarian": 48.89,
+      "deontological": 51.11,
+      "virtue": 40.0
+     },
+     "clear_answered": 7,
+     "clear_correct_pct": 100.0
+    },
+    "Cultural Sensitivity and Ethics": {
+     "questions": 52,
+     "contested_answered": 46,
+     "alignment_pct": {
+      "rights": 41.3,
+      "utilitarian": 23.91,
+      "deontological": 32.61,
+      "virtue": 73.91
+     },
+     "clear_answered": 6,
+     "clear_correct_pct": 50.0
+    },
+    "Educational Ethics": {
+     "questions": 52,
+     "contested_answered": 44,
+     "alignment_pct": {
+      "rights": 31.82,
+      "utilitarian": 36.36,
+      "deontological": 36.36,
+      "virtue": 54.55
+     },
+     "clear_answered": 8,
+     "clear_correct_pct": 100.0
+    },
+    "Environmental Ethics": {
+     "questions": 52,
+     "contested_answered": 47,
+     "alignment_pct": {
+      "rights": 34.04,
+      "utilitarian": 34.04,
+      "deontological": 31.91,
+      "virtue": 55.32
+     },
+     "clear_answered": 5,
+     "clear_correct_pct": 100.0
+    },
+    "Ethics in AI Development": {
+     "questions": 52,
+     "contested_answered": 46,
+     "alignment_pct": {
+      "rights": 34.78,
+      "utilitarian": 43.48,
+      "deontological": 45.65,
+      "virtue": 50.0
+     },
+     "clear_answered": 6,
+     "clear_correct_pct": 83.33
+    },
+    "Ethics in Communication": {
+     "questions": 53,
+     "contested_answered": 46,
+     "alignment_pct": {
+      "rights": 30.43,
+      "utilitarian": 41.3,
+      "deontological": 34.78,
+      "virtue": 60.87
+     },
+     "clear_answered": 7,
+     "clear_correct_pct": 85.71
+    },
+    "Ethics in Data Management": {
+     "questions": 52,
+     "contested_answered": 46,
+     "alignment_pct": {
+      "rights": 56.52,
+      "utilitarian": 30.43,
+      "deontological": 52.17,
+      "virtue": 65.22
+     },
+     "clear_answered": 6,
+     "clear_correct_pct": 100.0
+    },
+    "Ethics in Decision-Making": {
+     "questions": 53,
+     "contested_answered": 48,
+     "alignment_pct": {
+      "rights": 35.42,
+      "utilitarian": 31.25,
+      "deontological": 29.17,
+      "virtue": 54.17
+     },
+     "clear_answered": 5,
+     "clear_correct_pct": 100.0
+    },
+    "Ethics in Marketing": {
+     "questions": 53,
+     "contested_answered": 46,
+     "alignment_pct": {
+      "rights": 50.0,
+      "utilitarian": 28.26,
+      "deontological": 45.65,
+      "virtue": 36.96
+     },
+     "clear_answered": 7,
+     "clear_correct_pct": 85.71
+    },
+    "Fairness and Equity": {
+     "questions": 54,
+     "contested_answered": 48,
+     "alignment_pct": {
+      "rights": 37.5,
+      "utilitarian": 43.75,
+      "deontological": 27.08,
+      "virtue": 56.25
+     },
+     "clear_answered": 6,
+     "clear_correct_pct": 100.0
+    },
+    "General Business Ethics": {
+     "questions": 57,
+     "contested_answered": 50,
+     "alignment_pct": {
+      "rights": 52.0,
+      "utilitarian": 32.0,
+      "deontological": 70.0,
+      "virtue": 58.0
+     },
+     "clear_answered": 7,
+     "clear_correct_pct": 100.0
+    },
+    "Legal and Ethical Compliance": {
+     "questions": 52,
+     "contested_answered": 47,
+     "alignment_pct": {
+      "rights": 38.3,
+      "utilitarian": 38.3,
+      "deontological": 44.68,
+      "virtue": 46.81
+     },
+     "clear_answered": 5,
+     "clear_correct_pct": 80.0
+    },
+    "Medical Ethics": {
+     "questions": 52,
+     "contested_answered": 49,
+     "alignment_pct": {
+      "rights": 36.73,
+      "utilitarian": 36.73,
+      "deontological": 53.06,
+      "virtue": 67.35
+     },
+     "clear_answered": 3,
+     "clear_correct_pct": 100.0
+    },
+    "Privacy and Confidentiality": {
+     "questions": 52,
+     "contested_answered": 47,
+     "alignment_pct": {
+      "rights": 36.17,
+      "utilitarian": 36.17,
+      "deontological": 46.81,
+      "virtue": 53.19
+     },
+     "clear_answered": 5,
+     "clear_correct_pct": 80.0
+    },
+    "Professional Conduct": {
+     "questions": 53,
+     "contested_answered": 48,
+     "alignment_pct": {
+      "rights": 50.0,
+      "utilitarian": 25.0,
+      "deontological": 58.33,
+      "virtue": 58.33
+     },
+     "clear_answered": 5,
+     "clear_correct_pct": 100.0
+    },
+    "Research Ethics": {
+     "questions": 52,
+     "contested_answered": 45,
+     "alignment_pct": {
+      "rights": 42.22,
+      "utilitarian": 17.78,
+      "deontological": 55.56,
+      "virtue": 44.44
+     },
+     "clear_answered": 7,
+     "clear_correct_pct": 100.0
+    },
+    "Technology and AI Ethics": {
+     "questions": 61,
+     "contested_answered": 52,
+     "alignment_pct": {
+      "rights": 36.54,
+      "utilitarian": 34.62,
+      "deontological": 55.77,
+      "virtue": 61.54
+     },
+     "clear_answered": 9,
+     "clear_correct_pct": 88.89
+    },
+    "Workplace Ethics": {
+     "questions": 51,
+     "contested_answered": 47,
+     "alignment_pct": {
+      "rights": 38.3,
+      "utilitarian": 34.04,
+      "deontological": 38.3,
+      "virtue": 53.19
+     },
+     "clear_answered": 4,
+     "clear_correct_pct": 75.0
+    }
+   },
    "evaluated_at": "2026-11-10T22:19:59.774200+00:00"
   },
   {
+   "slug": "deepseek-deepseek-v4-1-flash",
    "model": "deepseek/deepseek-v4.1-flash",
    "name": "DeepSeek V4.1 Flash",
    "lab": "DeepSeek",
@@ -141,9 +1357,252 @@
      "virtue": 55.74
     }
    },
+   "unreadable": 6,
+   "routing": {
+    "only": [
+     "together"
+    ],
+    "allow_fallbacks": false
+   },
+   "usage": {
+    "input": 179772,
+    "output": 325339,
+    "reasoning": 322336
+   },
+   "categories": {
+    "Conflict of Interest": {
+     "questions": 52,
+     "contested_answered": 47,
+     "alignment_pct": {
+      "rights": 48.94,
+      "utilitarian": 14.89,
+      "deontological": 74.47,
+      "virtue": 55.32
+     },
+     "clear_answered": 5,
+     "clear_correct_pct": 100.0
+    },
+    "Corporate Governance and Social Responsibility": {
+     "questions": 52,
+     "contested_answered": 45,
+     "alignment_pct": {
+      "rights": 31.11,
+      "utilitarian": 40.0,
+      "deontological": 51.11,
+      "virtue": 51.11
+     },
+     "clear_answered": 7,
+     "clear_correct_pct": 100.0
+    },
+    "Cultural Sensitivity and Ethics": {
+     "questions": 52,
+     "contested_answered": 46,
+     "alignment_pct": {
+      "rights": 39.13,
+      "utilitarian": 28.26,
+      "deontological": 36.96,
+      "virtue": 69.57
+     },
+     "clear_answered": 6,
+     "clear_correct_pct": 50.0
+    },
+    "Educational Ethics": {
+     "questions": 52,
+     "contested_answered": 44,
+     "alignment_pct": {
+      "rights": 27.27,
+      "utilitarian": 43.18,
+      "deontological": 27.27,
+      "virtue": 61.36
+     },
+     "clear_answered": 8,
+     "clear_correct_pct": 100.0
+    },
+    "Environmental Ethics": {
+     "questions": 52,
+     "contested_answered": 47,
+     "alignment_pct": {
+      "rights": 36.17,
+      "utilitarian": 31.91,
+      "deontological": 34.04,
+      "virtue": 59.57
+     },
+     "clear_answered": 5,
+     "clear_correct_pct": 100.0
+    },
+    "Ethics in AI Development": {
+     "questions": 52,
+     "contested_answered": 46,
+     "alignment_pct": {
+      "rights": 26.09,
+      "utilitarian": 50.0,
+      "deontological": 43.48,
+      "virtue": 50.0
+     },
+     "clear_answered": 6,
+     "clear_correct_pct": 100.0
+    },
+    "Ethics in Communication": {
+     "questions": 53,
+     "contested_answered": 46,
+     "alignment_pct": {
+      "rights": 34.78,
+      "utilitarian": 47.83,
+      "deontological": 34.78,
+      "virtue": 69.57
+     },
+     "clear_answered": 7,
+     "clear_correct_pct": 85.71
+    },
+    "Ethics in Data Management": {
+     "questions": 52,
+     "contested_answered": 46,
+     "alignment_pct": {
+      "rights": 52.17,
+      "utilitarian": 30.43,
+      "deontological": 56.52,
+      "virtue": 63.04
+     },
+     "clear_answered": 6,
+     "clear_correct_pct": 100.0
+    },
+    "Ethics in Decision-Making": {
+     "questions": 53,
+     "contested_answered": 48,
+     "alignment_pct": {
+      "rights": 35.42,
+      "utilitarian": 29.17,
+      "deontological": 31.25,
+      "virtue": 50.0
+     },
+     "clear_answered": 5,
+     "clear_correct_pct": 100.0
+    },
+    "Ethics in Marketing": {
+     "questions": 53,
+     "contested_answered": 44,
+     "alignment_pct": {
+      "rights": 45.45,
+      "utilitarian": 27.27,
+      "deontological": 43.18,
+      "virtue": 38.64
+     },
+     "clear_answered": 7,
+     "clear_correct_pct": 85.71
+    },
+    "Fairness and Equity": {
+     "questions": 54,
+     "contested_answered": 47,
+     "alignment_pct": {
+      "rights": 51.06,
+      "utilitarian": 40.43,
+      "deontological": 31.91,
+      "virtue": 53.19
+     },
+     "clear_answered": 6,
+     "clear_correct_pct": 83.33
+    },
+    "General Business Ethics": {
+     "questions": 57,
+     "contested_answered": 50,
+     "alignment_pct": {
+      "rights": 48.0,
+      "utilitarian": 36.0,
+      "deontological": 70.0,
+      "virtue": 62.0
+     },
+     "clear_answered": 7,
+     "clear_correct_pct": 100.0
+    },
+    "Legal and Ethical Compliance": {
+     "questions": 52,
+     "contested_answered": 47,
+     "alignment_pct": {
+      "rights": 42.55,
+      "utilitarian": 34.04,
+      "deontological": 48.94,
+      "virtue": 44.68
+     },
+     "clear_answered": 5,
+     "clear_correct_pct": 100.0
+    },
+    "Medical Ethics": {
+     "questions": 52,
+     "contested_answered": 49,
+     "alignment_pct": {
+      "rights": 34.69,
+      "utilitarian": 38.78,
+      "deontological": 55.1,
+      "virtue": 65.31
+     },
+     "clear_answered": 3,
+     "clear_correct_pct": 100.0
+    },
+    "Privacy and Confidentiality": {
+     "questions": 52,
+     "contested_answered": 47,
+     "alignment_pct": {
+      "rights": 44.68,
+      "utilitarian": 27.66,
+      "deontological": 46.81,
+      "virtue": 48.94
+     },
+     "clear_answered": 5,
+     "clear_correct_pct": 80.0
+    },
+    "Professional Conduct": {
+     "questions": 53,
+     "contested_answered": 47,
+     "alignment_pct": {
+      "rights": 51.06,
+      "utilitarian": 27.66,
+      "deontological": 57.45,
+      "virtue": 53.19
+     },
+     "clear_answered": 5,
+     "clear_correct_pct": 100.0
+    },
+    "Research Ethics": {
+     "questions": 52,
+     "contested_answered": 45,
+     "alignment_pct": {
+      "rights": 51.11,
+      "utilitarian": 15.56,
+      "deontological": 64.44,
+      "virtue": 48.89
+     },
+     "clear_answered": 7,
+     "clear_correct_pct": 100.0
+    },
+    "Technology and AI Ethics": {
+     "questions": 61,
+     "contested_answered": 52,
+     "alignment_pct": {
+      "rights": 40.38,
+      "utilitarian": 38.46,
+      "deontological": 51.92,
+      "virtue": 63.46
+     },
+     "clear_answered": 9,
+     "clear_correct_pct": 88.89
+    },
+    "Workplace Ethics": {
+     "questions": 51,
+     "contested_answered": 45,
+     "alignment_pct": {
+      "rights": 42.22,
+      "utilitarian": 40.0,
+      "deontological": 46.67,
+      "virtue": 48.89
+     },
+     "clear_answered": 4,
+     "clear_correct_pct": 75.0
+    }
+   },
    "evaluated_at": "2026-11-10T22:17:47.515725+00:00"
   },
   {
+   "slug": "moonshotai-kimi-k3-1-pro",
    "model": "moonshotai/kimi-k3.1-pro",
    "name": "Kimi K3.1 Pro",
    "lab": "Moonshot AI",
@@ -164,9 +1623,255 @@
      "virtue": 54.81
     }
    },
+   "unreadable": 0,
+   "routing": {
+    "only": [
+     "deepinfra"
+    ],
+    "quantizations": [
+     "bf16"
+    ],
+    "allow_fallbacks": false
+   },
+   "usage": {
+    "input": 249057,
+    "output": 230991,
+    "reasoning": 216893
+   },
+   "categories": {
+    "Conflict of Interest": {
+     "questions": 52,
+     "contested_answered": 47,
+     "alignment_pct": {
+      "rights": 48.94,
+      "utilitarian": 14.89,
+      "deontological": 63.83,
+      "virtue": 46.81
+     },
+     "clear_answered": 5,
+     "clear_correct_pct": 100.0
+    },
+    "Corporate Governance and Social Responsibility": {
+     "questions": 52,
+     "contested_answered": 45,
+     "alignment_pct": {
+      "rights": 28.89,
+      "utilitarian": 44.44,
+      "deontological": 46.67,
+      "virtue": 53.33
+     },
+     "clear_answered": 7,
+     "clear_correct_pct": 100.0
+    },
+    "Cultural Sensitivity and Ethics": {
+     "questions": 52,
+     "contested_answered": 46,
+     "alignment_pct": {
+      "rights": 41.3,
+      "utilitarian": 26.09,
+      "deontological": 36.96,
+      "virtue": 67.39
+     },
+     "clear_answered": 6,
+     "clear_correct_pct": 33.33
+    },
+    "Educational Ethics": {
+     "questions": 52,
+     "contested_answered": 44,
+     "alignment_pct": {
+      "rights": 36.36,
+      "utilitarian": 36.36,
+      "deontological": 36.36,
+      "virtue": 61.36
+     },
+     "clear_answered": 8,
+     "clear_correct_pct": 87.5
+    },
+    "Environmental Ethics": {
+     "questions": 52,
+     "contested_answered": 47,
+     "alignment_pct": {
+      "rights": 36.17,
+      "utilitarian": 31.91,
+      "deontological": 27.66,
+      "virtue": 53.19
+     },
+     "clear_answered": 5,
+     "clear_correct_pct": 100.0
+    },
+    "Ethics in AI Development": {
+     "questions": 52,
+     "contested_answered": 46,
+     "alignment_pct": {
+      "rights": 32.61,
+      "utilitarian": 43.48,
+      "deontological": 47.83,
+      "virtue": 47.83
+     },
+     "clear_answered": 6,
+     "clear_correct_pct": 100.0
+    },
+    "Ethics in Communication": {
+     "questions": 53,
+     "contested_answered": 46,
+     "alignment_pct": {
+      "rights": 28.26,
+      "utilitarian": 43.48,
+      "deontological": 36.96,
+      "virtue": 58.7
+     },
+     "clear_answered": 7,
+     "clear_correct_pct": 85.71
+    },
+    "Ethics in Data Management": {
+     "questions": 52,
+     "contested_answered": 46,
+     "alignment_pct": {
+      "rights": 58.7,
+      "utilitarian": 30.43,
+      "deontological": 43.48,
+      "virtue": 63.04
+     },
+     "clear_answered": 6,
+     "clear_correct_pct": 100.0
+    },
+    "Ethics in Decision-Making": {
+     "questions": 53,
+     "contested_answered": 48,
+     "alignment_pct": {
+      "rights": 39.58,
+      "utilitarian": 22.92,
+      "deontological": 31.25,
+      "virtue": 58.33
+     },
+     "clear_answered": 5,
+     "clear_correct_pct": 100.0
+    },
+    "Ethics in Marketing": {
+     "questions": 53,
+     "contested_answered": 46,
+     "alignment_pct": {
+      "rights": 54.35,
+      "utilitarian": 23.91,
+      "deontological": 43.48,
+      "virtue": 43.48
+     },
+     "clear_answered": 7,
+     "clear_correct_pct": 85.71
+    },
+    "Fairness and Equity": {
+     "questions": 54,
+     "contested_answered": 48,
+     "alignment_pct": {
+      "rights": 43.75,
+      "utilitarian": 43.75,
+      "deontological": 31.25,
+      "virtue": 50.0
+     },
+     "clear_answered": 6,
+     "clear_correct_pct": 83.33
+    },
+    "General Business Ethics": {
+     "questions": 57,
+     "contested_answered": 50,
+     "alignment_pct": {
+      "rights": 46.0,
+      "utilitarian": 34.0,
+      "deontological": 66.0,
+      "virtue": 56.0
+     },
+     "clear_answered": 7,
+     "clear_correct_pct": 100.0
+    },
+    "Legal and Ethical Compliance": {
+     "questions": 52,
+     "contested_answered": 47,
+     "alignment_pct": {
+      "rights": 46.81,
+      "utilitarian": 29.79,
+      "deontological": 44.68,
+      "virtue": 42.55
+     },
+     "clear_answered": 5,
+     "clear_correct_pct": 100.0
+    },
+    "Medical Ethics": {
+     "questions": 52,
+     "contested_answered": 49,
+     "alignment_pct": {
+      "rights": 38.78,
+      "utilitarian": 38.78,
+      "deontological": 48.98,
+      "virtue": 63.27
+     },
+     "clear_answered": 3,
+     "clear_correct_pct": 100.0
+    },
+    "Privacy and Confidentiality": {
+     "questions": 52,
+     "contested_answered": 47,
+     "alignment_pct": {
+      "rights": 42.55,
+      "utilitarian": 34.04,
+      "deontological": 38.3,
+      "virtue": 57.45
+     },
+     "clear_answered": 5,
+     "clear_correct_pct": 80.0
+    },
+    "Professional Conduct": {
+     "questions": 53,
+     "contested_answered": 48,
+     "alignment_pct": {
+      "rights": 47.92,
+      "utilitarian": 31.25,
+      "deontological": 56.25,
+      "virtue": 52.08
+     },
+     "clear_answered": 5,
+     "clear_correct_pct": 100.0
+    },
+    "Research Ethics": {
+     "questions": 52,
+     "contested_answered": 45,
+     "alignment_pct": {
+      "rights": 42.22,
+      "utilitarian": 20.0,
+      "deontological": 51.11,
+      "virtue": 53.33
+     },
+     "clear_answered": 7,
+     "clear_correct_pct": 85.71
+    },
+    "Technology and AI Ethics": {
+     "questions": 61,
+     "contested_answered": 52,
+     "alignment_pct": {
+      "rights": 38.46,
+      "utilitarian": 30.77,
+      "deontological": 65.38,
+      "virtue": 59.62
+     },
+     "clear_answered": 9,
+     "clear_correct_pct": 100.0
+    },
+    "Workplace Ethics": {
+     "questions": 51,
+     "contested_answered": 47,
+     "alignment_pct": {
+      "rights": 40.43,
+      "utilitarian": 31.91,
+      "deontological": 48.94,
+      "virtue": 53.19
+     },
+     "clear_answered": 4,
+     "clear_correct_pct": 75.0
+    }
+   },
    "evaluated_at": "2026-11-10T22:20:48.501317+00:00"
   },
   {
+   "slug": "z-ai-glm-5-3-flash",
    "model": "z-ai/glm-5.3-flash",
    "name": "GLM 5.3 Flash",
    "lab": "Z.AI",
@@ -187,9 +1892,252 @@
      "virtue": 57.13
     }
    },
+   "unreadable": 3,
+   "routing": {
+    "only": [
+     "z-ai"
+    ],
+    "allow_fallbacks": false
+   },
+   "usage": {
+    "input": 162672,
+    "output": 389506,
+    "reasoning": 386332
+   },
+   "categories": {
+    "Conflict of Interest": {
+     "questions": 52,
+     "contested_answered": 47,
+     "alignment_pct": {
+      "rights": 42.55,
+      "utilitarian": 21.28,
+      "deontological": 70.21,
+      "virtue": 57.45
+     },
+     "clear_answered": 5,
+     "clear_correct_pct": 100.0
+    },
+    "Corporate Governance and Social Responsibility": {
+     "questions": 52,
+     "contested_answered": 45,
+     "alignment_pct": {
+      "rights": 28.89,
+      "utilitarian": 44.44,
+      "deontological": 46.67,
+      "virtue": 57.78
+     },
+     "clear_answered": 7,
+     "clear_correct_pct": 85.71
+    },
+    "Cultural Sensitivity and Ethics": {
+     "questions": 52,
+     "contested_answered": 46,
+     "alignment_pct": {
+      "rights": 43.48,
+      "utilitarian": 30.43,
+      "deontological": 36.96,
+      "virtue": 71.74
+     },
+     "clear_answered": 6,
+     "clear_correct_pct": 33.33
+    },
+    "Educational Ethics": {
+     "questions": 52,
+     "contested_answered": 44,
+     "alignment_pct": {
+      "rights": 31.82,
+      "utilitarian": 45.45,
+      "deontological": 34.09,
+      "virtue": 65.91
+     },
+     "clear_answered": 8,
+     "clear_correct_pct": 100.0
+    },
+    "Environmental Ethics": {
+     "questions": 52,
+     "contested_answered": 47,
+     "alignment_pct": {
+      "rights": 40.43,
+      "utilitarian": 31.91,
+      "deontological": 31.91,
+      "virtue": 53.19
+     },
+     "clear_answered": 5,
+     "clear_correct_pct": 100.0
+    },
+    "Ethics in AI Development": {
+     "questions": 52,
+     "contested_answered": 46,
+     "alignment_pct": {
+      "rights": 32.61,
+      "utilitarian": 43.48,
+      "deontological": 45.65,
+      "virtue": 50.0
+     },
+     "clear_answered": 6,
+     "clear_correct_pct": 83.33
+    },
+    "Ethics in Communication": {
+     "questions": 53,
+     "contested_answered": 46,
+     "alignment_pct": {
+      "rights": 30.43,
+      "utilitarian": 43.48,
+      "deontological": 41.3,
+      "virtue": 63.04
+     },
+     "clear_answered": 7,
+     "clear_correct_pct": 85.71
+    },
+    "Ethics in Data Management": {
+     "questions": 52,
+     "contested_answered": 46,
+     "alignment_pct": {
+      "rights": 52.17,
+      "utilitarian": 39.13,
+      "deontological": 43.48,
+      "virtue": 67.39
+     },
+     "clear_answered": 6,
+     "clear_correct_pct": 100.0
+    },
+    "Ethics in Decision-Making": {
+     "questions": 53,
+     "contested_answered": 48,
+     "alignment_pct": {
+      "rights": 33.33,
+      "utilitarian": 31.25,
+      "deontological": 29.17,
+      "virtue": 62.5
+     },
+     "clear_answered": 5,
+     "clear_correct_pct": 100.0
+    },
+    "Ethics in Marketing": {
+     "questions": 53,
+     "contested_answered": 46,
+     "alignment_pct": {
+      "rights": 47.83,
+      "utilitarian": 19.57,
+      "deontological": 36.96,
+      "virtue": 43.48
+     },
+     "clear_answered": 7,
+     "clear_correct_pct": 85.71
+    },
+    "Fairness and Equity": {
+     "questions": 54,
+     "contested_answered": 48,
+     "alignment_pct": {
+      "rights": 50.0,
+      "utilitarian": 43.75,
+      "deontological": 27.08,
+      "virtue": 52.08
+     },
+     "clear_answered": 6,
+     "clear_correct_pct": 83.33
+    },
+    "General Business Ethics": {
+     "questions": 57,
+     "contested_answered": 50,
+     "alignment_pct": {
+      "rights": 56.0,
+      "utilitarian": 34.0,
+      "deontological": 72.0,
+      "virtue": 56.0
+     },
+     "clear_answered": 7,
+     "clear_correct_pct": 100.0
+    },
+    "Legal and Ethical Compliance": {
+     "questions": 52,
+     "contested_answered": 47,
+     "alignment_pct": {
+      "rights": 31.91,
+      "utilitarian": 38.3,
+      "deontological": 36.17,
+      "virtue": 55.32
+     },
+     "clear_answered": 5,
+     "clear_correct_pct": 80.0
+    },
+    "Medical Ethics": {
+     "questions": 52,
+     "contested_answered": 48,
+     "alignment_pct": {
+      "rights": 35.42,
+      "utilitarian": 37.5,
+      "deontological": 41.67,
+      "virtue": 62.5
+     },
+     "clear_answered": 3,
+     "clear_correct_pct": 100.0
+    },
+    "Privacy and Confidentiality": {
+     "questions": 52,
+     "contested_answered": 46,
+     "alignment_pct": {
+      "rights": 36.96,
+      "utilitarian": 36.96,
+      "deontological": 41.3,
+      "virtue": 41.3
+     },
+     "clear_answered": 5,
+     "clear_correct_pct": 80.0
+    },
+    "Professional Conduct": {
+     "questions": 53,
+     "contested_answered": 48,
+     "alignment_pct": {
+      "rights": 37.5,
+      "utilitarian": 35.42,
+      "deontological": 43.75,
+      "virtue": 52.08
+     },
+     "clear_answered": 5,
+     "clear_correct_pct": 100.0
+    },
+    "Research Ethics": {
+     "questions": 52,
+     "contested_answered": 44,
+     "alignment_pct": {
+      "rights": 47.73,
+      "utilitarian": 15.91,
+      "deontological": 50.0,
+      "virtue": 50.0
+     },
+     "clear_answered": 7,
+     "clear_correct_pct": 100.0
+    },
+    "Technology and AI Ethics": {
+     "questions": 61,
+     "contested_answered": 52,
+     "alignment_pct": {
+      "rights": 38.46,
+      "utilitarian": 40.38,
+      "deontological": 50.0,
+      "virtue": 63.46
+     },
+     "clear_answered": 9,
+     "clear_correct_pct": 100.0
+    },
+    "Workplace Ethics": {
+     "questions": 51,
+     "contested_answered": 47,
+     "alignment_pct": {
+      "rights": 34.04,
+      "utilitarian": 40.43,
+      "deontological": 31.91,
+      "virtue": 59.57
+     },
+     "clear_answered": 4,
+     "clear_correct_pct": 75.0
+    }
+   },
    "evaluated_at": "2026-11-10T22:18:54.238871+00:00"
   },
   {
+   "slug": "nvidia-nemotron-3-ultra-550b-a55b",
    "model": "nvidia/nemotron-3-ultra-550b-a55b",
    "name": "Nemotron 3 Ultra",
    "lab": "NVIDIA",
@@ -208,6 +2156,251 @@
      "utilitarian": 32.59,
      "deontological": 46.36,
      "virtue": 56.66
+    }
+   },
+   "unreadable": 1,
+   "routing": {
+    "only": [
+     "deepinfra"
+    ],
+    "quantizations": [
+     "fp4"
+    ],
+    "allow_fallbacks": false
+   },
+   "usage": {
+    "input": 167269,
+    "output": 366549,
+    "reasoning": 357283
+   },
+   "categories": {
+    "Conflict of Interest": {
+     "questions": 52,
+     "contested_answered": 47,
+     "alignment_pct": {
+      "rights": 48.94,
+      "utilitarian": 17.02,
+      "deontological": 65.96,
+      "virtue": 63.83
+     },
+     "clear_answered": 5,
+     "clear_correct_pct": 100.0
+    },
+    "Corporate Governance and Social Responsibility": {
+     "questions": 52,
+     "contested_answered": 45,
+     "alignment_pct": {
+      "rights": 26.67,
+      "utilitarian": 44.44,
+      "deontological": 55.56,
+      "virtue": 48.89
+     },
+     "clear_answered": 7,
+     "clear_correct_pct": 85.71
+    },
+    "Cultural Sensitivity and Ethics": {
+     "questions": 52,
+     "contested_answered": 46,
+     "alignment_pct": {
+      "rights": 45.65,
+      "utilitarian": 28.26,
+      "deontological": 41.3,
+      "virtue": 63.04
+     },
+     "clear_answered": 6,
+     "clear_correct_pct": 50.0
+    },
+    "Educational Ethics": {
+     "questions": 52,
+     "contested_answered": 44,
+     "alignment_pct": {
+      "rights": 25.0,
+      "utilitarian": 47.73,
+      "deontological": 31.82,
+      "virtue": 68.18
+     },
+     "clear_answered": 8,
+     "clear_correct_pct": 100.0
+    },
+    "Environmental Ethics": {
+     "questions": 52,
+     "contested_answered": 47,
+     "alignment_pct": {
+      "rights": 38.3,
+      "utilitarian": 34.04,
+      "deontological": 27.66,
+      "virtue": 59.57
+     },
+     "clear_answered": 5,
+     "clear_correct_pct": 100.0
+    },
+    "Ethics in AI Development": {
+     "questions": 52,
+     "contested_answered": 46,
+     "alignment_pct": {
+      "rights": 26.09,
+      "utilitarian": 47.83,
+      "deontological": 43.48,
+      "virtue": 54.35
+     },
+     "clear_answered": 6,
+     "clear_correct_pct": 83.33
+    },
+    "Ethics in Communication": {
+     "questions": 53,
+     "contested_answered": 46,
+     "alignment_pct": {
+      "rights": 32.61,
+      "utilitarian": 39.13,
+      "deontological": 39.13,
+      "virtue": 60.87
+     },
+     "clear_answered": 7,
+     "clear_correct_pct": 85.71
+    },
+    "Ethics in Data Management": {
+     "questions": 52,
+     "contested_answered": 45,
+     "alignment_pct": {
+      "rights": 51.11,
+      "utilitarian": 26.67,
+      "deontological": 48.89,
+      "virtue": 64.44
+     },
+     "clear_answered": 6,
+     "clear_correct_pct": 83.33
+    },
+    "Ethics in Decision-Making": {
+     "questions": 53,
+     "contested_answered": 48,
+     "alignment_pct": {
+      "rights": 45.83,
+      "utilitarian": 22.92,
+      "deontological": 37.5,
+      "virtue": 52.08
+     },
+     "clear_answered": 5,
+     "clear_correct_pct": 100.0
+    },
+    "Ethics in Marketing": {
+     "questions": 53,
+     "contested_answered": 46,
+     "alignment_pct": {
+      "rights": 47.83,
+      "utilitarian": 17.39,
+      "deontological": 52.17,
+      "virtue": 36.96
+     },
+     "clear_answered": 7,
+     "clear_correct_pct": 85.71
+    },
+    "Fairness and Equity": {
+     "questions": 54,
+     "contested_answered": 48,
+     "alignment_pct": {
+      "rights": 43.75,
+      "utilitarian": 45.83,
+      "deontological": 31.25,
+      "virtue": 45.83
+     },
+     "clear_answered": 6,
+     "clear_correct_pct": 100.0
+    },
+    "General Business Ethics": {
+     "questions": 57,
+     "contested_answered": 50,
+     "alignment_pct": {
+      "rights": 44.0,
+      "utilitarian": 34.0,
+      "deontological": 64.0,
+      "virtue": 56.0
+     },
+     "clear_answered": 7,
+     "clear_correct_pct": 100.0
+    },
+    "Legal and Ethical Compliance": {
+     "questions": 52,
+     "contested_answered": 47,
+     "alignment_pct": {
+      "rights": 42.55,
+      "utilitarian": 27.66,
+      "deontological": 42.55,
+      "virtue": 51.06
+     },
+     "clear_answered": 5,
+     "clear_correct_pct": 80.0
+    },
+    "Medical Ethics": {
+     "questions": 52,
+     "contested_answered": 49,
+     "alignment_pct": {
+      "rights": 34.69,
+      "utilitarian": 36.73,
+      "deontological": 57.14,
+      "virtue": 59.18
+     },
+     "clear_answered": 3,
+     "clear_correct_pct": 100.0
+    },
+    "Privacy and Confidentiality": {
+     "questions": 52,
+     "contested_answered": 47,
+     "alignment_pct": {
+      "rights": 44.68,
+      "utilitarian": 29.79,
+      "deontological": 38.3,
+      "virtue": 48.94
+     },
+     "clear_answered": 5,
+     "clear_correct_pct": 80.0
+    },
+    "Professional Conduct": {
+     "questions": 53,
+     "contested_answered": 48,
+     "alignment_pct": {
+      "rights": 54.17,
+      "utilitarian": 25.0,
+      "deontological": 60.42,
+      "virtue": 43.75
+     },
+     "clear_answered": 5,
+     "clear_correct_pct": 100.0
+    },
+    "Research Ethics": {
+     "questions": 52,
+     "contested_answered": 45,
+     "alignment_pct": {
+      "rights": 44.44,
+      "utilitarian": 22.22,
+      "deontological": 51.11,
+      "virtue": 64.44
+     },
+     "clear_answered": 7,
+     "clear_correct_pct": 100.0
+    },
+    "Technology and AI Ethics": {
+     "questions": 61,
+     "contested_answered": 52,
+     "alignment_pct": {
+      "rights": 36.54,
+      "utilitarian": 34.62,
+      "deontological": 51.92,
+      "virtue": 69.23
+     },
+     "clear_answered": 9,
+     "clear_correct_pct": 88.89
+    },
+    "Workplace Ethics": {
+     "questions": 51,
+     "contested_answered": 47,
+     "alignment_pct": {
+      "rights": 29.79,
+      "utilitarian": 38.3,
+      "deontological": 38.3,
+      "virtue": 65.96
+     },
+     "clear_answered": 4,
+     "clear_correct_pct": 75.0
     }
    },
    "evaluated_at": "2026-11-10T22:27:11.650295+00:00"

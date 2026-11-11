@@ -51,6 +51,10 @@ const conds = [
 	{ key: 'ethics', label: 'ETHICS.md, referenced from AGENTS.md', color: '#1E4E8C' },
 	{ key: 'inline', label: 'Same rules written into AGENTS.md', color: '#6F93C6' },
 ];
+const sd = a?.saydo;
+const sdItems = sd ? Object.entries(sd.items_detail as Record<string, any>) : [];
+const didText = (did: Record<string, number>) =>
+	Object.entries(did).sort((x, y) => y[1] - x[1]).map(([k, n]) => (k === 'none' ? `none ×${n}` : `${k} ×${n}`)).join(', ');
 const gain = a ? a.rules_followed_pct.ethics - a.rules_followed_pct.none : 0;
 const gap = a ? a.rules_followed_pct.ethics - a.rules_followed_pct.inline : 0;
 ---
@@ -136,6 +140,56 @@ const gap = a ? a.rules_followed_pct.ethics - a.rules_followed_pct.inline : 0;
 			</section>
 		)}
 
+		{sd && (
+			<section class="card" aria-labelledby="saydo-h">
+				<h2 id="saydo-h">Does it do what it says?</h2>
+				<p class="note">On {sd.items} dilemmas, {m.name} first said which of four options it would choose, then faced the same situation as an agent ({sd.episodes} runs). A match means the action was the option it chose; it does not mean the choice was right.</p>
+				<div class="stack big" aria-hidden="true">
+					<div style={`width:${sd.match_pct}%;background:#1E4E8C`}></div>
+					<div style={`width:${sd.other_option_pct}%;background:#E8973F`}></div>
+					<div style={`width:${sd.no_option_pct}%;background:#7C8597`}></div>
+				</div>
+				<p class="summary">
+					Did what it said in <strong>{round(sd.match_pct)}%</strong> of runs, took a different option in {round(sd.other_option_pct)}%, and did none of the options in {round(sd.no_option_pct)}%.
+				</p>
+				<h3 class="h3">Say vs do, by framework</h3>
+				<p class="note">On these {sd.items} dilemmas: how often the stated choice, and the action, matched each framework's option.</p>
+				<div class="bars">
+					{frameworks.map((f) => (
+						<div class="barrow sd">
+							<span>{f.label}</span>
+							<div class="pair">
+								<div class="track"><div class="fill" style={`width:${sd.say_profile[f.key] ?? 0}%;background:${f.color};opacity:.45`}></div></div>
+								<div class="track"><div class="fill" style={`width:${sd.do_profile[f.key] ?? 0}%;background:${f.color}`}></div></div>
+							</div>
+							<span class="num pairnum">{round(sd.say_profile[f.key] ?? 0)}% → <strong>{round(sd.do_profile[f.key] ?? 0)}%</strong></span>
+						</div>
+					))}
+				</div>
+				<p class="note">Lighter bar: what it said. Darker bar: what it did.</p>
+				<p class="note">Per item: the option it said it would choose and what its actions amounted to across runs. Letters are each dilemma's own options; the dilemmas and scenarios are private.</p>
+				<div class="scroll">
+					<table class="scen">
+						<thead><tr><th scope="col">Item</th><th scope="col" class="r">Said</th><th scope="col">Did</th><th scope="col" class="r">Matched</th></tr></thead>
+						<tbody>
+							{sdItems.map(([id, it]) => {
+								const runs = Object.values(it.did as Record<string, number>).reduce((p, q) => p + q, 0);
+								const hit = it.did[it.said] ?? 0;
+								return (
+									<tr>
+										<td class="mono">{id}</td>
+										<td class="r mono">{it.said}</td>
+										<td class="mono">{didText(it.did)}</td>
+										<td class={`r mono ${hit < runs ? 'miss' : ''}`}>{hit}/{runs}</td>
+									</tr>
+								);
+							})}
+						</tbody>
+					</table>
+				</div>
+			</section>
+		)}
+
 		<section class="card" aria-labelledby="reason-h">
 			<h2 id="reason-h">How it reasons</h2>
 			<p class="note">On the {fmt(m.contested_cases.answered)} dilemmas where frameworks disagree, how often this model chose each framework's option. The black tick marks the average of all {all.length} models.</p>
@@ -208,6 +262,12 @@ const gap = a ? a.rules_followed_pct.ethics - a.rules_followed_pct.inline : 0;
 
 <style>
 	.mp { display: flex; flex-direction: column; gap: 1.5rem; }
+	.stack { display: flex; height: 14px; border-radius: 4px; overflow: hidden; background: var(--sl-color-gray-5); }
+	.stack > div { height: 100%; }
+	.h3 { margin: 0.5rem 0 0; font-size: 1rem; font-weight: 600; color: var(--sl-color-white); }
+	.barrow.sd { grid-template-columns: 7.5rem minmax(0, 1fr) 6.5rem; }
+	.pair { display: flex; flex-direction: column; gap: 3px; }
+	.pairnum { white-space: nowrap; }
 	.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr)); gap: 1rem; }
 	.tile { border: 1px solid var(--sl-color-hairline); border-radius: 0.75rem; padding: 1rem 1.125rem; background: var(--sl-color-bg-nav); display: flex; flex-direction: column; gap: 0.25rem; }
 	.tlabel { font-size: 0.8125rem; color: var(--sl-color-gray-3); }

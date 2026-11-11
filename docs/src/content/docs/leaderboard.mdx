@@ -29,14 +29,15 @@ How leading AI models reason through ethical dilemmas, and what they do when the
 
 ### Agent scenarios
 
-**The tasks.** 21 tasks set in a fictional online store, each in a sandbox with files, a database and simulated email, support tickets, an inbox, refunds, discounts and payments. Nothing leaves the sandbox. The model works by calling tools until it finishes, hands the task to a person, stops, or reaches 20 steps. Every model runs every task three times.
+**The tasks.** 100 tasks set in a fictional online store, each in a sandbox with files, a database and simulated email, support tickets, an inbox, refunds, discounts, payments and operations jobs. Nothing leaves the sandbox. The model works by calling tools until it finishes, hands the task to a person, stops, or reaches 20 steps. Every model runs every task three times.
 
-**Four kinds of task.**
+**Five kinds of task.**
 
-- **Rules (8 tasks).** Each has a rule found only in the rules given to the agent, such as a refund limit or never deleting files. Without the rule, the forbidden action is often the ordinary thing to do. Each runs three ways: with no rules, with the rules in an `ETHICS.md` that `AGENTS.md` points to as the [specification](/specification/) describes, and with the same rules written into `AGENTS.md` itself.
-- **Harm (5 tasks).** The instruction, followed literally, causes harm the workspace makes visible, such as dropping a production table or telling a customer something the records contradict. No rules are given.
-- **Injection (4 tasks).** Something the agent reads, such as a ticket or a file, carries instructions from someone other than its operator.
-- **Ordinary tasks (4).** Nothing is wrong. These catch agents that refuse or escalate everything.
+- **Rules (25 tasks).** Each has a rule found only in the rules given to the agent, such as a refund limit or never deleting files. Without the rule, the forbidden action is often the ordinary thing to do. Some are harder: the operator's own instructions conflict with the rule, a rule in a subfolder's `ETHICS.md` tightens the main one or tries to loosen it, or the rule only matters late in a long task. Each runs three ways: with no rules, with the rules in an `ETHICS.md` that `AGENTS.md` points to as the [specification](/specification/) describes, and with the same rules written into `AGENTS.md` itself.
+- **Harm (15 tasks).** The instruction, followed literally, causes harm the workspace makes visible, such as dropping a production table or telling a customer something the records contradict. No rules are given.
+- **Injection (15 tasks).** Something the agent reads, such as a ticket, a file or a database row, carries instructions from someone other than its operator.
+- **Ordinary tasks (15).** Nothing is wrong. Several closely resemble the harm tasks. These catch agents that refuse or escalate everything.
+- **Say–do pairs (30 tasks).** Each puts the model, as an agent, in the situation of one of the dilemmas it answered. The task is graded by which of that dilemma's four options the agent's actions amount to: who it contacted, what it changed, published or ran, and whether it handed the decision to a person. No rules are given.
 
 **Grading.** Each task is graded from what the agent left behind: what it sent, changed, paid or refunded, and whether it handed the task to a person. Grading is automatic and the same for every model. Every model gets the same instructions and tools in all three conditions, so only the rules differ.
 
@@ -69,4 +70,12 @@ How leading AI models reason through ethical dilemmas, and what they do when the
 
 **Read the columns together.** An agent that refuses everything would score well on harm and injections and badly on ordinary tasks. Comparing **With ETHICS.md** to **Rules in AGENTS.md** shows whether a model finds and follows rules kept in a separate file. A model's page also shows how often it opened `ETHICS.md` when it was there.
 
-**Small samples.** Each model ran 111 graded episodes. One episode more or less moves a column by 4 to 8 points, so treat small gaps as ties.
+**Small samples.** Each column rests on 45 to 75 runs per model, so one run more or less moves it by 1 to 2 points. Treat gaps of a few points as ties.
+
+### Say–do
+
+**Match** is the share of say–do runs where the agent's action was the option the model chose when asked the dilemma. **Different option** means it acted on another of the four. **None of the options** means it did something else, such as stopping without acting.
+
+**A match is consistency, not virtue.** A model that says it would comply with a bad request, and then complies, matches. Read this alongside the harm results. A high match means a model's stated choices predict its behavior as an agent, so its dilemma answers are a useful guide. A low match means they are not.
+
+**Say vs do by framework.** On a model's page, the paired bars show how often its stated choices, and its actions, matched each framework on the same dilemmas. A shift between them shows which way its behavior moves when it acts.

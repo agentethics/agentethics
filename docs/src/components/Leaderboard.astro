@@ -9,9 +9,19 @@ const frameworks = [
 ];
 const models = scores.models;
 const total = models[0]?.questions_total ?? 0;
-// The date of the most recent model evaluation in this release.
-const latest = models.map((m) => m.evaluated_at).filter(Boolean).sort().at(-1) ?? scores.generated_at;
-const updated = new Date(latest).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
+const day = (iso: string) => new Date(iso).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
+// Each suite's last run: when its most recent model evaluation finished.
+const dilemmasRun = scores.dilemmas_evaluated_at ?? scores.generated_at;
+const agent = scores.agent;
+const agentRun = agent?.evaluated_at;
+const agentCols = [
+	{ label: 'With ETHICS.md', get: (a: any) => a.rules_followed_pct.ethics, hint: 'Rules followed when they are in ETHICS.md' },
+	{ label: 'Rules in AGENTS.md', get: (a: any) => a.rules_followed_pct.inline, hint: 'Same rules written into AGENTS.md' },
+	{ label: 'No rules', get: (a: any) => a.rules_followed_pct.none, hint: 'Baseline: the rules are not given' },
+	{ label: 'Harm avoided', get: (a: any) => a.harm_avoided_pct, hint: '' },
+	{ label: 'Injections resisted', get: (a: any) => a.injections_resisted_pct, hint: '' },
+	{ label: 'Ordinary tasks done', get: (a: any) => a.benign_completed_pct, hint: '' },
+];
 const pct = (n: number) => `${Math.round(n)}%`;
 ---
 
@@ -22,9 +32,11 @@ const pct = (n: number) => `${Math.round(n)}%`;
 		</p>
 	)}
 
-	<p class="updated">Scores updated <time datetime={latest.slice(0, 10)}>{updated}</time></p>
+	<p class="updated">
+		Last run: dilemmas <time datetime={dilemmasRun.slice(0, 10)}>{day(dilemmasRun)}</time>{agentRun && <> · agent scenarios <time datetime={agentRun.slice(0, 10)}>{day(agentRun)}</time></>}
+	</p>
 	<p class="meta">
-		Evals v{scores.evals_version} · {models.length} models · {total.toLocaleString('en-US')} dilemmas · run {scores.run_id} · <a href="#methodology">Methodology</a> · <a href="#what-the-scores-mean">What the scores mean</a>
+		Evals v{scores.evals_version} · {models.length} models · dates in UTC · <a href="#methodology">Methodology</a> · <a href="#what-the-scores-mean">What the scores mean</a>
 	</p>
 
 	<section class="card" aria-labelledby="reason-h">
@@ -67,16 +79,45 @@ const pct = (n: number) => `${Math.round(n)}%`;
 		</div>
 	</section>
 
-	<section class="soon" aria-labelledby="soon-h">
-		<h2 id="soon-h">Coming next: models as agents</h2>
-		<p>The next release tests the same models acting as agents in sandboxed tasks, graded on what they do: ETHICS.md rules followed, harm avoided, injections resisted, and tasks completed.</p>
-	</section>
+	{agent && (
+		<section class="card" aria-labelledby="act-h">
+			<h2 id="act-h">How models act as agents</h2>
+			<p class="note">Each model worked through {Object.values(agent.scenarios).reduce((a: number, b: any) => a + b, 0)} sandboxed tasks, {agent.repeats} times each, and was graded on what it did. The first three columns are the same {agent.scenarios.rule} rules given three ways. Higher is better in every column.</p>
+			<div class="scroll">
+				<table class="agent">
+					<thead>
+						<tr>
+							<th scope="col">Model</th>
+							{agentCols.map((c) => <th scope="col" title={c.hint}>{c.label}</th>)}
+						</tr>
+					</thead>
+					<tbody>
+						{models.map((m) => (
+							<tr>
+								<td class="model">
+									<a class="mlink" href={`/leaderboard/${m.slug}/#agent-h`}><strong>{m.name}</strong></a>
+									<span class="sub">{m.lab}</span>
+								</td>
+								{agentCols.map((c, i) => {
+									const v = m.agent ? c.get(m.agent) : null;
+									return <td class={`num ${i === 2 ? 'base' : ''}`}>{v == null ? '–' : pct(v)}</td>;
+								})}
+							</tr>
+						))}
+					</tbody>
+				</table>
+			</div>
+		</section>
+	)}
 </div>
 
 <style>
 	.lb { display: flex; flex-direction: column; gap: 1.5rem; }
 	.banner { margin: 0; padding: 0.75rem 1rem; border-radius: 0.5rem; background: #FFF4E0; color: #6B4205; border: 1px solid #F0D9AE; font-size: 0.875rem; }
 	.updated { margin: 0; font-size: 1rem; font-weight: 600; color: var(--sl-color-white); }
+	table.agent { min-width: 760px; }
+	table.agent td.num, table.agent th:not(:first-child) { text-align: right; min-width: 100px; }
+	td.base { color: var(--sl-color-gray-3); }
 	.meta { margin: -1rem 0 0; color: var(--sl-color-gray-3); font-size: 0.875rem; }
 	.card, .soon { border: 1px solid var(--sl-color-hairline); border-radius: 0.75rem; padding: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; background: var(--sl-color-bg-nav); }
 	.soon { border-style: dashed; background: transparent; }

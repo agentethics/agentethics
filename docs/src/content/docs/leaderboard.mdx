@@ -1,16 +1,19 @@
 ---
 title: "Leaderboard"
-description: "How leading AI models reason through ethical dilemmas, and soon, how they behave as agents."
+description: "How leading AI models reason through ethical dilemmas, and how they behave as agents with and without an ETHICS.md."
 template: splash
+editUrl: false
 ---
 
 import Leaderboard from '../../components/Leaderboard.astro';
 
-How leading AI models reason through ethical dilemmas. Results for models acting as agents, including whether an `ETHICS.md` changes what they do, are coming next.
+How leading AI models reason through ethical dilemmas, and what they do when they act as agents, including whether an `ETHICS.md` changes it.
 
 <Leaderboard />
 
 ## Methodology
+
+### Dilemmas
 
 **The questions.** 1,007 ethical dilemmas across 19 areas, from medical and business ethics to privacy and AI. The set began as Shraddha's 100-question questionnaire and was extended to 1,007 in the same format. Each dilemma has four options, and each of four frameworks (rights-based, utilitarian, deontological and virtue) is keyed to the option it would choose. On 113 dilemmas all four frameworks choose the same option. On the other 894 they disagree, and those are the ones scored here.
 
@@ -24,7 +27,24 @@ How leading AI models reason through ethical dilemmas. Results for models acting
 
 **Private questions.** The questions and answer keys are held privately so they don't leak into training data. Only the scores are published.
 
+### Agent scenarios
+
+**The tasks.** 21 tasks set in a fictional online store, each in a sandbox with files, a database and simulated email, support tickets, an inbox, refunds, discounts and payments. Nothing leaves the sandbox. The model works by calling tools until it finishes, hands the task to a person, stops, or reaches 20 steps. Every model runs every task three times.
+
+**Four kinds of task.**
+
+- **Rules (8 tasks).** Each has a rule found only in the rules given to the agent, such as a refund limit or never deleting files. Without the rule, the forbidden action is often the ordinary thing to do. Each runs three ways: with no rules, with the rules in an `ETHICS.md` that `AGENTS.md` points to as the [specification](/specification/) describes, and with the same rules written into `AGENTS.md` itself.
+- **Harm (5 tasks).** The instruction, followed literally, causes harm the workspace makes visible, such as dropping a production table or telling a customer something the records contradict. No rules are given.
+- **Injection (4 tasks).** Something the agent reads, such as a ticket or a file, carries instructions from someone other than its operator.
+- **Ordinary tasks (4).** Nothing is wrong. These catch agents that refuse or escalate everything.
+
+**Grading.** Each task is graded from what the agent left behind: what it sent, changed, paid or refunded, and whether it handed the task to a person. Grading is automatic and the same for every model. Every model gets the same instructions and tools in all three conditions, so only the rules differ.
+
+**Private tasks.** Like the dilemmas, the tasks are held privately. Only aggregate scores are published.
+
 ## What the scores mean
+
+### Dilemmas
 
 **Each percentage** is how often the model chose the option a framework favors, across the 894 dilemmas where the frameworks disagree. A model at 55% on virtue picked the virtue-keyed option on 55% of them.
 
@@ -36,4 +56,17 @@ How leading AI models reason through ethical dilemmas. Results for models acting
 
 **Small gaps may be noise.** Each model answered each dilemma once. Differences of a few points between models, or under about 10 points within one of the 19 areas, may not hold up on a second run.
 
-**What this does not measure.** These are the choices a model states when asked. Whether it acts the same way when it can take actions is what the agent results, coming next, will test.
+**What this does not measure.** These are the choices a model states when asked. The agent results show what models do when they can act.
+
+### Agent scenarios
+
+**Higher is better in every column.**
+
+- **With ETHICS.md** and **Rules in AGENTS.md:** the share of rule tasks where the agent followed the rule, either by doing the task within it or by handing the decision to a person.
+- **No rules:** the same tasks with no rules given. It is a baseline, and low is expected: it shows the rules change behavior, rather than the model already acting that way.
+- **Harm avoided** and **Injections resisted:** the share of tasks where the agent did not cross the line. Doing the task safely, asking a person, and declining all count.
+- **Ordinary tasks done:** the share of harmless tasks the agent completed.
+
+**Read the columns together.** An agent that refuses everything would score well on harm and injections and badly on ordinary tasks. Comparing **With ETHICS.md** to **Rules in AGENTS.md** shows whether a model finds and follows rules kept in a separate file. A model's page also shows how often it opened `ETHICS.md` when it was there.
+
+**Small samples.** Each model ran 111 graded episodes. One episode more or less moves a column by 4 to 8 points, so treat small gaps as ties.

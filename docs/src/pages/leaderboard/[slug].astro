@@ -31,12 +31,28 @@ const updated = m.evaluated_at
 	? new Date(m.evaluated_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' })
 	: '';
 const fmt = (n: number) => n.toLocaleString('en-US');
+const day = (iso: string) => new Date(iso).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
+const a = m.agent as any;
+const agentRun = (scores as any).agent;
+const withAgent = all.filter((x: any) => x.agent);
+const aAvg = (get: (x: any) => number) => withAgent.reduce((s: number, x: any) => s + get(x.agent), 0) / withAgent.length;
+const agentRows = [
+	{ label: 'Rules followed with ETHICS.md', get: (x: any) => x.rules_followed_pct.ethics },
+	{ label: 'Same rules written in AGENTS.md', get: (x: any) => x.rules_followed_pct.inline },
+	{ label: 'Rules followed with no rules given (baseline)', get: (x: any) => x.rules_followed_pct.none },
+	{ label: 'Read ETHICS.md when it was there', get: (x: any) => x.ethics_read_pct },
+	{ label: 'Harm avoided', get: (x: any) => x.harm_avoided_pct },
+	{ label: 'Injections resisted', get: (x: any) => x.injections_resisted_pct },
+	{ label: 'Ordinary tasks done', get: (x: any) => x.benign_completed_pct },
+];
 ---
 
-<StarlightPage frontmatter={{ title: m.name, description: `${m.name} on the Agent Ethics dilemma evaluation.`, template: 'splash' }}>
+<StarlightPage frontmatter={{ title: m.name, description: `${m.name} on the Agent Ethics evaluations: ethical dilemmas and agent scenarios.`, template: 'splash' }}>
 	<div class="mp not-content">
 		<p class="back"><a href="/leaderboard/">← All models</a></p>
-		{updated && <p class="updated">Scores updated <time datetime={m.evaluated_at.slice(0, 10)}>{updated}</time></p>}
+		<p class="updated">
+			Last run: dilemmas {updated}{m.agent?.evaluated_at && ` · agent scenarios ${day(m.agent.evaluated_at)}`}
+		</p>
 		<p class="meta">
 			{m.lab} · served by {m.host}{quant ? ` (${quant})` : ''} · <code>{m.model}</code> · run {scores.run_id} · <a href="/leaderboard/#methodology">Methodology</a>
 		</p>
@@ -108,10 +124,29 @@ const fmt = (n: number) => n.toLocaleString('en-US');
 			</dl>
 		</section>
 
-		<section class="soon" aria-labelledby="soon-h">
-			<h2 id="soon-h">Coming next: {m.name} as an agent</h2>
-			<p>The next release tests this model acting as an agent in sandboxed tasks: ETHICS.md rules followed, harm avoided, injections resisted, and tasks completed.</p>
-		</section>
+		{a && (
+			<section class="card" aria-labelledby="agent-h">
+				<h2 id="agent-h">As an agent</h2>
+				<p class="note">{a.episodes} graded episodes: {Object.values(agentRun.scenarios).reduce((p: number, q: any) => p + q, 0)} sandboxed tasks, {agentRun.repeats} times each, with the {agentRun.scenarios.rule} rule tasks run three ways. The black tick marks the average of all {withAgent.length} models.</p>
+				<div class="bars wide">
+					{agentRows.map((r) => {
+						const v = r.get(a);
+						const avgV = aAvg(r.get);
+						return (
+							<div class="barrow">
+								<span>{r.label}</span>
+								<div class="track big">
+									<div class="fill" style={`width:${v}%;background:#1E4E8C`}></div>
+									<div class="tick" style={`left:${avgV}%`} aria-hidden="true"></div>
+								</div>
+								<span class="num">{round(v)}%</span>
+								<span class="delta">{signed(v - avgV)} vs avg</span>
+							</div>
+						);
+					})}
+				</div>
+			</section>
+		)}
 	</div>
 </StarlightPage>
 
@@ -125,6 +160,7 @@ const fmt = (n: number) => n.toLocaleString('en-US');
 	h2 { margin: 0; font-size: 1.25rem; font-weight: 600; color: var(--sl-color-white); }
 	.note, .soon p { margin: 0; font-size: 0.875rem; color: var(--sl-color-gray-3); max-width: 48rem; }
 	.bars { display: flex; flex-direction: column; gap: 0.75rem; }
+	.bars.wide .barrow { grid-template-columns: 17rem minmax(0, 1fr) 3rem 5.5rem; }
 	.barrow { display: grid; grid-template-columns: 7.5rem minmax(0, 1fr) 3rem 5.5rem; gap: 0.75rem; align-items: center; font-size: 0.875rem; }
 	.track { position: relative; height: 10px; border-radius: 3px; background: var(--sl-color-gray-5); }
 	.track.big { height: 14px; }
@@ -145,7 +181,7 @@ const fmt = (n: number) => n.toLocaleString('en-US');
 	.details dt { color: var(--sl-color-gray-3); }
 	.details dd { margin: 0; }
 	@media (max-width: 40rem) {
-		.barrow { grid-template-columns: 6rem minmax(0, 1fr) 2.75rem; }
+		.barrow, .bars.wide .barrow { grid-template-columns: 6rem minmax(0, 1fr) 2.75rem; }
 		.barrow .delta { grid-column: 2 / -1; margin-top: -0.5rem; }
 	}
 </style>

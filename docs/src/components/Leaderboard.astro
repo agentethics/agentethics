@@ -136,7 +136,7 @@ const pct = (n: number) => `${Math.round(n)}%`;
 	{models.some((m) => m.agent?.saydo) && (
 		<section class="card" aria-labelledby="saydo-h">
 			<h2 id="saydo-h">Do models do what they say?</h2>
-			<p class="note">Each model answered a dilemma, then faced the same situation as an agent. The bar shows how often its action was the option it said it would choose, how often it took a different option, and how often it did none of them. A match means its stated choices predict its behavior; it does not mean the choice was right.</p>
+			<p class="note">Each model answered a dilemma, then faced the same situation as an agent, first with no rules, then with the general company ETHICS.md. Each bar shows how often its action was the option it said it would choose, how often it took a different option, and how often it did none of them. A match means its stated choices predict its behavior; it does not mean the choice was right.</p>
 			<div class="legend">
 				<span class="key"><span class="sw" style="background:#1E4E8C"></span>Did what it said</span>
 				<span class="key"><span class="sw" style="background:#E8973F"></span>Took a different option</span>
@@ -145,15 +145,30 @@ const pct = (n: number) => `${Math.round(n)}%`;
 			<div class="uplift">
 				{models.filter((m) => m.agent?.saydo).map((m) => {
 					const sd = m.agent.saydo;
+					const runs = Math.round(sd.episodes / sd.items);
+					const rows = [
+						{ label: 'No rules', match: sd.match_pct, other: sd.other_option_pct, none: sd.no_option_pct },
+						...(m.general ? [{ label: 'With ETHICS.md', match: m.general.ethics.saydo_match_pct, other: m.general.ethics.saydo_other_pct, none: m.general.ethics.saydo_none_pct }] : []),
+					];
 					return (
 						<div class="urow">
 							<a class="uname" href={`/leaderboard/${m.slug}/#saydo-h`}>{m.name}</a>
-							<div class="stack" title={`${pct(sd.match_pct)} matched · ${pct(sd.other_option_pct)} different option · ${pct(sd.no_option_pct)} none`}>
-								<div style={`width:${sd.match_pct}%;background:#1E4E8C`}></div>
-								<div style={`width:${sd.other_option_pct}%;background:#E8973F`}></div>
-								<div style={`width:${sd.no_option_pct}%;background:var(--c-none)`}></div>
+							<div class="ubars">
+								{rows.map((r) => (
+									<div class="srow">
+										<span class="slabel">{r.label}</span>
+										<div class="stack" title={`${r.label}: ${pct(r.match)} matched · ${pct(r.other)} different option · ${pct(r.none)} none`}>
+											<div style={`width:${r.match}%;background:#1E4E8C`}></div>
+											<div style={`width:${r.other}%;background:#E8973F`}></div>
+											<div style={`width:${r.none}%;background:var(--c-none)`}></div>
+										</div>
+									</div>
+								))}
 							</div>
-							<span class="unum"><span><strong>{pct(sd.match_pct)}</strong> match</span><span class="usub">{sd.items} dilemmas × {Math.round(sd.episodes / sd.items)} {Math.round(sd.episodes / sd.items) === 1 ? 'run' : 'runs'}</span></span>
+							<span class="unum">
+								<span>{m.general ? <>{pct(sd.match_pct)} → <strong>{pct(m.general.ethics.saydo_match_pct)}</strong></> : <strong>{pct(sd.match_pct)}</strong>} match</span>
+								<span class="usub">{sd.items} dilemmas × {runs} {runs === 1 ? 'run' : 'runs'}</span>
+							</span>
 						</div>
 					);
 				})}
@@ -256,6 +271,8 @@ const pct = (n: number) => `${Math.round(n)}%`;
 
 	.stack { display: flex; height: 14px; border-radius: 3px; overflow: hidden; background: var(--sl-color-gray-5); }
 	.stack > div { height: 100%; }
+	.srow { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr); align-items: center; gap: 0.5rem; }
+	.slabel { font-size: 0.75rem; color: var(--sl-color-gray-3); white-space: nowrap; }
 	.sort { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
 	.sort-label { font-size: 0.875rem; color: var(--sl-color-gray-3); margin-right: 0.25rem; }
 	.pill { font: inherit; font-size: 0.875rem; padding: 0.35rem 0.9rem; border-radius: 999px; border: 1px solid var(--sl-color-gray-5); background: transparent; color: var(--sl-color-white); cursor: pointer; }
@@ -283,6 +300,6 @@ const pct = (n: number) => `${Math.round(n)}%`;
 
 	@media (max-width: 40rem) {
 		.urow { grid-template-columns: minmax(0, 1fr) auto; }
-		.ubars, .urow .stack { grid-column: 1 / -1; grid-row: 2; }
+		.ubars { grid-column: 1 / -1; grid-row: 2; }
 	}
 </style>

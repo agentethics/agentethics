@@ -17,7 +17,6 @@ type Fw = (typeof frameworks)[number]['key'];
 
 const all = scores.models;
 const avg = (fw: Fw) => all.reduce((s, x) => s + (x.contested_cases.alignment_pct as Record<Fw, number>)[fw], 0) / all.length;
-const avgClear = all.reduce((s, x) => s + x.clear_cases.correct_pct, 0) / all.length;
 const mine = m.contested_cases.alignment_pct as Record<Fw, number>;
 const round = (n: number) => Math.round(n);
 const signed = (n: number) => (Math.round(n) > 0 ? `+${Math.round(n)}` : `${Math.round(n)}`);
@@ -57,12 +56,6 @@ const fmt = (n: number) => n.toLocaleString('en-US');
 					</div>
 				))}
 			</div>
-		</section>
-
-		<section class="card" aria-labelledby="clear-h">
-			<h2 id="clear-h">Questions with one right answer</h2>
-			<p class="note">On the {m.clear_cases.answered} dilemmas where all four frameworks agree, the share this model answered the agreed way.</p>
-			<p class="big-num">{round(m.clear_cases.correct_pct)}% <span class="delta">average of all models: {round(avgClear)}%</span></p>
 		</section>
 
 		<section class="card" aria-labelledby="cat-h">
@@ -137,8 +130,6 @@ const fmt = (n: number) => n.toLocaleString('en-US');
 	.tick { position: absolute; top: -4px; bottom: -4px; width: 2px; background: var(--sl-color-white); margin-left: -1px; }
 	.num { font-family: var(--sl-font-mono); text-align: right; }
 	.delta { font-size: 0.75rem; color: var(--sl-color-gray-3); }
-	.big-num { margin: 0; font-family: var(--sl-font-mono); font-size: 2rem; color: var(--sl-color-white); }
-	.big-num .delta { font-family: var(--sl-font-system); font-size: 0.875rem; margin-left: 0.5rem; }
 	.scroll { overflow-x: auto; border: 1px solid var(--sl-color-hairline); border-radius: 0.5rem; }
 	table { width: 100%; min-width: 760px; border-collapse: collapse; font-size: 0.875rem; }
 	th { text-align: left; font-weight: 600; padding: 0.6rem 0.75rem; background: var(--sl-color-gray-6); }

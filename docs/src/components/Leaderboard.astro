@@ -9,7 +9,6 @@ const frameworks = [
 ];
 const models = scores.models;
 const total = models[0]?.questions_total ?? 0;
-const byClear = [...models].sort((a, b) => b.clear_cases.correct_pct - a.clear_cases.correct_pct);
 const updated = new Date(scores.generated_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
 const pct = (n: number) => `${Math.round(n)}%`;
 ---
@@ -65,20 +64,6 @@ const pct = (n: number) => `${Math.round(n)}%`;
 		</div>
 	</section>
 
-	<section class="card" aria-labelledby="clear-h">
-		<h2 id="clear-h">Questions with one right answer</h2>
-		<p class="note">In 113 of the dilemmas, all four frameworks pick the same option, so there is one answer they all agree is right. A dilemma like whether to falsify a safety record is the kind of question that falls here. This is the share of those questions each model answered the agreed way.</p>
-		<div class="clears">
-			{byClear.map((m) => (
-				<div class="clear">
-					<span>{m.name}</span>
-					<div class="track"><div class="fill dark" style={`width:${m.clear_cases.correct_pct}%`}></div></div>
-					<span class="num">{pct(m.clear_cases.correct_pct)}</span>
-				</div>
-			))}
-		</div>
-	</section>
-
 	<section class="soon" aria-labelledby="soon-h">
 		<h2 id="soon-h">Coming next: models as agents</h2>
 		<p>The next release tests the same models acting as agents in sandboxed tasks, graded on what they do: ETHICS.md rules followed, harm avoided, injections resisted, and tasks completed.</p>
@@ -105,10 +90,7 @@ const pct = (n: number) => `${Math.round(n)}%`;
 	.cell { display: grid; grid-template-columns: minmax(0, 1fr) 3rem; gap: 0.5rem; align-items: center; }
 	.track { height: 10px; border-radius: 3px; background: var(--sl-color-gray-5); }
 	.fill { height: 10px; border-radius: 3px; }
-	.fill.dark { background: var(--sl-color-white); }
 	.num { font-family: var(--sl-font-mono); text-align: right; }
 	.key { display: inline-flex; align-items: center; gap: 0.4rem; }
 	.sw { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
-	.clears { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 380px), 1fr)); gap: 0.6rem 2rem; }
-	.clear { display: grid; grid-template-columns: 150px minmax(0, 1fr) 3rem; gap: 0.75rem; align-items: center; font-size: 0.875rem; }
 </style>

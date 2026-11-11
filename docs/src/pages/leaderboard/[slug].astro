@@ -36,15 +36,23 @@ const a = m.agent as any;
 const agentRun = (scores as any).agent;
 const withAgent = all.filter((x: any) => x.agent);
 const aAvg = (get: (x: any) => number) => withAgent.reduce((s: number, x: any) => s + get(x.agent), 0) / withAgent.length;
-const agentRows = [
-	{ label: 'Rules followed with ETHICS.md', get: (x: any) => x.rules_followed_pct.ethics },
-	{ label: 'Same rules written in AGENTS.md', get: (x: any) => x.rules_followed_pct.inline },
-	{ label: 'Rules followed with no rules given (baseline)', get: (x: any) => x.rules_followed_pct.none },
-	{ label: 'Read ETHICS.md when it was there', get: (x: any) => x.ethics_read_pct },
-	{ label: 'Harm avoided', get: (x: any) => x.harm_avoided_pct },
-	{ label: 'Injections resisted', get: (x: any) => x.injections_resisted_pct },
-	{ label: 'Ordinary tasks done', get: (x: any) => x.benign_completed_pct },
+const typeLabel: Record<string, string> = { rule: 'Rule', harm: 'Harm', injection: 'Injection', benign: 'Ordinary' };
+const scen = a ? Object.entries(a.scenarios as Record<string, any>) : [];
+const tiles = a
+	? [
+			{ label: 'Harm avoided', v: a.harm_avoided_pct, get: (x: any) => x.harm_avoided_pct, note: 'Harmful instructions not carried out' },
+			{ label: 'ETHICS.md rules followed', v: a.rules_followed_pct.ethics, get: (x: any) => x.rules_followed_pct.ethics, note: `Opened ETHICS.md in ${round(a.ethics_read_pct)}% of runs` },
+			{ label: 'Injections resisted', v: a.injections_resisted_pct, get: (x: any) => x.injections_resisted_pct, note: 'Planted instructions not followed' },
+			{ label: 'Ordinary tasks done', v: a.benign_completed_pct, get: (x: any) => x.benign_completed_pct, note: 'Harmless tasks completed' },
+		]
+	: [];
+const conds = [
+	{ key: 'none', label: 'No rules', color: '#7C8597' },
+	{ key: 'ethics', label: 'ETHICS.md, referenced from AGENTS.md', color: '#1E4E8C' },
+	{ key: 'inline', label: 'Same rules written into AGENTS.md', color: '#6F93C6' },
 ];
+const gain = a ? a.rules_followed_pct.ethics - a.rules_followed_pct.none : 0;
+const gap = a ? a.rules_followed_pct.ethics - a.rules_followed_pct.inline : 0;
 ---
 
 <StarlightPage frontmatter={{ title: m.name, description: `${m.name} on the Agent Ethics evaluations: ethical dilemmas and agent scenarios.`, template: 'splash' }}>
@@ -56,6 +64,77 @@ const agentRows = [
 		<p class="meta">
 			{m.lab} · served by {m.host}{quant ? ` (${quant})` : ''} · <code>{m.model}</code> · run {scores.run_id} · <a href="/leaderboard/#methodology">Methodology</a>
 		</p>
+
+		{a && (
+			<section class="tiles" aria-label="Agent measures">
+				{tiles.map((t) => (
+					<div class="tile">
+						<span class="tlabel">{t.label}</span>
+						<span class="tval">{round(t.v)}%</span>
+						<span class="tnote">{signed(t.v - aAvg(t.get))} vs avg · {t.note}</span>
+					</div>
+				))}
+			</section>
+		)}
+
+		{a && (
+			<section class="card" aria-labelledby="agent-h">
+				<h2 id="agent-h">Does ETHICS.md change behavior?</h2>
+				<p class="note">Share of the {agentRun.scenarios.rule} rule tasks followed, {agentRun.repeats} runs each, under three setups. The rules are the same each time; only where they appear changes.</p>
+				<div class="conds">
+					{conds.map((c) => (
+						<div class="cond">
+							<div class="clabel"><span>{c.label}</span><span class="num">{round(a.rules_followed_pct[c.key])}%</span></div>
+							<div class="track big"><div class="fill" style={`width:${a.rules_followed_pct[c.key]}%;background:${c.color}`}></div></div>
+						</div>
+					))}
+				</div>
+				<p class="summary">
+					With ETHICS.md, {m.name} followed <strong>{signed(gain)} points</strong> more rules than with none.
+					{Math.abs(gap) < 10
+						? ' Rules written directly into AGENTS.md scored about the same, so it found and used the separate file.'
+						: gap < 0
+							? ` The same rules written into AGENTS.md scored ${round(-gap)} points higher: it opened ETHICS.md in ${round(a.ethics_read_pct)}% of runs, so most of the time it never saw the rules.`
+							: ` It did ${round(gap)} points better with ETHICS.md than with the rules in AGENTS.md.`}
+				</p>
+			</section>
+		)}
+
+		{a && (
+			<section class="card" aria-labelledby="sc-h">
+				<h2 id="sc-h">Agent scenarios</h2>
+				<p class="note">Runs out of {agentRun.repeats} in which the agent did the right thing: followed the rule, avoided the harm, resisted the injection, or completed the ordinary task. Scenario details are private; the IDs let results be compared across models. Only rule scenarios run three ways.</p>
+				<div class="scroll">
+					<table class="scen">
+						<thead>
+							<tr>
+								<th scope="col">Scenario</th>
+								<th scope="col">Type</th>
+								<th scope="col" class="r">No rules</th>
+								<th scope="col" class="r">With ETHICS.md</th>
+								<th scope="col" class="r">Rules in AGENTS.md</th>
+							</tr>
+						</thead>
+						<tbody>
+							{scen.map(([id, row]) => (
+								<tr>
+									<td class="mono">{id}</td>
+									<td><span class={`tag ${row.type}`}>{typeLabel[row.type]}</span></td>
+									{['none', 'ethics', 'inline'].map((k) => {
+										const c = row.conditions[k];
+										return (
+											<td class={`r mono ${k === 'ethics' ? 'strong' : ''} ${c && c.good < c.runs ? 'miss' : ''}`}>
+												{c ? `${c.good}/${c.runs}` : '–'}
+											</td>
+										);
+									})}
+								</tr>
+							))}
+						</tbody>
+					</table>
+				</div>
+			</section>
+		)}
 
 		<section class="card" aria-labelledby="reason-h">
 			<h2 id="reason-h">How it reasons</h2>
@@ -124,34 +203,30 @@ const agentRows = [
 			</dl>
 		</section>
 
-		{a && (
-			<section class="card" aria-labelledby="agent-h">
-				<h2 id="agent-h">As an agent</h2>
-				<p class="note">{a.episodes} graded episodes: {Object.values(agentRun.scenarios).reduce((p: number, q: any) => p + q, 0)} sandboxed tasks, {agentRun.repeats} times each, with the {agentRun.scenarios.rule} rule tasks run three ways. The black tick marks the average of all {withAgent.length} models.</p>
-				<div class="bars wide">
-					{agentRows.map((r) => {
-						const v = r.get(a);
-						const avgV = aAvg(r.get);
-						return (
-							<div class="barrow">
-								<span>{r.label}</span>
-								<div class="track big">
-									<div class="fill" style={`width:${v}%;background:#1E4E8C`}></div>
-									<div class="tick" style={`left:${avgV}%`} aria-hidden="true"></div>
-								</div>
-								<span class="num">{round(v)}%</span>
-								<span class="delta">{signed(v - avgV)} vs avg</span>
-							</div>
-						);
-					})}
-				</div>
-			</section>
-		)}
 	</div>
 </StarlightPage>
 
 <style>
 	.mp { display: flex; flex-direction: column; gap: 1.5rem; }
+	.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr)); gap: 1rem; }
+	.tile { border: 1px solid var(--sl-color-hairline); border-radius: 0.75rem; padding: 1rem 1.125rem; background: var(--sl-color-bg-nav); display: flex; flex-direction: column; gap: 0.25rem; }
+	.tlabel { font-size: 0.8125rem; color: var(--sl-color-gray-3); }
+	.tval { font-family: var(--sl-font-mono); font-size: 1.75rem; font-weight: 500; color: var(--sl-color-white); line-height: 1.2; }
+	.tnote { font-size: 0.75rem; color: var(--sl-color-gray-3); }
+	.conds { display: flex; flex-direction: column; gap: 0.875rem; }
+	.cond { display: flex; flex-direction: column; gap: 0.375rem; }
+	.clabel { display: flex; justify-content: space-between; font-size: 0.875rem; }
+	.summary { margin: 0; font-size: 0.875rem; border-top: 1px solid var(--sl-color-hairline); padding-top: 0.75rem; max-width: 48rem; }
+	table.scen { min-width: 640px; }
+	.scen td.r, .scen th.r { text-align: right; }
+	.mono { font-family: var(--sl-font-mono); }
+	.scen td.strong { font-weight: 600; color: var(--sl-color-white); }
+	.scen td.miss { color: #C2552D; }
+	.tag { display: inline-block; font-size: 0.75rem; font-weight: 500; padding: 0.1rem 0.6rem; border-radius: 999px; white-space: nowrap; }
+	.tag.rule { color: #1E4E8C; background: #E8F0FA; }
+	.tag.harm { color: #7A2E12; background: #FBEAE3; }
+	.tag.injection { color: #5B3A8C; background: #EFE9F8; }
+	.tag.benign { color: #2E6B4A; background: #E6F3EC; }
 	.back, .meta { margin: 0; font-size: 0.875rem; }
 	.meta { color: var(--sl-color-gray-3); }
 	.updated { margin: 0; font-size: 1rem; font-weight: 600; color: var(--sl-color-white); }

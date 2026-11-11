@@ -7,20 +7,24 @@ const frameworks = [
 	{ key: 'deontological', label: 'Deontological', color: '#2E8C80' },
 	{ key: 'virtue', label: 'Virtue', color: '#8E9AB3' },
 ];
-const models = scores.models;
+const models = scores.models as any[];
 const total = models[0]?.questions_total ?? 0;
 const day = (iso: string) => new Date(iso).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
 // Each suite's last run: when its most recent model evaluation finished.
 const dilemmasRun = scores.dilemmas_evaluated_at ?? scores.generated_at;
-const agent = scores.agent;
+const agent = scores.agent as any;
 const agentRun = agent?.evaluated_at;
-const agentCols = [
-	{ label: 'With ETHICS.md', get: (a: any) => a.rules_followed_pct.ethics, hint: 'Rules followed when they are in ETHICS.md' },
-	{ label: 'Rules in AGENTS.md', get: (a: any) => a.rules_followed_pct.inline, hint: 'Same rules written into AGENTS.md' },
-	{ label: 'No rules', get: (a: any) => a.rules_followed_pct.none, hint: 'Baseline: the rules are not given' },
-	{ label: 'Harm avoided', get: (a: any) => a.harm_avoided_pct, hint: '' },
-	{ label: 'Injections resisted', get: (a: any) => a.injections_resisted_pct, hint: '' },
-	{ label: 'Ordinary tasks done', get: (a: any) => a.benign_completed_pct, hint: '' },
+const nScenarios = agent ? Object.values(agent.scenarios as Record<string, number>).reduce((a, b) => a + b, 0) : 0;
+const conditions = [
+	{ key: 'none', label: 'No rules', color: 'var(--c-none)' },
+	{ key: 'ethics', label: 'With ETHICS.md', color: '#1E4E8C' },
+	{ key: 'inline', label: 'Same rules in AGENTS.md', color: '#6F93C6' },
+];
+const measures = [
+	{ key: 'harm', label: 'Harm avoided', short: 'Harm', get: (a: any) => a.harm_avoided_pct },
+	{ key: 'ethics', label: 'ETHICS.md rules followed', short: 'ETHICS.md', get: (a: any) => a.rules_followed_pct.ethics },
+	{ key: 'injection', label: 'Injections resisted', short: 'Injections', get: (a: any) => a.injections_resisted_pct },
+	{ key: 'tasks', label: 'Ordinary tasks done', short: 'Tasks', get: (a: any) => a.benign_completed_pct },
 ];
 const pct = (n: number) => `${Math.round(n)}%`;
 ---
@@ -36,18 +40,95 @@ const pct = (n: number) => `${Math.round(n)}%`;
 		Last run: dilemmas <time datetime={dilemmasRun.slice(0, 10)}>{day(dilemmasRun)}</time>{agentRun && <> · agent scenarios <time datetime={agentRun.slice(0, 10)}>{day(agentRun)}</time></>}
 	</p>
 	<p class="meta">
-		Evals v{scores.evals_version} · {models.length} models · dates in UTC · <a href="#methodology">Methodology</a> · <a href="#what-the-scores-mean">What the scores mean</a>
+		Evals v{scores.evals_version} · {models.length} models · {nScenarios ? `${nScenarios} agent scenarios · ` : ''}{total.toLocaleString('en-US')} dilemmas · dates in UTC · <a href="#methodology">Methodology</a> · <a href="#what-the-scores-mean">What the scores mean</a>
 	</p>
 
+	{agent && (
+		<section class="card" aria-labelledby="uplift-h">
+			<h2 id="uplift-h">Does ETHICS.md change behavior?</h2>
+			<p class="note">Share of the {agent.scenarios.rule} rule tasks each model followed, run {agent.repeats} times each. The rules are the same each time; only where they appear changes.</p>
+			<div class="legend">
+				{conditions.map((c) => <span class="key"><span class="sw" style={`background:${c.color}`}></span>{c.label}</span>)}
+			</div>
+			<div class="uplift">
+				{models.filter((m) => m.agent).map((m) => (
+					<div class="urow">
+						<a class="uname" href={`/leaderboard/${m.slug}/`}>{m.name}</a>
+						<div class="ubars">
+							{conditions.map((c) => (
+								<div class="track" title={`${c.label}: ${pct(m.agent.rules_followed_pct[c.key])}`}>
+									<div class="fill" style={`width:${m.agent.rules_followed_pct[c.key]}%;background:${c.color}`}></div>
+								</div>
+							))}
+						</div>
+						<span class="unum">
+							<span>{pct(m.agent.rules_followed_pct.none)} → <strong>{pct(m.agent.rules_followed_pct.ethics)}</strong></span>
+							<span class="usub">AGENTS.md {pct(m.agent.rules_followed_pct.inline)}</span>
+						</span>
+					</div>
+				))}
+			</div>
+		</section>
+	)}
+
+	{agent && (
+		<section class="card" aria-labelledby="measure-h">
+			<div class="head">
+				<div>
+					<h2 id="measure-h">Results by measure</h2>
+					<p class="note">Models acting as agents in sandboxed tasks, graded on what they did. Each column is its own measure; higher is better. Select a model for its full results.</p>
+				</div>
+				<div class="sort" role="group" aria-label="Sort agent results" data-table="measure-table">
+					<span class="sort-label">Sort by</span>
+					<button type="button" class="pill" data-sort="default" aria-pressed="true">Default</button>
+					{measures.map((c) => <button type="button" class="pill" data-sort={c.key} aria-pressed="false">{c.short}</button>)}
+				</div>
+			</div>
+			<div class="scroll">
+				<table id="measure-table" class="measures">
+					<thead>
+						<tr>
+							<th scope="col">Model</th>
+							{measures.map((c) => <th scope="col">{c.label}</th>)}
+						</tr>
+					</thead>
+					<tbody>
+						{models.filter((m) => m.agent).map((m, i) => (
+							<tr data-default={i} {...Object.fromEntries(measures.map((c) => [`data-${c.key}`, c.get(m.agent)]))}>
+								<td class="model">
+									<a class="mlink" href={`/leaderboard/${m.slug}/`}><strong>{m.name}</strong></a>
+									<span class="sub">{m.lab}</span>
+								</td>
+								{measures.map((c) => {
+									const v = c.get(m.agent);
+									return (
+										<td>
+											<div class="cell">
+												<div class="track"><div class={`fill ${v < 50 ? 'low' : ''}`} style={`width:${v}%`}></div></div>
+												<span class="num">{pct(v)}</span>
+											</div>
+										</td>
+									);
+								})}
+							</tr>
+						))}
+					</tbody>
+				</table>
+			</div>
+		</section>
+	)}
+
 	<section class="card" aria-labelledby="reason-h">
-		<h2 id="reason-h">How models reason</h2>
-		<p class="note">On dilemmas where ethical frameworks disagree, how often each model chose the option each framework favors. Frameworks often share an answer, so a row does not add to 100. No profile is better than another. Select a model for its breakdown by category.</p>
-		<div class="sort" role="group" aria-label="Sort models">
-			<span class="sort-label">Sort by</span>
-			<button type="button" class="pill" data-sort="default" aria-pressed="true">Default</button>
-			{frameworks.map((f) => (
-				<button type="button" class="pill" data-sort={f.key} aria-pressed="false">{f.label}</button>
-			))}
+		<div class="head">
+			<div>
+				<h2 id="reason-h">How models reason</h2>
+				<p class="note">On dilemmas where ethical frameworks disagree, how often each model chose the option each framework favors. Frameworks often share an answer, so a row does not add to 100. No profile is better than another. Select a model for its breakdown by category.</p>
+			</div>
+			<div class="sort" role="group" aria-label="Sort models by framework" data-table="reason-table">
+				<span class="sort-label">Sort by</span>
+				<button type="button" class="pill" data-sort="default" aria-pressed="true">Default</button>
+				{frameworks.map((f) => <button type="button" class="pill" data-sort={f.key} aria-pressed="false">{f.label}</button>)}
+			</div>
 		</div>
 		<div class="scroll">
 			<table id="reason-table">
@@ -62,19 +143,13 @@ const pct = (n: number) => `${Math.round(n)}%`;
 				</thead>
 				<tbody>
 					{models.map((m, i) => (
-						<tr
-							data-default={i}
-							data-rights={m.contested_cases.alignment_pct.rights}
-							data-utilitarian={m.contested_cases.alignment_pct.utilitarian}
-							data-deontological={m.contested_cases.alignment_pct.deontological}
-							data-virtue={m.contested_cases.alignment_pct.virtue}
-						>
+						<tr data-default={i} {...Object.fromEntries(frameworks.map((f) => [`data-${f.key}`, m.contested_cases.alignment_pct[f.key]]))}>
 							<td class="model">
 								<a class="mlink" href={`/leaderboard/${m.slug}/`}><strong>{m.name}</strong></a>
 								<span class="sub">{m.lab} · served by {m.host ?? 'unknown'}</span>
 							</td>
 							{frameworks.map((f) => {
-								const v = (m.contested_cases.alignment_pct as Record<string, number>)[f.key];
+								const v = m.contested_cases.alignment_pct[f.key];
 								return (
 									<td>
 										<div class="cell">
@@ -91,81 +166,62 @@ const pct = (n: number) => `${Math.round(n)}%`;
 			</table>
 		</div>
 	</section>
-
-	{agent && (
-		<section class="card" aria-labelledby="act-h">
-			<h2 id="act-h">How models act as agents</h2>
-			<p class="note">Each model worked through {Object.values(agent.scenarios).reduce((a: number, b: any) => a + b, 0)} sandboxed tasks, {agent.repeats} times each, and was graded on what it did. The first three columns are the same {agent.scenarios.rule} rules given three ways. Higher is better in every column.</p>
-			<div class="scroll">
-				<table class="agent">
-					<thead>
-						<tr>
-							<th scope="col">Model</th>
-							{agentCols.map((c) => <th scope="col" title={c.hint}>{c.label}</th>)}
-						</tr>
-					</thead>
-					<tbody>
-						{models.map((m) => (
-							<tr>
-								<td class="model">
-									<a class="mlink" href={`/leaderboard/${m.slug}/#agent-h`}><strong>{m.name}</strong></a>
-									<span class="sub">{m.lab}</span>
-								</td>
-								{agentCols.map((c, i) => {
-									const v = m.agent ? c.get(m.agent) : null;
-									return <td class={`num ${i === 2 ? 'base' : ''}`}>{v == null ? '–' : pct(v)}</td>;
-								})}
-							</tr>
-						))}
-					</tbody>
-				</table>
-			</div>
-		</section>
-	)}
 </div>
 
 <script>
-	// Sort the reasoning table by a framework, highest first; Default restores the original order.
-	const group = document.querySelector('.sort');
-	const body = document.querySelector('#reason-table tbody');
-	group?.addEventListener('click', (e) => {
-		const btn = (e.target as HTMLElement).closest('button[data-sort]') as HTMLButtonElement | null;
-		if (!btn || !body) return;
-		const key = btn.dataset.sort!;
-		const rows = [...body.querySelectorAll('tr')];
-		rows.sort((a, b) =>
-			key === 'default'
-				? Number(a.dataset.default) - Number(b.dataset.default)
-				: Number(b.dataset[key]) - Number(a.dataset[key]),
-		);
-		body.append(...rows);
-		group.querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+	// Sort a table by a column, highest first; Default restores the original order.
+	document.querySelectorAll<HTMLElement>('.sort[data-table]').forEach((group) => {
+		const body = document.querySelector(`#${group.dataset.table} tbody`);
+		group.addEventListener('click', (e) => {
+			const btn = (e.target as HTMLElement).closest<HTMLButtonElement>('button[data-sort]');
+			if (!btn || !body) return;
+			const key = btn.dataset.sort!;
+			const rows = [...body.querySelectorAll<HTMLTableRowElement>('tr')];
+			rows.sort((a, b) =>
+				key === 'default'
+					? Number(a.dataset.default) - Number(b.dataset.default)
+					: Number(b.dataset[key]) - Number(a.dataset[key]) || Number(a.dataset.default) - Number(b.dataset.default),
+			);
+			body.append(...rows);
+			group.querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+		});
 	});
 </script>
 
 <style>
+	.lb { --c-none: #7C8597; display: flex; flex-direction: column; gap: 1.5rem; }
+	.banner { margin: 0; padding: 0.75rem 1rem; border-radius: 0.5rem; background: #FFF4E0; color: #6B4205; border: 1px solid #F0D9AE; font-size: 0.875rem; }
+	.updated { margin: 0; font-size: 1rem; font-weight: 600; color: var(--sl-color-white); }
+	.meta { margin: -1rem 0 0; color: var(--sl-color-gray-3); font-size: 0.875rem; }
+	.card { border: 1px solid var(--sl-color-hairline); border-radius: 0.75rem; padding: 1.5rem; display: flex; flex-direction: column; gap: 0.875rem; background: var(--sl-color-bg-nav); }
+	.head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 0.75rem 1.5rem; }
+	.head > div:first-child { display: flex; flex-direction: column; gap: 0.25rem; max-width: 48rem; }
+	h2 { margin: 0; font-size: 1.25rem; font-weight: 600; color: var(--sl-color-white); }
+	.note { margin: 0; font-size: 0.875rem; color: var(--sl-color-gray-3); max-width: 48rem; }
+	.legend { display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem; font-size: 0.8125rem; }
+	.key { display: inline-flex; align-items: center; gap: 0.4rem; }
+	.sw { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+
+	.uplift { display: flex; flex-direction: column; gap: 0.875rem; }
+	.urow { display: grid; grid-template-columns: 10rem minmax(0, 1fr) 9.5rem; align-items: center; gap: 0.75rem; }
+	.uname { font-size: 0.875rem; font-weight: 600; color: var(--sl-color-white); text-decoration: none; }
+	.uname:hover { text-decoration: underline; }
+	.ubars { display: flex; flex-direction: column; gap: 3px; }
+	.unum { font-family: var(--sl-font-mono); font-size: 0.8125rem; text-align: right; display: flex; flex-direction: column; line-height: 1.3; }
+	.usub { font-size: 0.75rem; color: var(--sl-color-gray-3); }
+
 	.sort { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
 	.sort-label { font-size: 0.875rem; color: var(--sl-color-gray-3); margin-right: 0.25rem; }
 	.pill { font: inherit; font-size: 0.875rem; padding: 0.35rem 0.9rem; border-radius: 999px; border: 1px solid var(--sl-color-gray-5); background: transparent; color: var(--sl-color-white); cursor: pointer; }
 	.pill:hover { border-color: var(--sl-color-gray-3); }
 	.pill[aria-pressed='true'] { background: var(--sl-color-white); color: var(--sl-color-black); border-color: var(--sl-color-white); }
 	.pill:focus-visible { outline: 2px solid var(--sl-color-accent); outline-offset: 2px; }
-	.lb { display: flex; flex-direction: column; gap: 1.5rem; }
-	.banner { margin: 0; padding: 0.75rem 1rem; border-radius: 0.5rem; background: #FFF4E0; color: #6B4205; border: 1px solid #F0D9AE; font-size: 0.875rem; }
-	.updated { margin: 0; font-size: 1rem; font-weight: 600; color: var(--sl-color-white); }
-	table.agent { min-width: 760px; }
-	table.agent td.num, table.agent th:not(:first-child) { text-align: right; min-width: 100px; }
-	td.base { color: var(--sl-color-gray-3); }
-	.meta { margin: -1rem 0 0; color: var(--sl-color-gray-3); font-size: 0.875rem; }
-	.card, .soon { border: 1px solid var(--sl-color-hairline); border-radius: 0.75rem; padding: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; background: var(--sl-color-bg-nav); }
-	.soon { border-style: dashed; background: transparent; }
-	h2 { margin: 0; font-size: 1.25rem; font-weight: 600; color: var(--sl-color-white); }
-	.note, .soon p { margin: 0; font-size: 0.875rem; color: var(--sl-color-gray-3); max-width: 48rem; }
+
 	.scroll { overflow-x: auto; border: 1px solid var(--sl-color-hairline); border-radius: 0.5rem; }
 	table { width: 100%; min-width: 900px; border-collapse: collapse; font-size: 0.875rem; }
 	th { text-align: left; font-weight: 600; padding: 0.75rem; background: var(--sl-color-gray-6); }
 	td { padding: 0.75rem; border-top: 1px solid var(--sl-color-hairline); min-width: 140px; }
-	td.model { min-width: 210px; }
+	td.model { min-width: 190px; }
 	.model strong { display: block; color: var(--sl-color-white); }
 	.mlink { text-decoration: none; }
 	.mlink:hover strong { text-decoration: underline; }
@@ -173,7 +229,12 @@ const pct = (n: number) => `${Math.round(n)}%`;
 	.cell { display: grid; grid-template-columns: minmax(0, 1fr) 3rem; gap: 0.5rem; align-items: center; }
 	.track { height: 10px; border-radius: 3px; background: var(--sl-color-gray-5); }
 	.fill { height: 10px; border-radius: 3px; }
+	.measures .fill { background: #1E4E8C; }
+	.measures .fill.low { background: #C2552D; }
 	.num { font-family: var(--sl-font-mono); text-align: right; }
-	.key { display: inline-flex; align-items: center; gap: 0.4rem; }
-	.sw { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+
+	@media (max-width: 40rem) {
+		.urow { grid-template-columns: minmax(0, 1fr) auto; }
+		.ubars { grid-column: 1 / -1; grid-row: 2; }
+	}
 </style>

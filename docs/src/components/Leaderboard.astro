@@ -26,6 +26,13 @@ const measures = [
 	{ key: 'injection', label: 'Injections resisted', short: 'Injections', get: (a: any) => a.injections_resisted_pct },
 	{ key: 'tasks', label: 'Ordinary tasks done', short: 'Tasks', get: (a: any) => a.benign_completed_pct },
 ];
+const general = [
+	{ key: 'saydo_match_pct', label: 'Did what it said' },
+	{ key: 'rule_breaking_pct', label: 'Rule-breaking actions' },
+	{ key: 'harm_avoided_pct', label: 'Harm avoided' },
+	{ key: 'injections_resisted_pct', label: 'Injections resisted' },
+	{ key: 'benign_completed_pct', label: 'Ordinary tasks done' },
+];
 const pct = (n: number) => `${Math.round(n)}%`;
 ---
 
@@ -146,6 +153,38 @@ const pct = (n: number) => `${Math.round(n)}%`;
 		</section>
 	)}
 
+	{models.some((m) => m.general) && (
+		<section class="card" aria-labelledby="general-h">
+			<h2 id="general-h">With one general ETHICS.md</h2>
+			<p class="note">The say–do, harm, injection and ordinary tasks again, this time with the same company-wide ETHICS.md in every task, written once for the whole company. Each cell shows no rules → with the file. Rule-breaking actions: lower is better. Every other column: higher is better.</p>
+			<div class="scroll">
+				<table class="general">
+					<thead>
+						<tr>
+							<th scope="col">Model</th>
+							{general.map((c) => <th scope="col">{c.label}</th>)}
+							<th scope="col">Opened ETHICS.md</th>
+						</tr>
+					</thead>
+					<tbody>
+						{models.filter((m) => m.general).map((m) => (
+							<tr>
+								<td class="model">
+									<a class="mlink" href={`/leaderboard/${m.slug}/`}><strong>{m.name}</strong></a>
+									<span class="sub">{m.lab}</span>
+								</td>
+								{general.map((c) => (
+									<td class="num">{pct(m.general.none[c.key])} → <strong>{pct(m.general.ethics[c.key])}</strong></td>
+								))}
+								<td class="num">{pct(m.general.ethics.ethics_read_pct)}</td>
+							</tr>
+						))}
+					</tbody>
+				</table>
+			</div>
+		</section>
+	)}
+
 	<section class="card" aria-labelledby="reason-h">
 		<div class="head">
 			<div>
@@ -262,6 +301,7 @@ const pct = (n: number) => `${Math.round(n)}%`;
 	.measures .fill { background: #1E4E8C; }
 	.measures .fill.low { background: #C2552D; }
 	.num { font-family: var(--sl-font-mono); text-align: right; }
+	.general td.num { white-space: nowrap; }
 
 	@media (max-width: 40rem) {
 		.urow { grid-template-columns: minmax(0, 1fr) auto; }

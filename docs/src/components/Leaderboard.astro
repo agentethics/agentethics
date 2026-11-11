@@ -20,18 +20,15 @@ const conditions = [
 	{ key: 'ethics', label: 'With ETHICS.md', color: '#1E4E8C' },
 	{ key: 'inline', label: 'Same rules in AGENTS.md', color: '#6F93C6' },
 ];
+// Each measure with no rules and with an ETHICS.md. Rule tasks use their own ETHICS.md;
+// the other tasks use the one general company file.
 const measures = [
-	{ key: 'harm', label: 'Harm avoided', short: 'Harm', get: (a: any) => a.harm_avoided_pct },
-	{ key: 'ethics', label: 'ETHICS.md rules followed', short: 'ETHICS.md', get: (a: any) => a.rules_followed_pct.ethics },
-	{ key: 'injection', label: 'Injections resisted', short: 'Injections', get: (a: any) => a.injections_resisted_pct },
-	{ key: 'tasks', label: 'Ordinary tasks done', short: 'Tasks', get: (a: any) => a.benign_completed_pct },
-];
-const general = [
-	{ key: 'saydo_match_pct', label: 'Did what it said' },
-	{ key: 'rule_breaking_pct', label: 'Rule-breaking actions' },
-	{ key: 'harm_avoided_pct', label: 'Harm avoided' },
-	{ key: 'injections_resisted_pct', label: 'Injections resisted' },
-	{ key: 'benign_completed_pct', label: 'Ordinary tasks done' },
+	{ key: 'rules', label: 'Rules followed', short: 'Rules', none: (m: any) => m.agent.rules_followed_pct.none, with: (m: any) => m.agent.rules_followed_pct.ethics },
+	{ key: 'harm', label: 'Harm avoided', short: 'Harm', none: (m: any) => m.general?.none.harm_avoided_pct, with: (m: any) => m.general?.ethics.harm_avoided_pct },
+	{ key: 'injection', label: 'Injections resisted', short: 'Injections', none: (m: any) => m.general?.none.injections_resisted_pct, with: (m: any) => m.general?.ethics.injections_resisted_pct },
+	{ key: 'tasks', label: 'Ordinary tasks done', short: 'Tasks', none: (m: any) => m.general?.none.benign_completed_pct, with: (m: any) => m.general?.ethics.benign_completed_pct },
+	{ key: 'said', label: 'Did what it said', short: 'Said', none: (m: any) => m.general?.none.saydo_match_pct, with: (m: any) => m.general?.ethics.saydo_match_pct },
+	{ key: 'breaking', label: 'Rule-breaking actions', short: 'Rule-breaking', lower: true, none: (m: any) => m.general?.none.rule_breaking_pct, with: (m: any) => m.general?.ethics.rule_breaking_pct },
 ];
 const pct = (n: number) => `${Math.round(n)}%`;
 ---
@@ -83,13 +80,17 @@ const pct = (n: number) => `${Math.round(n)}%`;
 			<div class="head">
 				<div>
 					<h2 id="measure-h">Results by measure</h2>
-					<p class="note">Models acting as agents in sandboxed tasks, graded on what they did. Each column is its own measure; higher is better. Select a model for its full results.</p>
+					<p class="note">Each cell shows the result with no rules → with an ETHICS.md, which <code>AGENTS.md</code> points to. Rule tasks use an ETHICS.md holding that task's rule. Every other task uses one general company ETHICS.md, the same for all of them. Rule-breaking actions: lower is better. Every other column: higher is better. Sorting uses the results with ETHICS.md.</p>
 				</div>
 				<div class="sort" role="group" aria-label="Sort agent results" data-table="measure-table">
 					<span class="sort-label">Sort by</span>
 					<button type="button" class="pill" data-sort="default" aria-pressed="true">Default</button>
-					{measures.map((c) => <button type="button" class="pill" data-sort={c.key} aria-pressed="false">{c.short}</button>)}
+					{measures.map((c) => <button type="button" class="pill" data-sort={c.key} data-lower={c.lower ? '1' : undefined} aria-pressed="false">{c.short}</button>)}
 				</div>
+			</div>
+			<div class="legend">
+				<span class="key"><span class="sw" style="background:var(--c-none)"></span>No rules</span>
+				<span class="key"><span class="sw" style="background:#1E4E8C"></span>With ETHICS.md</span>
 			</div>
 			<div class="scroll">
 				<table id="measure-table" class="measures">
@@ -97,26 +98,33 @@ const pct = (n: number) => `${Math.round(n)}%`;
 						<tr>
 							<th scope="col">Model</th>
 							{measures.map((c) => <th scope="col">{c.label}</th>)}
+							<th scope="col">Opened ETHICS.md</th>
 						</tr>
 					</thead>
 					<tbody>
 						{models.filter((m) => m.agent).map((m, i) => (
-							<tr data-default={i} {...Object.fromEntries(measures.map((c) => [`data-${c.key}`, c.get(m.agent)]))}>
+							<tr data-default={i} {...Object.fromEntries(measures.map((c) => [`data-${c.key}`, c.with(m) ?? -1]))}>
 								<td class="model">
 									<a class="mlink" href={`/leaderboard/${m.slug}/`}><strong>{m.name}</strong></a>
 									<span class="sub">{m.lab}</span>
 								</td>
 								{measures.map((c) => {
-									const v = c.get(m.agent);
+									const n = c.none(m), w = c.with(m);
 									return (
 										<td>
-											<div class="cell">
-												<div class="track"><div class={`fill ${v < 50 ? 'low' : ''}`} style={`width:${v}%`}></div></div>
-												<span class="num">{pct(v)}</span>
-											</div>
+											{w == null ? <span class="num">–</span> : (
+												<div class="pair" title={`No rules ${pct(n)} · with ETHICS.md ${pct(w)}`}>
+													<div class="bars">
+														<div class="track thin"><div class="fill" style={`width:${n}%;background:var(--c-none)`}></div></div>
+														<div class="track thin"><div class="fill" style={`width:${w}%;background:#1E4E8C`}></div></div>
+													</div>
+													<span class="num">{pct(n)} → <strong>{pct(w)}</strong></span>
+												</div>
+											)}
 										</td>
 									);
 								})}
+								<td class="num">{m.general ? pct(m.general.ethics.ethics_read_pct) : '–'}</td>
 							</tr>
 						))}
 					</tbody>
@@ -149,38 +157,6 @@ const pct = (n: number) => `${Math.round(n)}%`;
 						</div>
 					);
 				})}
-			</div>
-		</section>
-	)}
-
-	{models.some((m) => m.general) && (
-		<section class="card" aria-labelledby="general-h">
-			<h2 id="general-h">With one general ETHICS.md</h2>
-			<p class="note">The say–do, harm, injection and ordinary tasks again, this time with the same company-wide ETHICS.md in every task, written once for the whole company. Each cell shows no rules → with the file. Rule-breaking actions: lower is better. Every other column: higher is better.</p>
-			<div class="scroll">
-				<table class="general">
-					<thead>
-						<tr>
-							<th scope="col">Model</th>
-							{general.map((c) => <th scope="col">{c.label}</th>)}
-							<th scope="col">Opened ETHICS.md</th>
-						</tr>
-					</thead>
-					<tbody>
-						{models.filter((m) => m.general).map((m) => (
-							<tr>
-								<td class="model">
-									<a class="mlink" href={`/leaderboard/${m.slug}/`}><strong>{m.name}</strong></a>
-									<span class="sub">{m.lab}</span>
-								</td>
-								{general.map((c) => (
-									<td class="num">{pct(m.general.none[c.key])} → <strong>{pct(m.general.ethics[c.key])}</strong></td>
-								))}
-								<td class="num">{pct(m.general.ethics.ethics_read_pct)}</td>
-							</tr>
-						))}
-					</tbody>
-				</table>
 			</div>
 		</section>
 	)}
@@ -247,7 +223,8 @@ const pct = (n: number) => `${Math.round(n)}%`;
 			rows.sort((a, b) =>
 				key === 'default'
 					? Number(a.dataset.default) - Number(b.dataset.default)
-					: Number(b.dataset[key]) - Number(a.dataset[key]) || Number(a.dataset.default) - Number(b.dataset.default),
+					: (btn.dataset.lower ? Number(a.dataset[key]) - Number(b.dataset[key]) : Number(b.dataset[key]) - Number(a.dataset[key])) ||
+						Number(a.dataset.default) - Number(b.dataset.default),
 			);
 			body.append(...rows);
 			group.querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
@@ -298,10 +275,11 @@ const pct = (n: number) => `${Math.round(n)}%`;
 	.cell { display: grid; grid-template-columns: minmax(0, 1fr) 3rem; gap: 0.5rem; align-items: center; }
 	.track { height: 10px; border-radius: 3px; background: var(--sl-color-gray-5); }
 	.fill { height: 10px; border-radius: 3px; }
-	.measures .fill { background: #1E4E8C; }
-	.measures .fill.low { background: #C2552D; }
+	.pair { display: flex; flex-direction: column; gap: 0.35rem; }
+	.bars { display: flex; flex-direction: column; gap: 2px; }
+	.track.thin, .track.thin .fill { height: 6px; }
+	.pair .num { white-space: nowrap; font-size: 0.8125rem; text-align: left; }
 	.num { font-family: var(--sl-font-mono); text-align: right; }
-	.general td.num { white-space: nowrap; }
 
 	@media (max-width: 40rem) {
 		.urow { grid-template-columns: minmax(0, 1fr) auto; }

@@ -35,15 +35,17 @@ const day = (iso: string) => new Date(iso).toLocaleDateString('en-US', { year: '
 const a = m.agent as any;
 const agentRun = (scores as any).agent;
 const withAgent = all.filter((x: any) => x.agent);
-const aAvg = (get: (x: any) => number) => withAgent.reduce((s: number, x: any) => s + get(x.agent), 0) / withAgent.length;
+const aAvg = (get: (x: any) => number) => withAgent.reduce((s: number, x: any) => s + get(x), 0) / withAgent.length;
 const typeLabel: Record<string, string> = { rule: 'Rule', harm: 'Harm', injection: 'Injection', benign: 'Ordinary' };
 const scen = a ? Object.entries(a.scenarios as Record<string, any>) : [];
+// With an ETHICS.md: rule tasks use their own, every other task the one general company file.
+const g = (m as any).general;
 const tiles = a
 	? [
-			{ label: 'Harm avoided', v: a.harm_avoided_pct, get: (x: any) => x.harm_avoided_pct, note: 'Harmful instructions not carried out' },
-			{ label: 'ETHICS.md rules followed', v: a.rules_followed_pct.ethics, get: (x: any) => x.rules_followed_pct.ethics, note: `Opened ETHICS.md in ${round(a.ethics_read_pct)}% of runs` },
-			{ label: 'Injections resisted', v: a.injections_resisted_pct, get: (x: any) => x.injections_resisted_pct, note: 'Planted instructions not followed' },
-			{ label: 'Ordinary tasks done', v: a.benign_completed_pct, get: (x: any) => x.benign_completed_pct, note: 'Harmless tasks completed' },
+			{ label: 'Harm avoided', v: g?.ethics.harm_avoided_pct ?? a.harm_avoided_pct, get: (x: any) => x.general?.ethics.harm_avoided_pct ?? x.agent.harm_avoided_pct, note: g ? `${round(g.none.harm_avoided_pct)}% with no rules` : 'With no rules' },
+			{ label: 'Rules followed', v: a.rules_followed_pct.ethics, get: (x: any) => x.agent.rules_followed_pct.ethics, note: `${round(a.rules_followed_pct.none)}% with no rules · opened ETHICS.md in ${round(a.ethics_read_pct)}% of runs` },
+			{ label: 'Injections resisted', v: g?.ethics.injections_resisted_pct ?? a.injections_resisted_pct, get: (x: any) => x.general?.ethics.injections_resisted_pct ?? x.agent.injections_resisted_pct, note: g ? `${round(g.none.injections_resisted_pct)}% with no rules` : 'With no rules' },
+			{ label: 'Ordinary tasks done', v: g?.ethics.benign_completed_pct ?? a.benign_completed_pct, get: (x: any) => x.general?.ethics.benign_completed_pct ?? x.agent.benign_completed_pct, note: g ? `${round(g.none.benign_completed_pct)}% with no rules` : 'With no rules' },
 		]
 	: [];
 const conds = [
@@ -70,6 +72,7 @@ const gap = a ? a.rules_followed_pct.ethics - a.rules_followed_pct.inline : 0;
 		</p>
 
 		{a && (
+			<p class="note">Agent results with an ETHICS.md. Rule tasks use their own; every other task uses one general company file.</p>
 			<section class="tiles" aria-label="Agent measures">
 				{tiles.map((t) => (
 					<div class="tile">

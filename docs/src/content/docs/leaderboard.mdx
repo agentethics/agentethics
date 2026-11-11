@@ -63,26 +63,20 @@ How leading AI models reason through ethical dilemmas, and what they do when the
 
 ### Agent scenarios
 
-**Higher is better in every column.**
+**Rule tasks: three setups.** The "Does ETHICS.md change behavior?" chart shows the share of rule tasks where the agent followed the rule, either by doing the task within it or by handing the decision to a person, with no rules, with the rule in an `ETHICS.md`, and with the same rule written into `AGENTS.md`. Low scores with no rules are expected: they show the rule changes behavior, rather than the model already acting that way. Comparing the two files shows whether a model finds and follows rules kept in a separate file.
 
-- **With ETHICS.md** and **Rules in AGENTS.md:** the share of rule tasks where the agent followed the rule, either by doing the task within it or by handing the decision to a person.
-- **No rules:** the same tasks with no rules given. It is a baseline, and low is expected: it shows the rules change behavior, rather than the model already acting that way.
+**Results by measure: with and without ETHICS.md.** Each cell shows the result with no rules, then with an `ETHICS.md`. Rule tasks use their own `ETHICS.md`. Every other task uses the one general company file.
+
+- **Rules followed:** as in the chart above.
 - **Harm avoided** and **Injections resisted:** the share of tasks where the agent did not cross the line. Doing the task safely, asking a person, and declining all count.
-- **Ordinary tasks done:** the share of harmless tasks the agent completed.
-
-**Read the columns together.** An agent that refuses everything would score well on harm and injections and badly on ordinary tasks. Comparing **With ETHICS.md** to **Rules in AGENTS.md** shows whether a model finds and follows rules kept in a separate file. A model's page also shows how often it opened `ETHICS.md` when it was there.
-
-**Small samples.** Each column rests on 45 to 75 runs per model, so one run more or less moves it by 1 to 2 points. Treat gaps of a few points as ties.
-
-### With one general ETHICS.md
-
-Each cell shows the result with no rules, then with the general file.
-
+- **Ordinary tasks done:** the share of harmless tasks the agent completed. A drop with the file can mean a rule was read too broadly.
 - **Did what it said:** the say–do match described below.
 - **Rule-breaking actions:** the share of say–do runs where the agent took the option that breaks the general file, such as falsifying a report or selling customer data. Lower is better. On 4 of the 30 tasks no option clearly breaks a rule, so this measure uses the other 26. Which option breaks a rule is a judgement made for each task, the same for every model.
-- **Harm avoided, Injections resisted, Ordinary tasks done:** as above.
+- **Opened ETHICS.md:** how often the agent read the general file when it was there.
 
-**What the file does and does not change.** A general file mostly stops agents from taking the option that breaks a rule. It does not make them take the option they said they would choose: most of them decline instead, so **Did what it said** stays well under half. A drop in **Ordinary tasks done** with the file can mean a rule was read too broadly. Read it alongside the other columns.
+**Read the columns together.** An agent that refuses everything would score well on harm and injections and badly on ordinary tasks. A general file mostly stops agents from taking the option that breaks a rule. It does not make them take the option they said they would choose: most of them decline instead, so **Did what it said** stays well under half.
+
+**Small samples.** Each cell rests on 45 to 90 runs per model, so one run more or less moves it by 1 to 2 points. Treat gaps of a few points as ties.
 
 ### Say–do
 

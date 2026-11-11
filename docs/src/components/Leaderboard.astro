@@ -283,6 +283,6 @@ const pct = (n: number) => `${Math.round(n)}%`;
 
 	@media (max-width: 40rem) {
 		.urow { grid-template-columns: minmax(0, 1fr) auto; }
-		.ubars { grid-column: 1 / -1; grid-row: 2; }
+		.ubars, .urow .stack { grid-column: 1 / -1; grid-row: 2; }
 	}
 </style>

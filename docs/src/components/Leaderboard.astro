@@ -42,8 +42,15 @@ const pct = (n: number) => `${Math.round(n)}%`;
 	<section class="card" aria-labelledby="reason-h">
 		<h2 id="reason-h">How models reason</h2>
 		<p class="note">On dilemmas where ethical frameworks disagree, how often each model chose the option each framework favors. Frameworks often share an answer, so a row does not add to 100. No profile is better than another. Select a model for its breakdown by category.</p>
+		<div class="sort" role="group" aria-label="Sort models">
+			<span class="sort-label">Sort by</span>
+			<button type="button" class="pill" data-sort="default" aria-pressed="true">Default</button>
+			{frameworks.map((f) => (
+				<button type="button" class="pill" data-sort={f.key} aria-pressed="false">{f.label}</button>
+			))}
+		</div>
 		<div class="scroll">
-			<table>
+			<table id="reason-table">
 				<thead>
 					<tr>
 						<th scope="col">Model</th>
@@ -54,8 +61,14 @@ const pct = (n: number) => `${Math.round(n)}%`;
 					</tr>
 				</thead>
 				<tbody>
-					{models.map((m) => (
-						<tr>
+					{models.map((m, i) => (
+						<tr
+							data-default={i}
+							data-rights={m.contested_cases.alignment_pct.rights}
+							data-utilitarian={m.contested_cases.alignment_pct.utilitarian}
+							data-deontological={m.contested_cases.alignment_pct.deontological}
+							data-virtue={m.contested_cases.alignment_pct.virtue}
+						>
 							<td class="model">
 								<a class="mlink" href={`/leaderboard/${m.slug}/`}><strong>{m.name}</strong></a>
 								<span class="sub">{m.lab} · served by {m.host ?? 'unknown'}</span>
@@ -111,7 +124,32 @@ const pct = (n: number) => `${Math.round(n)}%`;
 	)}
 </div>
 
+<script>
+	// Sort the reasoning table by a framework, highest first; Default restores the original order.
+	const group = document.querySelector('.sort');
+	const body = document.querySelector('#reason-table tbody');
+	group?.addEventListener('click', (e) => {
+		const btn = (e.target as HTMLElement).closest('button[data-sort]') as HTMLButtonElement | null;
+		if (!btn || !body) return;
+		const key = btn.dataset.sort!;
+		const rows = [...body.querySelectorAll('tr')];
+		rows.sort((a, b) =>
+			key === 'default'
+				? Number(a.dataset.default) - Number(b.dataset.default)
+				: Number(b.dataset[key]) - Number(a.dataset[key]),
+		);
+		body.append(...rows);
+		group.querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+	});
+</script>
+
 <style>
+	.sort { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
+	.sort-label { font-size: 0.875rem; color: var(--sl-color-gray-3); margin-right: 0.25rem; }
+	.pill { font: inherit; font-size: 0.875rem; padding: 0.35rem 0.9rem; border-radius: 999px; border: 1px solid var(--sl-color-gray-5); background: transparent; color: var(--sl-color-white); cursor: pointer; }
+	.pill:hover { border-color: var(--sl-color-gray-3); }
+	.pill[aria-pressed='true'] { background: var(--sl-color-white); color: var(--sl-color-black); border-color: var(--sl-color-white); }
+	.pill:focus-visible { outline: 2px solid var(--sl-color-accent); outline-offset: 2px; }
 	.lb { display: flex; flex-direction: column; gap: 1.5rem; }
 	.banner { margin: 0; padding: 0.75rem 1rem; border-radius: 0.5rem; background: #FFF4E0; color: #6B4205; border: 1px solid #F0D9AE; font-size: 0.875rem; }
 	.updated { margin: 0; font-size: 1rem; font-weight: 600; color: var(--sl-color-white); }

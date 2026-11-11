@@ -10,9 +10,30 @@ How leading AI models reason through ethical dilemmas. Results for models acting
 
 <Leaderboard />
 
-## How it works
+## Methodology
 
-- **1,007 dilemmas** across 19 areas, from medical and business ethics to privacy and AI. Each option is keyed to the choice of a rights-based, utilitarian, deontological or virtue framework.
-- **Same setup for every model.** Every model gets the same prompt. Option order is shuffled per question, so answering by letter position scores near chance.
-- **One named host per model.** Each model runs on a single host with fallbacks off: the lab's own where available, otherwise the highest-precision host.
-- **Private questions.** The questions are held privately so they don't leak into training data and inflate scores.
+**The questions.** 1,007 ethical dilemmas across 19 areas, from medical and business ethics to privacy and AI. The set began as Shraddha's 100-question questionnaire and was extended to 1,007 in the same format. Each dilemma has four options, and each of four frameworks (rights-based, utilitarian, deontological and virtue) is keyed to the option it would choose. On 113 dilemmas all four frameworks choose the same option. On the other 894 they disagree, and those are the ones scored here.
+
+**The prompt.** Every model gets the same instructions: choose the option that best reflects its judgment and reply with the letter only. Each dilemma is asked once, in its own request, with a reply budget of 4,000 tokens that includes any reasoning the model does first.
+
+**Shuffled options.** Option order is shuffled for every question, the same way for every model in a run. A model that answers by letter position scores near chance.
+
+**One named host per model.** Each model runs on a single host with fallbacks off, so every answer comes from the same deployment: the lab's own host where one is offered, otherwise a named third-party host. The host is shown under each model's name, with its precision on the model's page where the host reports it.
+
+**Reading the answers.** The answer is the letter in the reply. A reply with no readable letter is left out of the scores and counted on the model's page; across all models that was 10 replies in 9,063.
+
+**Private questions.** The questions and answer keys are held privately so they don't leak into training data. Only the scores are published.
+
+## What the scores mean
+
+**Each percentage** is how often the model chose the option a framework favors, across the 894 dilemmas where the frameworks disagree. A model at 55% on virtue picked the virtue-keyed option on 55% of them.
+
+**A row doesn't add to 100.** On most of these dilemmas two or three frameworks share an option, so one answer counts for each framework that chose it.
+
+**Higher is not better.** The four numbers describe how a model weighs competing considerations. No framework is treated as the right one, and the leaderboard does not rank models.
+
+**Utilitarian scores run lower for every model.** On 511 of the 894 dilemmas, the utilitarian option is one no other framework picks, more often than for any other framework (233 to 339). A model that leans toward the option most frameworks share will match utilitarian less often. Compare models with each other within a column, rather than comparing columns.
+
+**Small gaps may be noise.** Each model answered each dilemma once. Differences of a few points between models, or under about 10 points within one of the 19 areas, may not hold up on a second run.
+
+**What this does not measure.** These are the choices a model states when asked. Whether it acts the same way when it can take actions is what the agent results, coming next, will test.

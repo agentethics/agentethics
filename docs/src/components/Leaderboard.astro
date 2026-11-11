@@ -9,7 +9,9 @@ const frameworks = [
 ];
 const models = scores.models;
 const total = models[0]?.questions_total ?? 0;
-const updated = new Date(scores.generated_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
+// The date of the most recent model evaluation in this release.
+const latest = models.map((m) => m.evaluated_at).filter(Boolean).sort().at(-1) ?? scores.generated_at;
+const updated = new Date(latest).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
 const pct = (n: number) => `${Math.round(n)}%`;
 ---
 
@@ -20,8 +22,9 @@ const pct = (n: number) => `${Math.round(n)}%`;
 		</p>
 	)}
 
+	<p class="updated">Scores updated <time datetime={latest.slice(0, 10)}>{updated}</time></p>
 	<p class="meta">
-		Evals v{scores.evals_version} · {models.length} models · {total.toLocaleString('en-US')} dilemmas · run {scores.run_id} · updated {updated}
+		Evals v{scores.evals_version} · {models.length} models · {total.toLocaleString('en-US')} dilemmas · run {scores.run_id} · <a href="#methodology">Methodology</a> · <a href="#what-the-scores-mean">What the scores mean</a>
 	</p>
 
 	<section class="card" aria-labelledby="reason-h">
@@ -73,7 +76,8 @@ const pct = (n: number) => `${Math.round(n)}%`;
 <style>
 	.lb { display: flex; flex-direction: column; gap: 1.5rem; }
 	.banner { margin: 0; padding: 0.75rem 1rem; border-radius: 0.5rem; background: #FFF4E0; color: #6B4205; border: 1px solid #F0D9AE; font-size: 0.875rem; }
-	.meta { margin: 0; color: var(--sl-color-gray-3); font-size: 0.875rem; }
+	.updated { margin: 0; font-size: 1rem; font-weight: 600; color: var(--sl-color-white); }
+	.meta { margin: -1rem 0 0; color: var(--sl-color-gray-3); font-size: 0.875rem; }
 	.card, .soon { border: 1px solid var(--sl-color-hairline); border-radius: 0.75rem; padding: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; background: var(--sl-color-bg-nav); }
 	.soon { border-style: dashed; background: transparent; }
 	h2 { margin: 0; font-size: 1.25rem; font-weight: 600; color: var(--sl-color-white); }

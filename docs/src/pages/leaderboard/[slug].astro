@@ -36,8 +36,9 @@ const fmt = (n: number) => n.toLocaleString('en-US');
 <StarlightPage frontmatter={{ title: m.name, description: `${m.name} on the Agent Ethics dilemma evaluation.`, template: 'splash' }}>
 	<div class="mp not-content">
 		<p class="back"><a href="/leaderboard/">← All models</a></p>
+		{updated && <p class="updated">Scores updated <time datetime={m.evaluated_at.slice(0, 10)}>{updated}</time></p>}
 		<p class="meta">
-			{m.lab} · served by {m.host}{quant ? ` (${quant})` : ''} · <code>{m.model}</code> · run {scores.run_id}{updated && ` · ${updated}`}
+			{m.lab} · served by {m.host}{quant ? ` (${quant})` : ''} · <code>{m.model}</code> · run {scores.run_id} · <a href="/leaderboard/#methodology">Methodology</a>
 		</p>
 
 		<section class="card" aria-labelledby="reason-h">
@@ -118,6 +119,7 @@ const fmt = (n: number) => n.toLocaleString('en-US');
 	.mp { display: flex; flex-direction: column; gap: 1.5rem; }
 	.back, .meta { margin: 0; font-size: 0.875rem; }
 	.meta { color: var(--sl-color-gray-3); }
+	.updated { margin: 0; font-size: 1rem; font-weight: 600; color: var(--sl-color-white); }
 	.card, .soon { border: 1px solid var(--sl-color-hairline); border-radius: 0.75rem; padding: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; background: var(--sl-color-bg-nav); }
 	.soon { border-style: dashed; background: transparent; }
 	h2 { margin: 0; font-size: 1.25rem; font-weight: 600; color: var(--sl-color-white); }

@@ -138,7 +138,7 @@ const pct = (n: number) => `${Math.round(n)}%`;
 								<div style={`width:${sd.other_option_pct}%;background:#E8973F`}></div>
 								<div style={`width:${sd.no_option_pct}%;background:var(--c-none)`}></div>
 							</div>
-							<span class="unum"><span><strong>{pct(sd.match_pct)}</strong> match</span><span class="usub">{sd.items} dilemmas × {Math.round(sd.episodes / sd.items)} runs</span></span>
+							<span class="unum"><span><strong>{pct(sd.match_pct)}</strong> match</span><span class="usub">{sd.items} dilemmas × {Math.round(sd.episodes / sd.items)} {Math.round(sd.episodes / sd.items) === 1 ? 'run' : 'runs'}</span></span>
 						</div>
 					);
 				})}

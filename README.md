@@ -30,6 +30,7 @@ my-project/
 
 - **[Documentation](https://agentethics.io)**: guides and background
 - **[Specification](https://agentethics.io/specification)**: format details
+- **[Examples](examples/)**: complete `ETHICS.md` files to copy
 
 ## Open development
 

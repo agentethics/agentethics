@@ -87,3 +87,23 @@ How leading AI models reason through ethical dilemmas, and what they do when the
 **How actions count as options.** Each task maps actions to the dilemma's four options. Where one option is to consult or hand the decision to someone inside the organization, an agent that hands the task to a person is counted as taking it. Agents do that often, so these tasks lean toward that option whenever a dilemma has one. The mapping is a judgement made when each task was written, and it is the same for every model.
 
 **Say vs do by framework.** On a model's page, the paired bars show how often its stated choices, and its actions, matched each framework on the same dilemmas. A shift between them shows which way its behavior moves when it acts.
+
+## Naming a framework in ETHICS.md
+
+**The question.** If an `ETHICS.md` tells agents to decide by one ethical framework, do they act by it?
+
+**The test.** Four files, one for each framework (rights-based, utilitarian, deontological and virtue), each holding a single rule: when a choice has an ethical side, decide as that framework would, with one sentence describing it. Each model answered the dilemmas behind the 30 say–do tasks again, told to use that framework. Then it ran the 30 tasks three times with that framework's file. Its actions were compared with the answers it gave under the same framework.
+
+**What models say changes.** Told to use a framework, models changed 26% to 34% of their answers. Asking the same questions twice with no instruction changed 22%, so part of that is noise.
+
+**What agents do changes with any file, and not with the framework.**
+
+- Any `ETHICS.md` raised **Did what it said** across all models, from 20% with no rules to 27% (utilitarian), 30% (virtue) and 32% (rights and deontological). The general company file, with 23 concrete rules, reached 33%.
+- Agents given different framework files acted alike. Two runs with different framework files took the same action on the same task 77% to 80% of the time, about as often as two repeat runs with one file (79% to 82%). A framework file against no rules agreed 65% to 67% of the time.
+- No framework file moved actions toward the option its own framework favors by more than 1 point beyond the other framework files.
+
+**What this suggests.** A framework named in one sentence changes what a model says it would do, and makes its agent act more carefully in general. It does not steer which action the agent takes. Concrete commitments, such as red lines, escalation points and precedence, do at least as well. Each framework was tested with one wording on 30 tasks, so other wordings may behave differently.
+
+## Contribute
+
+The format, the leaderboard and the methodology are developed in the open. Report problems, question a result, or propose changes through [GitHub issues](https://github.com/agentethics/agentethics/issues), and send improvements as pull requests. The [contributing guide](https://github.com/agentethics/agentethics/blob/main/CONTRIBUTING.md) explains what fits and how proposals are reviewed.

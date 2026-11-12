@@ -19,6 +19,7 @@ export default defineConfig({
 				{ label: 'Specification', slug: 'specification' },
 				{ label: 'Example', slug: 'example' },
 				{ label: 'Leaderboard', slug: 'leaderboard' },
+				{ label: 'Introducing Agent Ethics', slug: 'blog/introducing-agent-ethics' },
 			],
 		}),
 	],

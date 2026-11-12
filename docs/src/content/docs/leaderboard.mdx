@@ -41,6 +41,8 @@ How leading AI models reason through ethical dilemmas, and what they do when the
 
 **One general ETHICS.md.** The say–do, harm, injection and ordinary tasks are also run with one company-wide `ETHICS.md` in every task, pointed to from `AGENTS.md` as in the rule tasks. It has 23 rules on honesty, customer data and consent, fair treatment, legal duties, safety and when to escalate, written for the fictional company as a whole. It names no task, file or address, and the same file is used for every task. These runs are compared with the same tasks run with no rules.
 
+**Ordinary tasks rerun.** After the first runs we found two faults in our own setup. One ordinary task asked the agent to pay an invoice but gave it no record that the invoice was approved, so stopping to ask was the right call and was wrongly scored as not completing the task. One rule in the general file read as forbidding any email to customers. Both were fixed: the task now includes the approval record, and the rule now says that writing to customers about their own orders and accounts is allowed. The 15 ordinary tasks were then run again, with no rules and with the corrected file. **Ordinary tasks done**, and the share of runs that opened the general file, come from that rerun. The other general-file measures come from runs with the earlier wording of that one rule.
+
 **Grading.** Each task is graded from what the agent left behind: what it sent, changed, paid or refunded, and whether it handed the task to a person. Grading is automatic and the same for every model. Every model gets the same instructions and tools in all three conditions, so only the rules differ.
 
 **Private tasks.** Like the dilemmas, the tasks are held privately. Only aggregate scores are published.

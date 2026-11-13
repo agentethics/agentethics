@@ -1,0 +1,112 @@
+---
+// Scorecards for the launch post. Every number is read from the published scores, so the post stays in step with the leaderboard.
+import scores from '../data/scores.json';
+
+const models = scores.models.filter((m) => m.agent && m.general);
+const pct = (v) => (v == null ? '–' : `${Math.round(v)}%`);
+const saydo = [...models].sort((a, b) => b.general.ethics.saydo_match_pct - a.general.ethics.saydo_match_pct);
+const measures = [
+	{ label: 'Rules followed', none: (m) => m.agent.rules_followed_pct.none, with: (m) => m.agent.rules_followed_pct.ethics },
+	{ label: 'Harm avoided', none: (m) => m.general.none.harm_avoided_pct, with: (m) => m.general.ethics.harm_avoided_pct },
+	{ label: 'Injections resisted', none: (m) => m.general.none.injections_resisted_pct, with: (m) => m.general.ethics.injections_resisted_pct },
+	{ label: 'Ordinary tasks done', none: (m) => m.general.none.benign_completed_pct, with: (m) => m.general.ethics.benign_completed_pct },
+];
+const ethics = [...models].sort((a, b) => b.agent.rules_followed_pct.ethics - a.agent.rules_followed_pct.ethics);
+---
+
+<div class="sc not-content">
+	<figure class="card" aria-labelledby="saydo-title">
+		<figcaption>
+			<h3 id="saydo-title">Do agents do what their model says?</h3>
+			<p class="note">Share of runs where the agent took the option its model said it would take, across 30 tasks built from the dilemmas.</p>
+		</figcaption>
+		<div class="legend">
+			<span class="key"><span class="sw none"></span>No rules</span>
+			<span class="key"><span class="sw with"></span>With ETHICS.md</span>
+		</div>
+		<ul class="rows">
+			{saydo.map((m) => {
+				const n = m.general.none.saydo_match_pct, w = m.general.ethics.saydo_match_pct;
+				return (
+					<li class="row" title={`${m.name}: ${pct(n)} with no rules, ${pct(w)} with ETHICS.md`}>
+						<a class="name" href={`/leaderboard/${m.slug}/`}>{m.name}</a>
+						<div class="bars">
+							<div class="track"><div class="fill none" style={`width:${n}%`}></div></div>
+							<div class="track"><div class="fill with" style={`width:${w}%`}></div></div>
+						</div>
+						<span class="num">{pct(n)} → <strong>{pct(w)}</strong></span>
+					</li>
+				);
+			})}
+		</ul>
+	</figure>
+
+	<figure class="card" aria-labelledby="ethics-title">
+		<figcaption>
+			<h3 id="ethics-title">Model ethics scorecard</h3>
+			<p class="note">Each cell shows the score with no rules → with ETHICS.md. Rules followed uses task-specific files; the other measures use the one general company file.</p>
+		</figcaption>
+		<div class="scroll">
+			<table>
+				<thead>
+					<tr>
+						<th scope="col">Model</th>
+						{measures.map((c) => <th scope="col">{c.label}</th>)}
+					</tr>
+				</thead>
+				<tbody>
+					{ethics.map((m) => (
+						<tr>
+							<th scope="row"><a class="name" href={`/leaderboard/${m.slug}/`}>{m.name}</a><span class="lab">{m.lab}</span></th>
+							{measures.map((c) => {
+								const n = c.none(m), w = c.with(m);
+								return (
+									<td title={`${m.name}, ${c.label.toLowerCase()}: ${pct(n)} with no rules, ${pct(w)} with ETHICS.md`}>
+										<div class="track"><div class="fill with" style={`width:${w}%`}></div></div>
+										<span class="num">{pct(n)} → <strong>{pct(w)}</strong></span>
+									</td>
+								);
+							})}
+						</tr>
+					))}
+				</tbody>
+			</table>
+		</div>
+	</figure>
+</div>
+
+<style>
+	.sc { --c-none: #7C8597; --c-with: #1E4E8C; display: flex; flex-direction: column; gap: 1.5rem; margin: 2rem 0; }
+	:global([data-theme='dark']) .sc { --c-with: #7FA3D6; }
+	:global([data-theme='dark']) .sc .track { background: var(--sl-color-gray-5); }
+	.card { margin: 0; border: 1px solid var(--sl-color-hairline); border-radius: 0.75rem; padding: 1.25rem; display: flex; flex-direction: column; gap: 0.75rem; background: var(--sl-color-bg-nav); }
+	h3 { margin: 0; font-size: 1.125rem; font-weight: 600; color: var(--sl-color-white); }
+	.note { margin: 0.25rem 0 0; font-size: 0.875rem; color: var(--sl-color-gray-3); }
+	.legend { display: flex; gap: 1rem; flex-wrap: wrap; font-size: 0.8125rem; color: var(--sl-color-gray-2); }
+	.key { display: inline-flex; align-items: center; gap: 0.375rem; }
+	.sw { width: 0.75rem; height: 0.75rem; border-radius: 2px; }
+	.none { background: var(--c-none); }
+	.with { background: var(--c-with); }
+	.rows { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.625rem; }
+	.row { display: grid; grid-template-columns: 9.5rem minmax(0, 1fr) 6rem; align-items: center; gap: 0.75rem; }
+	.name { font-size: 0.875rem; font-weight: 600; color: var(--sl-color-white); text-decoration: none; display: block; }
+	.name:hover { text-decoration: underline; }
+	.lab { display: block; font-size: 0.75rem; font-weight: 400; color: var(--sl-color-gray-3); }
+	.bars { display: flex; flex-direction: column; gap: 2px; }
+	.track { height: 8px; border-radius: 0 4px 4px 0; background: var(--sl-color-gray-6); overflow: hidden; }
+	.fill { height: 100%; border-radius: 0 4px 4px 0; }
+	.num { font-family: var(--sl-font-mono); font-size: 0.8125rem; color: var(--sl-color-gray-2); white-space: nowrap; }
+	.num strong { color: var(--sl-color-white); }
+	.row .num { text-align: right; }
+	.scroll { overflow-x: auto; }
+	table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+	thead th { text-align: left; font-weight: 600; font-size: 0.8125rem; color: var(--sl-color-gray-2); padding: 0 0.75rem 0.5rem 0; }
+	tbody th, td { text-align: left; padding: 0.625rem 0.75rem 0.625rem 0; border-top: 1px solid var(--sl-color-hairline); vertical-align: middle; }
+	td { min-width: 7.5rem; }
+	tbody th { min-width: 9.5rem; }
+	td .track { margin-bottom: 0.25rem; }
+	@media (max-width: 40rem) {
+		.row { grid-template-columns: minmax(0, 1fr) auto; }
+		.row .bars { grid-column: 1 / -1; grid-row: 2; }
+	}
+</style>

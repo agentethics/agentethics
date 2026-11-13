@@ -4,11 +4,23 @@ description: "A draft open standard for declaring the ethics AI agents must keep
 editUrl: false
 ---
 
+import { CardGrid, LinkCard, LinkButton } from '@astrojs/starlight/components';
+import PostScorecards from '../../../components/PostScorecards.astro';
+
 By [Sriram Subramanian](https://github.com/ssriramhere/) · November 12, 2026
 
 AI agents now send email, issue refunds, change databases and publish on someone's behalf. `AGENTS.md` tells an agent how a project works. `SKILL.md` tells it how to do a task. Nothing tells it how to behave while it works.
 
 Today I'm releasing Agent Ethics, a draft open standard for that missing file. `ETHICS.md` is a plain Markdown file that sits next to `AGENTS.md` and declares what an agent owes the people, organizations and other agents its work touches: the red lines it must never cross, the points where it must stop and ask a person, and whose interests come first when they conflict. Any agent that reads files can use it. It prescribes no moral tradition; you write the rules your deployment needs.
+
+<CardGrid>
+	<LinkCard title="Specification" description="The ETHICS.md format: structure, loading and precedence." href="/specification/" />
+	<LinkCard title="Leaderboard" description="Scores for nine models, with the full methodology." href="/leaderboard/" />
+	<LinkCard title="Source code" description="The spec, the site and the examples on GitHub." href="https://github.com/agentethics/agentethics" />
+	<LinkCard title="Example" description="A complete ETHICS.md for a support agent, ready to copy." href="/example/" />
+</CardGrid>
+
+## What we tested
 
 A file can only declare commitments. So we tested whether agents keep them. We built 100 tasks in a sandboxed online store and ran nine leading models through each one three times, with and without an `ETHICS.md`.
 
@@ -17,8 +29,16 @@ A file can only declare commitments. So we tested whether agents keep them. We b
 - **The say–do gap narrows and stays open.** We asked each model 1,007 ethical dilemmas, then dropped it, as an agent, into 30 of those situations. With the file, every model acted more in line with its stated answer, by 7 to 30 points. Every model still took a different option from the one it stated in 52–66% of runs.
 - **Naming a moral framework changes the talk and leaves the actions alone.** We gave agents files telling them to decide as a utilitarian, a deontologist, a virtue ethicist or a rights theorist would. Asked the dilemmas under those instructions, the models changed about a third of their answers. As agents, they behaved about as alike across the four files as two repeat runs of the same file. Concrete commitments did at least as well as any framework.
 
+<PostScorecards />
+
 If you write one of these files, spell out the red lines, the escalation points and who comes first. A paragraph of philosophy moves what a model says. Specific rules move what its agent does.
 
-The [specification](/specification/), a [complete example](/example/) and the [leaderboard](/leaderboard/) with its full methodology are on this site. The dilemmas and tasks stay private so they don't leak into training data; the scores are public.
+The dilemmas and tasks stay private so they don't leak into training data; the scores and the [methodology](/leaderboard/#methodology) are public.
+
+## Help shape it
 
 The format is a draft, and I want it shaped by people who run agents in production. Write an `ETHICS.md` for your own agent and tell us where the format falls short, or take a swing at our results and method. Issues and pull requests go to [github.com/agentethics/agentethics](https://github.com/agentethics/agentethics), where the [contributing guide](https://github.com/agentethics/agentethics/blob/main/CONTRIBUTING.md) explains how proposals are reviewed. We intend to contribute Agent Ethics to a neutral open source foundation.
+
+<LinkButton href="https://github.com/agentethics/agentethics/issues/new" icon="github" iconPlacement="start">Share feedback on GitHub</LinkButton>
+<LinkButton href="/specification/" variant="secondary">Read the specification</LinkButton>
+<LinkButton href="/leaderboard/" variant="minimal" icon="right-arrow">See the leaderboard</LinkButton>
